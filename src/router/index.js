@@ -8,7 +8,7 @@ const reg = () => import('@/pages/reg/reg')
 // 后台首页
 const index = () => import('@/pages/index/index')
 // 主页第一板块
-const home = () => import('@/pages/index/children/home')
+const home = () => import('@/pages/home/home')
 // 会员管理
 const memberManagement = () => import('@/pages/memberManagement/memberManagement')
 // 职员管理
@@ -21,14 +21,15 @@ const serviceList = () => import('@/pages/serviceManagement/children/serviceList
 const serviceApplication = () => import('@/pages/serviceManagement/children/serviceApplication')
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
   {
     path: '/',
     name: 'index',
     // 是否需要验证登录
     meta: {
       requiresAuth: true,
-      title:'tIndex'
+      title: 'tIndex',
+      // noCache: true,
     },
     component: index,
     redirect: '/home',
@@ -39,7 +40,8 @@ Vue.use(VueRouter)
         name: 'home',
         component: home,
         meta: {
-          requiresAuth: true
+          requiresAuth: true,
+          noCache: true,
         }
       },
       // 会员管理
@@ -48,8 +50,9 @@ Vue.use(VueRouter)
         name: 'memberManagement',
         component: memberManagement,
         meta: {
-          requiresAuth:true,
-          title:'tMemberManagement'
+          requiresAuth: true,
+          noCache: true,
+          title: 'tMemberManagement'
         }
       },
       // 职员管理
@@ -58,8 +61,9 @@ Vue.use(VueRouter)
         name: 'staffManagement',
         component: staffManagement,
         meta: {
-          requiresAuth:true,
-          title:'tStaffManagement'
+          requiresAuth: true,
+          noCache: true,
+          title: 'tStaffManagement'
         }
       },
       // 服务父板块
@@ -70,27 +74,28 @@ Vue.use(VueRouter)
         redirect: '/serviceManagement/serviceList',
         meta: {
           requiresAuth: true,
-          title:'tServiceManagement'
+          // noCache: true,
+          title: 'tServiceManagement'
         },
-        children:[
+        children: [
           // 子版块 服务列表
           {
-            path:'serviceList',
-            name:'serviceList',
-            component:serviceList,
-            meta:{
-              requiresAuth:true,
-              title:'tServiceList'
+            path: 'serviceList',
+            name: 'serviceList',
+            component: serviceList,
+            meta: {
+              requiresAuth: true,
+              title: 'tServiceList'
             }
           },
           // 子板块 服务申请列表
           {
-            path:'serviceApplication',
-            name:'serviceApplication',
-            component:serviceApplication,
-            meta:{
-              requiresAuth:true,
-              title:'tServiceApplication'
+            path: 'serviceApplication',
+            name: 'serviceApplication',
+            component: serviceApplication,
+            meta: {
+              requiresAuth: true,
+              title: 'tServiceApplication'
             }
           }
         ]

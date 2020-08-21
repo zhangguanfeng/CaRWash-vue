@@ -1,6 +1,8 @@
 <template>
   <div>
-    <router-view></router-view>
+    <transition name="fade-page" mode="out-in">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 

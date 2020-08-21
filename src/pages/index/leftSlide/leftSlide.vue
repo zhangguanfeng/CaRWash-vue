@@ -2,8 +2,8 @@
   <el-aside class="leftSlide" style="width:auto">
     <el-scrollbar style="height:100%;width:auto">
       <el-menu router unique-opened :default-active="activerouter" class="el-menu-vertical-demo"
-        @open="handleOpen" @close="handleClose" :collapse="collapse" background-color="#545c64"
-        text-color="#fff" active-text-color="#409EFF">
+        @open="handleOpen" @close="handleClose" @select="handleselect" :collapse="collapse"
+        background-color="#545c64" text-color="#fff" active-text-color="#409EFF">
         <el-menu-item index="/">
           <i class="el-icon-setting"></i>
           <span slot="title">{{$t('tIndex')}}</span>
@@ -52,6 +52,9 @@ export default {
     // 导航栏关闭事件
     handleClose (key, keyPath) {
       console.log(key, keyPath);
+    },
+    // 选中的栏目
+    handleselect () {
     }
   },
   mounted () {
