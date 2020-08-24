@@ -3,18 +3,18 @@
     <el-card class="container">
       <!-- 表格部分 -->
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="serviceName" label="服务名称" width="250">
+        <el-table-column prop="serviceName" :label="serviceList.name" width="250">
         </el-table-column>
-        <el-table-column prop="frequentness" label="每周次数" width="250">
+        <el-table-column prop="frequentness" :label="serviceList.frequentness" width="250">
         </el-table-column>
-        <el-table-column label="操作">
-          <el-tooltip class="item" effect="dark" content="查看" placement="top">
+        <el-table-column :label="operation">
+          <el-tooltip class="item" effect="dark" :content="btnTip.check" placement="top">
             <el-button icon="el-icon-user-solid" type="success" size="mini"></el-button>
           </el-tooltip>
-          <el-tooltip class="item" effect="dark" content="编辑" placement="top">
+          <el-tooltip class="item" effect="dark" :content="btnTip.edit" placement="top">
             <el-button icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
           </el-tooltip>
-          <el-tooltip class="item" effect="dark" content="删除" placement="top">
+          <el-tooltip class="item" effect="dark" :content="btnTip.delete" placement="top">
             <el-button icon="el-icon-delete" type="danger" size="mini"></el-button>
           </el-tooltip>
         </el-table-column>
@@ -39,7 +39,10 @@ export default {
       }, {
         serviceName: '洗车',
         frequentness: '5',
-      }]
+      }],
+      serviceList: this.$t('serviceList'),
+      operation: this.$t('operation'),
+      btnTip: this.$t('btnTip')
     }
   }
 }

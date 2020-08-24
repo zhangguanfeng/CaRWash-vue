@@ -13,5 +13,46 @@ const zh = {
   tServiceList: '服务列表',
   // 服务申请
   tServiceApplication: '服务订单管理',
+  // 会员管理页面部分
+  member: {
+    userID_zh: '用户ID',
+    phone_zh: '手机号'
+  },
+  // 职员管理页面部分
+  staff: {
+    username: '姓名',
+    shop: '代理店',
+    phone: '电话号码',
+    userID: '用户ID',
+    addStaff: '添加职员',
+    choiceShop: '请选择代理店',
+    finishForm: '添加'
+  },
+  // 服务列表页面部分
+  serviceList: {
+    name: '服务名称',
+    frequentness: '每周次数'
+  },
+  // 服务订单管理部分
+  serviceApplication: {
+    userID: '用户ID',
+    category: '服务种类',
+    time: '下单时间'
+  },
+  // 复用部分
+  search_title: '筛选查询',
+  inputUserID: '请输入用户ID',
+  inputPhoneNum: '请输入手机号',
+  inputUsername: '请输入用户姓名',
+  inputShop: '请输入代理店',
+  inputCategory: '请输入服务种类',
+  inputTime: '请选择下单时间',
+  operation: '操作',
+  search_zh: '搜索',
+  btnTip: {
+    check: '查看',
+    edit: '编辑',
+    delete: '删除'
+  }
 }
 export default zh
