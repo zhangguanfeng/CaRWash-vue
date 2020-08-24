@@ -6,6 +6,9 @@ import store from '@/store/index.js'
 // 引入全局reset样式
 import '@/assets/css/reset.css'
 import '@/assets/css/index.scss'
+// 引入全局图标样式
+import '@/assets/iconfont/iconfont.css'
+
 // 国际化
 import i18n from './i18n/i18n'
 // 引入c3动画

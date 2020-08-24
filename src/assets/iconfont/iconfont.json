@@ -1,0 +1,86 @@
+{
+  "id": "2018381",
+  "name": "car",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "韩国洗车项目",
+  "glyphs": [
+    {
+      "icon_id": "45384",
+      "name": "会员",
+      "font_class": "huiyuan",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "1113817",
+      "name": "主页",
+      "font_class": "icon95",
+      "unicode": "e66e",
+      "unicode_decimal": 58990
+    },
+    {
+      "icon_id": "1672203",
+      "name": "会员 (1)",
+      "font_class": "huiyuan1",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "2748018",
+      "name": "服务 (1)",
+      "font_class": "fuwu1",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "5240448",
+      "name": "服务 (1)",
+      "font_class": "fuwu",
+      "unicode": "e699",
+      "unicode_decimal": 59033
+    },
+    {
+      "icon_id": "9190086",
+      "name": "日期",
+      "font_class": "riqi",
+      "unicode": "e665",
+      "unicode_decimal": 58981
+    },
+    {
+      "icon_id": "1167161",
+      "name": "公司名称",
+      "font_class": "gongsimingcheng",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "11808024",
+      "name": "编号",
+      "font_class": "bianhao",
+      "unicode": "e696",
+      "unicode_decimal": 59030
+    },
+    {
+      "icon_id": "7588130",
+      "name": "用户",
+      "font_class": "yonghu",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "15076870",
+      "name": "电话",
+      "font_class": "dianhua",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "1069837",
+      "name": "3.0-搜索",
+      "font_class": "sousuo",
+      "unicode": "e6a8",
+      "unicode_decimal": 59048
+    }
+  ]
+}
