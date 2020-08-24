@@ -14,14 +14,14 @@
           <!-- <transition name="fade-page" mode="out-in">
             <router-view></router-view>
           </transition> -->
+          <!-- 缓存路由页面 -->
           <transition name="fade-page" mode="out-in">
-            <!-- 缓存路由页面 -->
             <keep-alive>
-              <router-view v-if="$route.meta.requiresAuth"></router-view>
+              <router-view v-if="$route.meta.noCache"></router-view>
             </keep-alive>
           </transition>
           <transition name="fade-page" mode="out-in">
-            <router-view v-if="!$route.meta.requiresAuth"></router-view>
+            <router-view v-if="!$route.meta.noCache"></router-view>
           </transition>
         </el-main>
       </el-scrollbar>
