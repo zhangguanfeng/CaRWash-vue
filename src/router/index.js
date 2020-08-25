@@ -12,6 +12,8 @@ const home = () => import('@/pages/home')
 const memberManagement = () => import('@/pages/memberManagement')
 const staffManagement = () => import('@/pages/staffManagement')
 const serviceList = () => import('@/pages/serviceManagement/serviceList')
+const serviceListEdit = () => import('@/pages/serviceManagement/serviceList/edit')
+const serviceListDetail = () => import('@/pages/serviceManagement/serviceList/detail')
 const serviceApplication = () => import('@/pages/serviceManagement/serviceApplication')
 Vue.use(VueRouter)
 
@@ -41,7 +43,6 @@ const routes = [
 			// 会员管理
 			{
 				path: 'memberManagement',
-				name: 'Transform',
 				component: Transform,
 				redirect: 'memberManagement',
 				meta: {
@@ -63,23 +64,23 @@ const routes = [
 					// 会员编辑
 					{
 						path: 'edit',
-						name: 'edit',
+						name: 'memberEdit',
 						component: memberEdit,
 						meta: {
 							requiresAuth: true,
 							noCache: false,
-							title: 'tMemberEdit'
+							title: 'tEdit'
 						},
 					},
 					// 会员详情
 					{
 						path: 'detail',
-						name: 'detail',
+						name: 'memberDetail',
 						component: memberDetail,
 						meta: {
 							requiresAuth: true,
 							noCache: false,
-							title: 'tMemberDetail'
+							title: 'tDetail'
 						},
 					}
 				]
@@ -98,7 +99,6 @@ const routes = [
 			// 服务父板块
 			{
 				path: 'serviceManagement',
-				name: 'serviceManagement',
 				component: Transform,
 				redirect: '/serviceManagement/serviceList',
 				meta: {
@@ -110,13 +110,45 @@ const routes = [
 					// 子版块 服务列表
 					{
 						path: 'serviceList',
-						name: 'serviceList',
-						component: serviceList,
+						component: Transform,
+						redirect:'serviceList',
 						meta: {
 							requiresAuth: true,
 							noCache: true,
 							title: 'tServiceList'
-						}
+						},
+						children:[
+							// 服务列表
+							{
+								path: '',
+								name: 'serviceList',
+								component: serviceList,
+								meta: {
+									requiresAuth: true,
+									noCache: true
+								},
+							},
+							{
+								path: 'edit',
+								name: 'serviceListEdit',
+								component: serviceListEdit,
+								meta: {
+									requiresAuth: true,
+									noCache: false,
+									title: 'tEdit'
+								}
+							},
+							{
+								path: 'detail',
+								name: 'serviceListDetail',
+								component: serviceListDetail,
+								meta: {
+									requiresAuth: true,
+									noCache: false,
+									title:'tDetail'
+								}
+							}
+						]
 					},
 					// 子板块 服务申请列表
 					{

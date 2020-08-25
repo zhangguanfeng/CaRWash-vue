@@ -4,44 +4,46 @@
     <el-card class="search_card" shadow="hover">
       <!-- 上半部分 -->
       <div class="search_card_top">
-        <h2>{{search_title}}</h2>
+        <h2>{{$t('search_title')}}</h2>
       </div>
       <!-- 下半部分 -->
       <div class="search_card_bottom">
-        <el-input :placeholder="inputCategory" class="searchByCategory" clearable
-          v-model="searchByCategory">
+        <el-input :placeholder="$t('inputCategory')" class="searchByCategory" clearable
+          v-model="filter.searchByCategory">
         </el-input>
-        <el-input :placeholder="inputUserID" class="searchByID" clearable v-model="searchByID">
+        <el-input :placeholder="$t('inputUserID')" class="searchByID" clearable v-model="filter.searchByID">
         </el-input>
-        <el-date-picker v-model="orderTime" type="date" :placeholder="serviceApplication.time"
+        <el-date-picker v-model="filter.orderTime" type="date" :placeholder="$t('serviceApplication').time"
           class="orderTime">
         </el-date-picker>
-        <el-input :placeholder="inputShop" class="searchByShop" clearable v-model="searchByShop">
+        <el-input :placeholder="$t('inputShop')" class="searchByShop" clearable v-model="filter.searchByShop">
         </el-input>
-        <el-button class="search" round>{{search_zh}}</el-button>
+        <el-button class="search" round>{{$t('search_zh')}}</el-button>
       </div>
     </el-card>
 
     <el-card class="container">
       <!-- 表格部分 -->
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="uesrID" :label="serviceApplication.userID" width="250">
+        <el-table-column prop="uesrID" :label="$t('serviceApplication').userID">
         </el-table-column>
-        <el-table-column prop="serviceCategory" :label="serviceApplication.category" width="250">
+        <el-table-column prop="username" :label="$t('serviceApplication').username">
         </el-table-column>
-        <el-table-column prop="orderTime" :label="serviceApplication.time" width="250">
+        <el-table-column prop="serviceCategory" :label="$t('serviceApplication').category">
         </el-table-column>
-        <el-table-column :label="operation">
-          <el-tooltip class="item" effect="dark" :content="btnTip.check" placement="top">
+        <el-table-column prop="orderTime" :label="$t('serviceApplication').time">
+        </el-table-column>
+        <!-- <el-table-column :label="$t('operation')">
+          <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
             <el-button icon="el-icon-user-solid" type="success" size="mini"></el-button>
           </el-tooltip>
-          <el-tooltip class="item" effect="dark" :content="btnTip.edit" placement="top">
+          <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
             <el-button icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
           </el-tooltip>
-          <el-tooltip class="item" effect="dark" :content="btnTip.delete" placement="top">
+          <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
             <el-button icon="el-icon-delete" type="danger" size="mini"></el-button>
           </el-tooltip>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
     </el-card>
   </div>
@@ -51,45 +53,43 @@
 export default {
   data () {
     return {
+      filter:{
       searchByCategory: '',
       searchByID: '',
       searchByShop: '',
+      orderTime: ''
+      },
       tableData: [{
         uesrID: '1001',
+        username:'12321',
         serviceCategory: '洗车',
         orderTime: '2020-08-26'
       }, {
         uesrID: '1001',
+        username:'12321',
         serviceCategory: '洗车',
         orderTime: '2020-08-26'
       }, {
         uesrID: '1001',
+        username:'12321',
         serviceCategory: '洗车',
         orderTime: '2020-08-26'
       }, {
         uesrID: '1001',
+        username:'12321',
         serviceCategory: '洗车',
         orderTime: '2020-08-26'
       }],
       // 是否显示添加表单
-      dialogFormVisible: false,
+      // dialogFormVisible: false,
       // 添加表单信息
       addStaffForm: {
-        name: '',
+        username: '',
         phone: '',
         userID: '',
         shop: ''
       },
-      orderTime: '',
-      serviceApplication: this.$t('serviceApplication'),
-      btnTip: this.$t('btnTip'),
-      inputCategory: this.$t('inputCategory'),
-      inputTime: this.$t('inputTime'),
-      inputUserID: this.$t('inputUserID'),
-      operation: this.$t('operation'),
-      search_zh: this.$t('search_zh'),
-      search_title: this.$t('search_title'),
-      inputShop: this.$t('inputShop')
+      
     }
   }
 }

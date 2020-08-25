@@ -5,17 +5,17 @@ const zh = {
   tIndex: '首页',
   // 会员管理
   tMemberManagement: '会员管理',
-  // 会员编辑
-  tMemberEdit:'会员编辑',
-  // 会员详情
-  tMemberDetail:'会员详情',
   // 职员管理
   tStaffManagement: '职员管理',
   // 服务管理
   tServiceManagement: '服务管理',
-  // 服务列表
-  tServiceList: '服务列表',
-  // 服务申请
+  // 服务信息列表
+  tServiceList: '服务信息列表',
+  // 编辑
+  tEdit: '编辑',
+  //详情
+  tDetail: '详情', 
+  // 服务订单管理
   tServiceApplication: '服务订单管理',
   // 会员管理页面部分
   member: {
@@ -30,7 +30,7 @@ const zh = {
     userID: '用户ID',
     addStaff: '添加职员',
     choiceShop: '请选择代理店',
-    finishForm: '添加'
+    finishForm: '添加',
   },
   // 服务列表页面部分
   serviceList: {
@@ -41,6 +41,7 @@ const zh = {
   serviceApplication: {
     userID: '用户ID',
     category: '服务种类',
+    username: '姓名',
     time: '下单时间'
   },
   // 复用部分
@@ -56,7 +57,9 @@ const zh = {
   btnTip: {
     check: '查看',
     edit: '编辑',
-    delete: '删除'
+    delete: '删除',
+    add: '添加',
+    close: '关闭'
   }
 }
 export default zh

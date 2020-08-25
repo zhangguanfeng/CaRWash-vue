@@ -2,37 +2,37 @@
     <div>
         <el-card class="search_card">
             <div class="search_card_top">
-                <h2>{{search_title}}</h2>
+                <h2>{{$t('search_title')}}</h2>
             </div>
             <div class="search_card_bottom">
                 <el-input
-                    :placeholder="inputUserID"
+                    :placeholder="$t('inputUserID')"
                     class="searchById"
                     clearable
-                    v-model="searchById"
+                    v-model="filter.searchById"
                 ></el-input>
                 <el-input
-                    placeholder="请输入手机号"
+                    :placeholder="$t('inputPhoneNum')"
                     class="searchByPhone"
                     clearable
-                    v-model="searchByPhone"
+                    v-model="filter.searchByPhone"
                 ></el-input>
-                <el-button class="search" icon="el-icon-search" round>{{search_zh}}</el-button>
+                <el-button class="search" icon="el-icon-search" round>{{$t('search_zh')}}</el-button>
             </div>
         </el-card>
 
         <el-card class="container">
             <el-table :data="tableData" border style="width: 100%" highlight-current-row>
-                <el-table-column prop="userID" :label="member_zh.userID_zh" width="250"></el-table-column>
-                <el-table-column prop="phoneNum" :label="member_zh.phone_zh" width="250"></el-table-column>
-                <el-table-column :label="operation">
-                    <el-tooltip class="item" effect="dark" :content="btnTip.check" placement="top">
+                <el-table-column prop="userID" :label="$t('member').userID_zh" width="250"></el-table-column>
+                <el-table-column prop="phoneNum" :label="$t('member').phone_zh" width="250"></el-table-column>
+                <el-table-column :label="$t('operation')">
+                    <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
                         <el-button icon="el-icon-user-solid" type="success" size="mini" @click="go(1)"></el-button>
                     </el-tooltip>
-                    <el-tooltip class="item" effect="dark" :content="btnTip.edit" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
                         <el-button icon="el-icon-edit-outline" type="primary" size="mini" @click="go(2)"></el-button>
                     </el-tooltip>
-                    <el-tooltip class="item" effect="dark" :content="btnTip.delete" placement="top">
+                    <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
                         <el-button icon="el-icon-delete" type="danger" size="mini"></el-button>
                     </el-tooltip>
                 </el-table-column>
@@ -45,8 +45,10 @@
 export default {
     data() {
         return {
-            searchById: "",
-            searchByPhone: "",
+            filter:{
+                searchById: "",
+                searchByPhone: "",
+            },
             tableData: [
                 {
                     userID: "1111",
@@ -64,14 +66,7 @@ export default {
                     userID: "14442",
                     phoneNum: "13507643552",
                 },
-            ],
-            search_title: this.$t("search_title"),
-            inputUserID: this.$t("inputUserID"),
-            inputPhoneNum: this.$t("inputPhoneNum"),
-            search_zh: this.$t("search_zh"),
-            member_zh: this.$t("member"),
-            btnTip: this.$t("btnTip"),
-            operation: this.$t("operation"),
+            ]
         };
     },
     methods:{

@@ -4,45 +4,45 @@
     <el-card class="search_card" shadow="hover">
       <!-- 下半部分 -->
       <div class="search_card_top">
-        <h2>{{search_title}}</h2>
+        <h2>{{$t('search_title')}}</h2>
       </div>
       <!-- 上半部分 -->
       <div class="search_card_bottom">
-        <el-input :placeholder="inputUsername" class="searchByName" clearable
-          v-model="searchByName">
+        <el-input :placeholder="$t('inputUsername')" class="searchByName" clearable
+          v-model="filter.name">
         </el-input>
-        <el-input :placeholder="inputShop" class="searchByShop" clearable v-model="searchByShop">
+        <el-input :placeholder="$t('inputShop')" class="searchByShop" clearable v-model="filter.shop">
         </el-input>
-        <el-button class="search" round>{{search_zh}}</el-button>
+        <el-button class="search" round>{{$t('search_zh')}}</el-button>
       </div>
     </el-card>
 
     <el-card class="container">
       <!-- 添加管理员部分 -->
-      <el-button type="primary" @click="addManager" class="addManager">
-        {{staff.addStaff}}
+      <el-button type="primary" @click="staffFormFun('add')" class="addManager">
+        {{$t('staff').addStaff}}
       </el-button>
 
       <!-- 表格部分 -->
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="userID" :label="staff.userID" width="250">
+        <el-table-column prop="userID" :label="$t('staff').userID" width="250">
         </el-table-column>
-        <el-table-column prop="staffName" :label="staff.username" width="250">
+        <el-table-column prop="name" :label="$t('staff').username" width="250">
         </el-table-column>
-        <el-table-column prop="shop" :label="staff.shop" width="250">
+        <el-table-column prop="shop" :label="$t('staff').shop" width="250">
         </el-table-column>
-        <el-table-column prop="phone" :label="staff.phone" width="250">
+        <el-table-column prop="phone" :label="$t('staff').phone" width="250">
         </el-table-column>
-        <el-table-column :label="operation">
+        <el-table-column :label="$t('operation')">
           <template slot-scope="scope">
-            <el-tooltip class="item" effect="dark" :content="btnTip.check" placement="top">
-              <el-button  @click="checkManager(scope.row)" icon="el-icon-user-solid" type="success" size="mini"></el-button>
+            <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
+              <el-button  @click="staffFormFun('check',scope.row)" icon="el-icon-user-solid" type="success" size="mini"></el-button>
             </el-tooltip>
-            <el-tooltip class="item" effect="dark" :content="btnTip.edit" placement="top">
-              <el-button  @click="editManager(scope.row)" icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
+            <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
+              <el-button  @click="staffFormFun('edit',scope.row)" icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
             </el-tooltip>
-            <el-tooltip class="item" effect="dark" :content="btnTip.delete" placement="top">
-              <el-button  @click="deleteManager(scope.row)" icon="el-icon-delete" type="danger" size="mini"></el-button>
+            <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
+              <el-button  @click="remove(scope.row)" icon="el-icon-delete" type="danger" size="mini"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -50,34 +50,29 @@
     </el-card>
 
     <!-- 添加表单 -->
-    <el-dialog title="添加职员" :visible.sync="dialogFormVisible">
-      <el-form ref="addStaffForm" :model="addStaffForm" label-width="90px" label-position="left"
+    <el-dialog :title="title" :visible.sync="dialogFormVisible">
+      <el-form ref="staffForm" :model="staffForm" label-width="90px" label-position="left"
         style="padding-left:30px;">
-        <el-form-item :label="staff.username">
+        <el-form-item :label="$t('staff').username">
           <el-col :span="5">
-            <el-input v-model="addStaffForm.name"></el-input>
+            <el-input v-model="staffForm.name"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item :label="staff.phone">
+        <el-form-item :label="$t('staff').phone">
           <el-col :span="8">
-            <el-input v-model="addStaffForm.phone"></el-input>
+            <el-input v-model="staffForm.phone"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item :label="staff.userID">
-          <el-col :span="8">
-            <el-input v-model="addStaffForm.userID"></el-input>
-          </el-col>
-        </el-form-item>
-        <el-form-item :label="staff.shop">
+        <el-form-item :label="$t('staff').shop">
           <el-col :span="10">
-            <el-select v-model="addStaffForm.shop" :placeholder="staff.choiceShop">
+            <el-select v-model="staffForm.shop" :placeholder="$t('staff').choiceShop">
               <el-option label="代理店一" value="shop1"></el-option>
               <el-option label="代理店二" value="shop2"></el-option>
             </el-select>
           </el-col>
         </el-form-item>
       </el-form>
-      <el-button @click="done('')" type="primary" style="margin-left:30px;">{{staff.finishForm}}</el-button>
+      <el-button @click="done" type="primary" style="margin-left:30px;">{{title}}</el-button>
     </el-dialog>
   </div>
 </template>
@@ -86,63 +81,75 @@
 export default {
   data () {
     return {
-      searchByName: '',
-      searchByShop: '',
+      filter:{
+        name:'',
+        shop:''
+      },
       tableData: [{
-        userID:1,
-        phone:1111,
+        userID: 1,
+        phone: 1111,
         name: '老王',
         shop: '×××官方旗舰店',
       }, {
-        userID:1,
-        phone:1111,
+        userID: 1,
+        phone: 1111,
         name: '老王',
         shop: '×××官方旗舰店',
       }, {
-        userID:1,
-        phone:1111,
+        userID: 1,
+        phone: 1111,
         name: '老王',
         shop: '×××官方旗舰店',
       }, {
-        userID:1,
-        phone:1111,
+        userID: 1,
+        phone: 1111,
         name: '老王',
         shop: '×××官方旗舰店',
       }],
       // 是否显示添加表单
       dialogFormVisible: false,
       // 添加表单信息
-      addStaffForm: {
+      staffForm: {
+        userID:'',
         name: '',
         phone: '',
-        userID: '',
         shop: ''
       },
-      inputUsername: this.$t('inputUsername'),
-      inputShop: this.$t('inputShop'),
-      search_zh: this.$t('search_zh'),
-      staff: this.$t('staff'),
-      operation: this.$t('operation'),
-      btnTip: this.$t('btnTip'),
-      search_title: this.$t('search_title')
+      which:''
+    }
+  },
+  computed:{
+    title(){
+      switch(this.which){
+        case 'add':
+          return this.$t('btnTip').add;
+        case 'check':
+          return this.$t('btnTip').close;
+        case 'edit':
+          return this.$t('btnTip').edit;
+      }
     }
   },
   methods:{
-    addManager(){
-      this.dialogFormVisible=true
+    staffFormFun(type,row){
+      this.dialogFormVisible = true
+      this.which = type
+      if(row) this.staffForm = row
     },
-    checkManager(row){
-      this.dialogFormVisible=true
-      this.addStaffForm=row
-    },
-    editManager(row){
-      this.dialogFormVisible=true
-      this.addStaffForm=row
-    },
-    deleteManager({userID}){
+    remove({userID}){
 
     },
-    done(){}
+    done(){
+      this.dialogFormVisible = false
+      switch(this.which){
+        case 'add': 
+          return 
+        case 'check':
+          return 
+        case 'edit':
+          return 
+      }
+    }
   }
 }
 </script>
