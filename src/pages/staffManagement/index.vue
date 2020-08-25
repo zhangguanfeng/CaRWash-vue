@@ -19,26 +19,32 @@
 
     <el-card class="container">
       <!-- 添加管理员部分 -->
-      <el-button type="primary" @click="dialogFormVisible = !dialogFormVisible" class="addManager">
+      <el-button type="primary" @click="addManager" class="addManager">
         {{staff.addStaff}}
       </el-button>
 
       <!-- 表格部分 -->
       <el-table :data="tableData" border style="width: 100%">
+        <el-table-column prop="userID" :label="staff.userID" width="250">
+        </el-table-column>
         <el-table-column prop="staffName" :label="staff.username" width="250">
         </el-table-column>
         <el-table-column prop="shop" :label="staff.shop" width="250">
         </el-table-column>
+        <el-table-column prop="phone" :label="staff.phone" width="250">
+        </el-table-column>
         <el-table-column :label="operation">
-          <el-tooltip class="item" effect="dark" :content="btnTip.check" placement="top">
-            <el-button icon="el-icon-user-solid" type="success" size="mini"></el-button>
-          </el-tooltip>
-          <el-tooltip class="item" effect="dark" :content="btnTip.edit" placement="top">
-            <el-button icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
-          </el-tooltip>
-          <el-tooltip class="item" effect="dark" :content="btnTip.delete" placement="top">
-            <el-button icon="el-icon-delete" type="danger" size="mini"></el-button>
-          </el-tooltip>
+          <template slot-scope="scope">
+            <el-tooltip class="item" effect="dark" :content="btnTip.check" placement="top">
+              <el-button  @click="checkManager(scope.row)" icon="el-icon-user-solid" type="success" size="mini"></el-button>
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" :content="btnTip.edit" placement="top">
+              <el-button  @click="editManager(scope.row)" icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" :content="btnTip.delete" placement="top">
+              <el-button  @click="deleteManager(scope.row)" icon="el-icon-delete" type="danger" size="mini"></el-button>
+            </el-tooltip>
+          </template>
         </el-table-column>
       </el-table>
     </el-card>
@@ -71,7 +77,7 @@
           </el-col>
         </el-form-item>
       </el-form>
-      <el-button type="primary" style="margin-left:30px;">{{staff.finishForm}}</el-button>
+      <el-button @click="done('')" type="primary" style="margin-left:30px;">{{staff.finishForm}}</el-button>
     </el-dialog>
   </div>
 </template>
@@ -83,16 +89,24 @@ export default {
       searchByName: '',
       searchByShop: '',
       tableData: [{
-        staffName: '老王',
+        userID:1,
+        phone:1111,
+        name: '老王',
         shop: '×××官方旗舰店',
       }, {
-        staffName: '老王',
+        userID:1,
+        phone:1111,
+        name: '老王',
         shop: '×××官方旗舰店',
       }, {
-        staffName: '老王',
+        userID:1,
+        phone:1111,
+        name: '老王',
         shop: '×××官方旗舰店',
       }, {
-        staffName: '老王',
+        userID:1,
+        phone:1111,
+        name: '老王',
         shop: '×××官方旗舰店',
       }],
       // 是否显示添加表单
@@ -112,6 +126,23 @@ export default {
       btnTip: this.$t('btnTip'),
       search_title: this.$t('search_title')
     }
+  },
+  methods:{
+    addManager(){
+      this.dialogFormVisible=true
+    },
+    checkManager(row){
+      this.dialogFormVisible=true
+      this.addStaffForm=row
+    },
+    editManager(row){
+      this.dialogFormVisible=true
+      this.addStaffForm=row
+    },
+    deleteManager({userID}){
+
+    },
+    done(){}
   }
 }
 </script>

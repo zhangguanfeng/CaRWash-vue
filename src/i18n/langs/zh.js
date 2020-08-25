@@ -5,6 +5,10 @@ const zh = {
   tIndex: '首页',
   // 会员管理
   tMemberManagement: '会员管理',
+  // 会员编辑
+  tMemberEdit:'会员编辑',
+  // 会员详情
+  tMemberDetail:'会员详情',
   // 职员管理
   tStaffManagement: '职员管理',
   // 服务管理
