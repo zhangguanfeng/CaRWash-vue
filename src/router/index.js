@@ -85,7 +85,8 @@ const routes = [
             component: serviceList,
             meta: {
               requiresAuth: true,
-              title: 'tServiceList'
+              title: 'tServiceList',
+              noCache: true,
             }
           },
           // 子板块 服务申请列表
@@ -95,7 +96,8 @@ const routes = [
             component: serviceApplication,
             meta: {
               requiresAuth: true,
-              title: 'tServiceApplication'
+              title: 'tServiceApplication',
+              noCache: true,
             }
           }
         ]

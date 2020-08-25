@@ -50,15 +50,9 @@
         </el-card>
       </el-col>
     </el-row>
-    <!-- <transition name="getAllCouponsName" enter-active-class="animated zoomIn"
-      leave-active-class="animated zoomOut">
-    </transition> -->
-    <transition enter-active-class="animated lightSpeedIn"
-      leave-active-class="animated lightSpeedOut">
-      <div class="bottom-img" v-show="isBool">
-        <img src="@/assets/img/background.png" alt="">
-      </div>
-    </transition>
+    <div class="bottom-img animated lightSpeedIn">
+      <img src="@/assets/img/background.png" alt="">
+    </div>
   </div>
 </template>
 <script>
@@ -71,14 +65,9 @@ export default {
       message: 0,
       order: 0,
       profit: 0,
-      isBool: false
     }
   },
   activated () {
-    setTimeout(() => {
-
-      this.isBool = true
-    }, 3000);
     this.vistors = 12132;
     this.message = 23232;
     this.order = 233;
@@ -86,7 +75,6 @@ export default {
   },
   deactivated () {
     setTimeout(() => {
-      this.isBool = false
       this.vistors = 0;
       this.message = 0;
       this.order = 0;
@@ -123,10 +111,13 @@ export default {
     }
   }
   .bottom-img {
+    // box-shadow: #666 1px 6px 2px 6px;
     padding: 20px;
-    // img{
-    //   width: 100%;
-    // }
+    height: 70vh;
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
 }
 </style>
