@@ -12,13 +12,14 @@
           <!-- 视图内容 -->
           <!-- <transition name="fade-page" mode="out-in">
             <router-view></router-view>
+
           </transition>-->
-        <cTransition>
-			<!-- <keep-alive v-if="$route.meta.noCache">
-				<router-view></router-view>
-			</keep-alive>
-			<router-view v-if="!$route.meta.noCache"></router-view> -->
-		</cTransition>
+          <cTransition>
+          <!-- <keep-alive v-if="$route.meta.noCache">
+            <router-view></router-view>
+          </keep-alive>
+          <router-view v-if="!$route.meta.noCache"></router-view> -->
+		      </cTransition>
         </el-main>
       </el-scrollbar>
     </el-container>
@@ -58,7 +59,7 @@ export default {
     breadcrumb,
 	"v-header": header,
 	// 动画效果 缓存
-	cTransition
+	  cTransition
   },
 };
 </script>

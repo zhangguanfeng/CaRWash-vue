@@ -5,8 +5,7 @@
         @open="handleOpen" @close="handleClose" @select="handleselect" :collapse="collapse"
         background-color="#545c64" text-color="#fff" active-text-color="#409EFF">
         <el-menu-item index="/">
-          <i class="iconfont iconicon95"
-            style="font-size: 17px;margin-left:2px;margin-right:11px;"></i>
+          <i class="iconfont iconicon95"></i>
           <span slot="title">{{$t('tIndex')}}</span>
         </el-menu-item>
         <el-menu-item index="/memberManagement">
@@ -19,7 +18,7 @@
         </el-menu-item>
         <el-submenu index="2">
           <template slot="title">
-            <i class="iconfont iconfuwu1" style="font-size: 17px;margin-left:2px;"></i>
+            <i class="iconfont iconfuwu1"></i>
             <span slot="title">{{$t('tServiceManagement')}}</span>
           </template>
           <el-menu-item-group>
@@ -75,8 +74,7 @@ export default {
   width: 200px;
   min-height: 400px;
   i {
-    margin: 0 10px 0 0;
-    font-size: 19px;
+    margin-right: 10px;
   }
 }
 .leftSlide {
