@@ -1,6 +1,8 @@
 // 引入elementUI中文包
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 const zh = {
+  // 退出
+  exit:'退出',
   // 首页
   tIndex: '首页',
   // 会员管理
@@ -9,14 +11,18 @@ const zh = {
   tStaffManagement: '职员管理',
   // 服务管理
   tServiceManagement: '服务管理',
-  // 服务信息列表
-  tServiceList: '服务信息列表',
+  // 服务列表
+  tServiceList: '服务列表',
   // 编辑
   tEdit: '编辑',
   //详情
   tDetail: '详情', 
   // 服务订单管理
   tServiceApplication: '服务订单管理',
+  // 管理员列表
+  tManagerList: '管理员列表',
+  // 代理店管理
+  tShopManagement: '代理店管理',
   // 会员管理页面部分
   member: {
     userID_zh: '用户ID',
@@ -43,6 +49,14 @@ const zh = {
     category: '服务种类',
     username: '姓名',
     time: '下单时间'
+  },
+  // 管理员列表
+  managerList: {
+    username: '姓名',
+    shop: '代理店',
+    userID: '用户ID',
+    choiceShop: '请选择代理店',
+    addManagerList:'添加管理员'
   },
   // 复用部分
   search_title: '筛选查询',

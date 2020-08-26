@@ -15,6 +15,10 @@ const serviceList = () => import('@/pages/serviceManagement/serviceList')
 const serviceListEdit = () => import('@/pages/serviceManagement/serviceList/edit')
 const serviceListDetail = () => import('@/pages/serviceManagement/serviceList/detail')
 const serviceApplication = () => import('@/pages/serviceManagement/serviceApplication')
+const serviceOrderDetail = () => import('@/pages/serviceManagement/serviceApplication/detail')
+const serviceOrderEdit = () => import('@/pages/serviceManagement/serviceApplication/edit')
+const managerList = () => import('@/pages/managerList')
+const shopManagement = () => import('@/pages/shopManagement')
 Vue.use(VueRouter)
 
 const routes = [
@@ -39,6 +43,30 @@ const routes = [
 					requiresAuth: true,
 					noCache: true,
 				},
+			},
+			// 管理员列表
+			{
+				path: 'managerList',
+				name: 'managerList',
+				component: managerList,
+				meta: {
+					limit:true,
+					requiresAuth: true,
+					noCache: true,
+					title:'tManagerList'
+				}
+			},
+			// 代理店管理
+			{
+				path: 'shopManagement',
+				name: 'shopManagement',
+				component: shopManagement,
+				meta: {
+					limit:true,
+					requiresAuth: true,
+					noCache: true,
+					title:'tShopManagement'
+				}
 			},
 			// 会员管理
 			{
@@ -150,16 +178,48 @@ const routes = [
 							}
 						]
 					},
-					// 子板块 服务申请列表
+					// 子板块 服务订单列表
 					{
 						path: 'serviceApplication',
-						name: 'serviceApplication',
-						component: serviceApplication,
+						component: Transform,
+						redirect: 'serviceApplication',
 						meta: {
 							requiresAuth: true,
 							noCache: true,
 							title: 'tServiceApplication'
-						}
+						},
+						children:[
+							// 服务订单列表
+							{
+								path: '',
+								name: 'serviceApplication',
+								component: serviceApplication,
+								meta: {
+									requiresAuth: true,
+									noCache: true
+								},
+							},
+							{
+								path: 'edit',
+								name: 'serviceOrderEdit',
+								component: serviceOrderEdit,
+								meta: {
+									requiresAuth: true,
+									noCache: false,
+									title: 'tEdit'
+								}
+							},
+							{
+								path: 'detail',
+								name: 'serviceOrderDetail',
+								component: serviceOrderDetail,
+								meta: {
+									requiresAuth: true,
+									noCache: false,
+									title:'tDetail'
+								}
+							}
+						]
 					}
 				]
 			},

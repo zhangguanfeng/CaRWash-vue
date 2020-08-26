@@ -29,8 +29,8 @@
 // 动画效果 缓存
 import cTransition from "@/components/transform"
 // 左侧
-import leftSlide from "./leftSlide/leftSlide";
-import header from "./header/header";
+import leftSlide from "./leftSlide";
+import header from "./header";
 // 时间
 import timeShow from "@/components/global/time";
 // 左侧面包屑

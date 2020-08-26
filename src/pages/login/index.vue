@@ -42,7 +42,7 @@ import bgImg from '@/assets/img/background.png'
 // 登录api
 // import {postLogin} from '@/api/api'
 // 引入storage
-// import storage from '@/utils/storage.js'
+import storage from '@/utils/storage.js'
 // 引入vuex
 import {mapMutations} from 'vuex'
 export default {
@@ -54,9 +54,9 @@ export default {
       // 表单数据
       ruleForm: {
         // 用户名
-        username: '',
+        username: 'admin',
         // 密码
-        password: ''
+        password: '123456'
       },
       // 表单验证规则
       rules: {
@@ -89,8 +89,9 @@ export default {
     // 判断表单验证
     submitAdmin (formName) {
       this.$refs[formName].validate((valid) => {
+        console.log(valid)
         if (valid) {
-          this.loginHandle()
+          this.loginHandle(this.ruleForm)
         } else {
           console.log('失败')
           return false
@@ -99,48 +100,63 @@ export default {
     },
     // 登录
     // 用户名 name, 密码 pwd, 重定向 url
-    async loginHandle (name, pwd, url) {
+    async loginHandle (ruleForm) {
       this.isShow = true
-      const res = await postLogin(
-        this.ruleForm.username,
-        this.ruleForm.password,
-        '/'
-      )
-      switch (res.errcode) {
-        case 5001:
-          this.$message.error(this.$t('tGlobal.tError'))
-          break
-        case 5002:
-          this.$message.error('用户不存在，请重新输入')
-          this.ruleForm.username = ''
-          this.ruleForm.password = ''
-          break
-        case 5003:
-          this.$message.error('用户名或密码错误')
-          this.ruleForm.username = ''
-          this.ruleForm.password = ''
-          break
-        case 5004:
-          this.$message.error('账号被删除或禁用')
-          this.ruleForm.username = ''
-          this.ruleForm.password = ''
-          break
-        case 5005:
-          this.$message.error('设置session失败')
-          this.ruleForm.username = ''
-          this.ruleForm.password = ''
-          break
-        default:
-          this.$message.success('登录成功')
-          // storage.setLocal('token', res.token)
-          // storage.setLocal('role', res.auth)
-          this.saveUserInfo(res)
-          this.$router.push('/')
+      if(ruleForm.username==='admin'&&ruleForm.password==123456){
+        this.$message.success('超级管理登录成功')
+        storage.setLocal('token', 123)
+        this.saveUserInfo({auth:true,token:123})
+        this.$router.push('/')
+      }else if(ruleForm.username==='admin123'&&ruleForm.password==123456){
+        this.$message.success('普通管理登录成功')
+        storage.setLocal('token', 123)
+        this.saveUserInfo({auth:false,token:123})
+        this.$router.push('/')
+      }else{
+        this.$message.error('帐号或密码错误')
       }
-      if (res.errcode) {
-        this.isShow = false
-      }
-      console.log(res)
+      this.isShow = false
+      
+      // const res = await postLogin(
+      //   this.ruleForm.username,
+      //   this.ruleForm.password,
+      //   '/'
+      // )
+      // switch (res.errcode) {
+      //   case 5001:
+      //     this.$message.error(this.$t('tGlobal.tError'))
+      //     break
+      //   case 5002:
+      //     this.$message.error('用户不存在，请重新输入')
+      //     this.ruleForm.username = ''
+      //     this.ruleForm.password = ''
+      //     break
+      //   case 5003:
+      //     this.$message.error('用户名或密码错误')
+      //     this.ruleForm.username = ''
+      //     this.ruleForm.password = ''
+      //     break
+      //   case 5004:
+      //     this.$message.error('账号被删除或禁用')
+      //     this.ruleForm.username = ''
+      //     this.ruleForm.password = ''
+      //     break
+      //   case 5005:
+      //     this.$message.error('设置session失败')
+      //     this.ruleForm.username = ''
+      //     this.ruleForm.password = ''
+      //     break
+      //   default:
+      //     this.$message.success('登录成功')
+      //     // storage.setLocal('token', res.token)
+      //     // storage.setLocal('role', res.auth)
+      //     this.saveUserInfo(res)
+      //     this.$router.push('/')
+      // }
+      // if (res.errcode) {
+      //   this.isShow = false
+      // }
+      // console.log(res)
       // postLogin(
       //   name,
       //   pwd,

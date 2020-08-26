@@ -33,17 +33,17 @@
         </el-table-column>
         <el-table-column prop="orderTime" :label="$t('serviceApplication').time">
         </el-table-column>
-        <!-- <el-table-column :label="$t('operation')">
+        <el-table-column :label="$t('operation')">
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
-            <el-button icon="el-icon-user-solid" type="success" size="mini"></el-button>
+            <el-button @click="go(1)" icon="el-icon-user-solid" type="success" size="mini"></el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
-            <el-button icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
+            <el-button @click="go(2)" icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
             <el-button icon="el-icon-delete" type="danger" size="mini"></el-button>
           </el-tooltip>
-        </el-table-column> -->
+        </el-table-column>
       </el-table>
     </el-card>
   </div>
@@ -81,7 +81,7 @@ export default {
         orderTime: '2020-08-26'
       }],
       // 是否显示添加表单
-      // dialogFormVisible: false,
+      dialogFormVisible: false,
       // 添加表单信息
       addStaffForm: {
         username: '',
@@ -90,6 +90,18 @@ export default {
         shop: ''
       },
       
+    }
+  },
+  methods:{
+    go(type){
+      switch(type){
+        case 1:
+          this.$router.push('serviceApplication/detail')
+          break;
+        case 2:
+          this.$router.push('serviceApplication/edit')
+          break;
+      }
     }
   }
 }

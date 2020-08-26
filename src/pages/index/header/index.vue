@@ -31,13 +31,12 @@
           <i class="el-icon-chat-dot-round fs20 fc255"></i>
         </el-button>
         <div>
-          <el-dropdown>
+          <el-dropdown  trigger="click">
             <div class="ml20 flex">
               <el-avatar icon="el-icon-user-solid"></el-avatar>
             </div>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>选项1</el-dropdown-item>
-              <el-dropdown-item>选项1</el-dropdown-item>
+              <el-dropdown-item @click.native="exit">{{$t('exit')}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -47,6 +46,8 @@
 </template>
 
 <script>
+// 引入storage
+import storage from '@/utils/storage.js'
 import { mapState, mapMutations } from 'vuex'
 export default {
   data () {
@@ -63,7 +64,14 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['saveLanguage']),
+    ...mapMutations(['saveUserInfo','saveLanguage']),
+    exit(){
+      this.$message.success('退出成功')
+      storage.removeLocal('token')
+      this.saveUserInfo(null)
+      storage.removeLocal('userinfo')
+      this.$router.push('/login')
+    },
     changeValue (index) {
       let obj = {}
       switch (index) {
