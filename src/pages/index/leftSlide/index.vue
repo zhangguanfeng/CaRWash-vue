@@ -4,6 +4,21 @@
       <el-menu router unique-opened :default-active="activerouter" class="el-menu-vertical-demo"
         @open="handleOpen" @close="handleClose" @select="handleselect" :collapse="collapse"
         background-color="#545c64" text-color="#fff" active-text-color="#409EFF">
+        <template v-for="(item , index) in routerList">
+          <el-submenu :index="item.path" v-if="!item.meta.hide && item.children">
+            <template slot="title">
+              {{$t(`${item.meta.title}`)}}
+            </template>
+            <el-menu-item v-for="(itemChild , index) in item.children"
+              :index="'/'+ item.path + '/' + itemChild.path" :key="index">
+              <span>{{$t(`${itemChild.meta.title}`)}}</span>
+            </el-menu-item>
+          </el-submenu>
+          <el-menu-item :index="'/'+ item.path" v-else>
+            {{$t(`${item.meta.title}`)}}
+          </el-menu-item>
+        </template>
+
         <el-menu-item index="/">
           <i class="iconfont iconicon95"></i>
           <span slot="title">{{$t('tIndex')}}</span>
@@ -50,7 +65,8 @@ export default {
   data () {
     return {
       // 当前激活的router
-      activerouter: ''
+      activerouter: '',
+      routerList: [],
     }
   },
   methods: {
@@ -63,13 +79,16 @@ export default {
       console.log(key, keyPath);
     },
     // 选中的栏目
-    handleselect () {
+    handleselect (key, keyPath) {
+      console.log(keyPath);
     }
   },
-  computed:{
+  computed: {
     ...mapState(['adminUser'])
   },
   mounted () {
+    this.routerList = this.$router.options.routes[0].children
+    console.log(this.routerList, ' this.routerList');
   },
   watch: {
     $route: {
