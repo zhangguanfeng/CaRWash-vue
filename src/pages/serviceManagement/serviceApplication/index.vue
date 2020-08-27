@@ -29,9 +29,9 @@
         </el-table-column>
         <el-table-column prop="username" :label="$t('username')">
         </el-table-column>
-        <el-table-column prop="serviceCategory" :label="$t('serviceApplication').category">
+        <el-table-column prop="serviceCategory" :label="$t('category')">
         </el-table-column>
-        <el-table-column prop="orderTime" :label="$t('serviceApplication').time">
+        <el-table-column prop="orderTime" :label="$t('time')">
         </el-table-column>
         <el-table-column :label="$t('operation')">
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">

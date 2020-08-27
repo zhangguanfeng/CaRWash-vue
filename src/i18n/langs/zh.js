@@ -25,6 +25,34 @@ const zh = {
   tShopManagement: '代理店管理',
   // 日程管理
   tScheduleManagement: '日程管理',
+  // 结果管理
+  tResultManagement: '洗车结果管理',
+  // 结算管理
+  tSettlementManagement: '结算管理',
+  // 结算列表
+  tSettlementList: '结算列表',
+  // 内容管理
+  tContentManagement: '内容管理',
+  // 评价列表
+  tCommentList: '评价列表',
+  // 车型列表
+  tCarList: '车型列表',
+  // 客服中心
+  tServiceCenter: '客服中心',
+  // 消息通知
+  tMessage: '消息通知',
+  // 常见疑问
+  tCommonQuestion: '常见疑问',
+  // 疑难解答
+  tDifficultQuestion: '疑难解答',
+  // 服务条款管理
+  tSetting: '服务条款管理',
+  // 服务使用条款
+  tUse: '服务使用条款',
+  // 个人信息管理条款
+  tInformation: '个人信息管理条款',
+  // 位置信息使用条款
+  tPosition: '位置信息使用条款',
   // 会员管理页面部分
   member: {
    
@@ -40,8 +68,7 @@ const zh = {
   },
   // 服务订单管理部分
   serviceApplication: {
-    category: '服务种类',
-    time: '下单时间'
+    
   },
   // 管理员列表
   managerList: {
@@ -55,6 +82,11 @@ const zh = {
     contact: '联系方式',
     business: '营业时间'
   },
+  // 日程管理
+  shecheduleManagement:{
+    time:'洗车时间',
+    state:'洗车状态'
+  },
   // 复用部分
   choiceShop: '请选择代理店',
   phone: '手机号',
@@ -62,6 +94,8 @@ const zh = {
   shop: '代理店',
   address: '地址',
   introduce: '介绍',
+  time: '下单时间',
+  category:'服务种类',
   search_title: '筛选查询',
   inputUserID: '请输入用户ID',
   inputPhoneNum: '请输入手机号',

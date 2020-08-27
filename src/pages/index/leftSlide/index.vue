@@ -55,10 +55,74 @@
             <el-menu-item index="/serviceManagement/serviceApplication">
               {{$t('tServiceApplication')}}</el-menu-item>
           </el-menu-item-group>
-          <el-menu-item index="/scheduleManagement">
-            <i class="iconfont iconhuiyuan"></i>
-            <span slot="title">{{$t('tScheduleManagement')}}</span>
-          </el-menu-item>
+        </el-submenu>
+        <el-menu-item index="/scheduleManagement">
+          <i class="iconfont iconhuiyuan"></i>
+          <span slot="title">{{$t('tScheduleManagement')}}</span>
+        </el-menu-item>
+         <el-menu-item index="/resultManagement">
+          <i class="iconfont iconhuiyuan1"></i>
+          <span slot="title">{{$t('tResultManagement')}}</span>
+        </el-menu-item>
+        <el-submenu index="3">
+          <template slot="title">
+            <i class="iconfont iconfuwu1"></i>
+            <span slot="title">{{$t('tSettlementManagement')}}</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item index="/settlementManagement/settlementList">{{$t('tSettlementList')}}
+            </el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+        <el-submenu index="4">
+          <template slot="title">
+            <i class="iconfont iconfuwu1"></i>
+            <span slot="title">{{$t('tContentManagement')}}</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item index="/contentManagement/commentList">{{$t('tCommentList')}}
+            </el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group>
+            <el-menu-item index="/contentManagement/carList">{{$t('tCarList')}}
+            </el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+        <el-submenu index="5">
+          <template slot="title">
+            <i class="iconfont iconfuwu1"></i>
+            <span slot="title">{{$t('tServiceCenter')}}</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item index="/serviceCenter/message">{{$t('tMessage')}}
+            </el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group>
+            <el-menu-item index="/serviceCenter/commonQuestion">{{$t('tCommonQuestion')}}
+            </el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group>
+            <el-menu-item index="/serviceCenter/difficultQuestion">{{$t('tDifficultQuestion')}}
+            </el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+        <el-submenu index="6">
+          <template slot="title">
+            <i class="iconfont iconfuwu1"></i>
+            <span slot="title">{{$t('tSetting')}}</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item index="/setting/use">{{$t('tUse')}}
+            </el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group>
+            <el-menu-item index="/setting/information">{{$t('tInformation')}}
+            </el-menu-item>
+          </el-menu-item-group>
+          <el-menu-item-group>
+            <el-menu-item index="/setting/position">{{$t('tPosition')}}
+            </el-menu-item>
+          </el-menu-item-group>
         </el-submenu>
       </el-menu>
     </el-scrollbar>
