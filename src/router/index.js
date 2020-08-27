@@ -45,7 +45,7 @@ const routes = [
         meta: {
           requiresAuth: true,
           title: 'tIndex',
-
+          icon: 'iconfont iconicon95',
           noCache: true,
         },
       },
@@ -58,6 +58,7 @@ const routes = [
           limit: true,
           requiresAuth: true,
           noCache: true,
+          icon: 'iconfont iconhuiyuan1',
           title: 'tManagerList'
         }
       },
@@ -70,6 +71,7 @@ const routes = [
           limit: true,
           requiresAuth: true,
           noCache: true,
+          icon: 'iconfont iconhuiyuan1',
           title: 'tShopManagement'
         },
         children:[
@@ -116,6 +118,7 @@ const routes = [
           requiresAuth: true,
           hide: true,
           noCache: true,
+          icon: 'iconfont iconhuiyuan',
           title: 'tMemberManagement'
         },
         children: [
@@ -161,17 +164,19 @@ const routes = [
         meta: {
           requiresAuth: true,
           noCache: true,
+          icon: 'iconfont iconhuiyuan',
           title: 'tStaffManagement'
         }
       },
-      // 服务父板块
+      // 服务父板块 这一块不能使用缓存路由页面,会出现BUG
       {
         path: 'serviceManagement',
         component: Transform,
         redirect: '/serviceManagement/serviceList',
         meta: {
           requiresAuth: true,
-          noCache: true,
+          noCache: false,
+          icon: 'iconfont iconfuwu1',
           title: 'tServiceManagement'
         },
         children: [
@@ -182,7 +187,7 @@ const routes = [
             redirect: 'serviceList',
             meta: {
               requiresAuth: true,
-              noCache: true,
+              noCache: false,
               title: 'tServiceList'
             },
             children: [
@@ -193,7 +198,7 @@ const routes = [
                 component: serviceList,
                 meta: {
                   requiresAuth: true,
-                  noCache: true
+                  noCache: false
                 },
               },
               {
@@ -225,7 +230,7 @@ const routes = [
             redirect: 'serviceApplication',
             meta: {
               requiresAuth: true,
-              noCache: true,
+              noCache: false,
               title: 'tServiceApplication'
             },
             children: [
@@ -236,7 +241,7 @@ const routes = [
                 component: serviceApplication,
                 meta: {
                   requiresAuth: true,
-                  noCache: true
+                  noCache: false
                 },
               },
               {

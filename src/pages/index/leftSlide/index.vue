@@ -1,13 +1,15 @@
 <template>
   <el-aside class="leftSlide" style="width:auto">
     <el-scrollbar style="height:100%;width:auto">
-      <el-menu router unique-opened :default-active="activerouter" class="el-menu-vertical-demo"
+      <el-menu router unique-opened :default-active="$route.path" class="el-menu-vertical-demo"
         @open="handleOpen" @close="handleClose" @select="handleselect" :collapse="collapse"
         background-color="#545c64" text-color="#fff" active-text-color="#409EFF">
         <!-- <template v-for="(item , index) in routerList">
+
           <el-submenu :index="item.path" v-if="!item.meta.hide && item.children">
             <template slot="title">
-              {{$t(`${item.meta.title}`)}}
+              <i :class="item.meta.icon"></i>
+              <span slot="title">{{$t(`${item.meta.title}`)}}</span>
             </template>
             <el-menu-item v-for="(itemChild , index) in item.children"
               :index="'/'+ item.path + '/' + itemChild.path" :key="index">
@@ -15,7 +17,8 @@
             </el-menu-item>
           </el-submenu>
           <el-menu-item :index="'/'+ item.path" v-else>
-            {{$t(`${item.meta.title}`)}}
+            <i :class="item.meta.icon"></i>
+            <span slot="title">{{$t(`${item.meta.title}`)}}</span>
           </el-menu-item>
         </template> -->
 
@@ -52,11 +55,11 @@
             <el-menu-item index="/serviceManagement/serviceApplication">
               {{$t('tServiceApplication')}}</el-menu-item>
           </el-menu-item-group>
+          <el-menu-item index="/scheduleManagement">
+            <i class="iconfont iconhuiyuan"></i>
+            <span slot="title">{{$t('tScheduleManagement')}}</span>
+          </el-menu-item>
         </el-submenu>
-        <el-menu-item index="/scheduleManagement">
-          <i class="iconfont iconhuiyuan"></i>
-          <span slot="title">{{$t('tScheduleManagement')}}</span>
-        </el-menu-item>
       </el-menu>
     </el-scrollbar>
   </el-aside>
@@ -68,8 +71,7 @@ export default {
   props: ['collapse'],
   data () {
     return {
-      // 当前激活的router
-      activerouter: '',
+
       routerList: [],
     }
   },
@@ -84,7 +86,7 @@ export default {
     },
     // 选中的栏目
     handleselect (key, keyPath) {
-      console.log(keyPath);
+
     }
   },
   computed: {
@@ -95,12 +97,7 @@ export default {
     console.log(this.routerList,this.$router, ' this.routerList');
   },
   watch: {
-    $route: {
-      handler (route) {
-        this.activerouter = this.$route.path === '/home' ? '/' : this.$route.path
-      },
-      immediate: true
-    }
+
   }
 }
 </script>
@@ -117,7 +114,6 @@ export default {
   position: relative;
   height: 100%;
   overflow: hidden;
-  color: rgb(88, 65, 214);
   .el-menu {
     border: none;
   }
