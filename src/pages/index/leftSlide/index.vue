@@ -4,7 +4,7 @@
       <el-menu router unique-opened :default-active="activerouter" class="el-menu-vertical-demo"
         @open="handleOpen" @close="handleClose" @select="handleselect" :collapse="collapse"
         background-color="#545c64" text-color="#fff" active-text-color="#409EFF">
-        <template v-for="(item , index) in routerList">
+        <!-- <template v-for="(item , index) in routerList">
           <el-submenu :index="item.path" v-if="!item.meta.hide && item.children">
             <template slot="title">
               {{$t(`${item.meta.title}`)}}
@@ -17,7 +17,7 @@
           <el-menu-item :index="'/'+ item.path" v-else>
             {{$t(`${item.meta.title}`)}}
           </el-menu-item>
-        </template>
+        </template> -->
 
         <el-menu-item index="/">
           <i class="iconfont iconicon95"></i>
@@ -53,6 +53,10 @@
               {{$t('tServiceApplication')}}</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
+        <el-menu-item index="/scheduleManagement">
+          <i class="iconfont iconhuiyuan"></i>
+          <span slot="title">{{$t('tScheduleManagement')}}</span>
+        </el-menu-item>
       </el-menu>
     </el-scrollbar>
   </el-aside>
@@ -88,7 +92,7 @@ export default {
   },
   mounted () {
     this.routerList = this.$router.options.routes[0].children
-    console.log(this.routerList, ' this.routerList');
+    console.log(this.routerList,this.$router, ' this.routerList');
   },
   watch: {
     $route: {

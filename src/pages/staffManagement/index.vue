@@ -25,13 +25,13 @@
 
       <!-- 表格部分 -->
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="userID" :label="$t('staff').userID" width="250">
+        <el-table-column prop="id" label="ID" width="250">
         </el-table-column>
-        <el-table-column prop="name" :label="$t('staff').username" width="250">
+        <el-table-column prop="username" :label="$t('username')" width="250">
         </el-table-column>
-        <el-table-column prop="shop" :label="$t('staff').shop" width="250">
+        <el-table-column prop="shop" :label="$t('shop')" width="250">
         </el-table-column>
-        <el-table-column prop="phone" :label="$t('staff').phone" width="250">
+        <el-table-column prop="phone" :label="$t('phone')" width="250">
         </el-table-column>
         <el-table-column :label="$t('operation')">
           <template slot-scope="scope">
@@ -53,19 +53,19 @@
     <el-dialog :title="title" :visible.sync="dialogFormVisible">
       <el-form ref="staffForm" :model="staffForm" label-width="90px" label-position="left"
         style="padding-left:30px;">
-        <el-form-item :label="$t('staff').username">
+        <el-form-item :label="$t('username')">
           <el-col :span="5">
-            <el-input v-model="staffForm.name"></el-input>
+            <el-input v-model="staffForm.username" :placeholder="$t('inputUserID')"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item :label="$t('staff').phone">
+        <el-form-item :label="$t('phone')">
           <el-col :span="8">
-            <el-input v-model="staffForm.phone"></el-input>
+            <el-input v-model="staffForm.phone" :placeholder="$t('inputPhoneNum')"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item :label="$t('staff').shop">
+        <el-form-item :label="$t('shop')">
           <el-col :span="10">
-            <el-select v-model="staffForm.shop" :placeholder="$t('staff').choiceShop">
+            <el-select v-model="staffForm.shop" :placeholder="$t('choiceShop')">
               <el-option label="代理店一" value="shop1"></el-option>
               <el-option label="代理店二" value="shop2"></el-option>
             </el-select>
@@ -86,32 +86,32 @@ export default {
         shop:''
       },
       tableData: [{
-        userID: 1,
+        id: 1,
         phone: 1111,
-        name: '老王',
+        username: '老王',
         shop: '×××官方旗舰店',
       }, {
-        userID: 1,
+        id: 1,
         phone: 1111,
-        name: '老王',
+        username: '老王',
         shop: '×××官方旗舰店',
       }, {
-        userID: 1,
+        id: 1,
         phone: 1111,
-        name: '老王',
+        username: '老王',
         shop: '×××官方旗舰店',
       }, {
-        userID: 1,
+        id: 1,
         phone: 1111,
-        name: '老王',
+        username: '老王',
         shop: '×××官方旗舰店',
       }],
       // 是否显示添加表单
       dialogFormVisible: false,
       // 添加表单信息
       staffForm: {
-        userID:'',
-        name: '',
+        id:'',
+        username: '',
         phone: '',
         shop: ''
       },
@@ -134,9 +134,18 @@ export default {
     staffFormFun(type,row){
       this.dialogFormVisible = true
       this.which = type
-      if(row) this.staffForm = row
+      if(row) {
+        this.staffForm = row
+      }else{
+        this.staffFrom = {
+          id:'',
+          username: '',
+          phone: '',
+          shop: ''
+        }
+      }
     },
-    remove({userID}){
+    remove({id}){
 
     },
     done(){

@@ -9,7 +9,7 @@
       <!-- 上半部分 -->
       <div class="search_card_bottom">
         <el-input :placeholder="$t('inputUsername')" class="searchByName" clearable
-          v-model="filter.name">
+          v-model="filter.username">
         </el-input>
         <el-input :placeholder="$t('inputShop')" class="searchByShop" clearable v-model="filter.shop">
         </el-input>
@@ -19,25 +19,25 @@
 
     <el-card class="container">
       <!-- 添加管理员部分 -->
-      <el-button type="primary" @click="staffFormFun('add')" class="addManager">
+      <el-button type="primary" @click="managerFormFun('add')" class="addManager">
         {{$t('managerList').addManagerList}}
       </el-button>
 
       <!-- 表格部分 -->
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="userID" :label="$t('managerList').userID" width="250">
+        <el-table-column prop="id" label="ID" width="250">
         </el-table-column>
-        <el-table-column prop="name" :label="$t('managerList').username" width="250">
+        <el-table-column prop="username" :label="$t('username')" width="250">
         </el-table-column>
-        <el-table-column prop="shop" :label="$t('managerList').shop" width="250">
+        <el-table-column prop="shop" :label="$t('shop')" width="250">
         </el-table-column>
         <el-table-column :label="$t('operation')">
           <template slot-scope="scope">
             <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
-              <el-button  @click="staffFormFun('check',scope.row)" icon="el-icon-user-solid" type="success" size="mini"></el-button>
+              <el-button  @click="managerFormFun('check',scope.row)" icon="el-icon-user-solid" type="success" size="mini"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
-              <el-button  @click="staffFormFun('edit',scope.row)" icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
+              <el-button  @click="managerFormFun('edit',scope.row)" icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
               <el-button  @click="remove(scope.row)" icon="el-icon-delete" type="danger" size="mini"></el-button>
@@ -49,16 +49,16 @@
 
     <!-- 添加表单 -->
     <el-dialog :title="title" :visible.sync="dialogFormVisible">
-      <el-form ref="staffForm" :model="staffForm" label-width="90px" label-position="left"
+      <el-form ref="managerForm" :model="managerForm" label-width="90px" label-position="left"
         style="padding-left:30px;">
-        <el-form-item :label="$t('managerList').username">
+        <el-form-item :label="$t('username')">
           <el-col :span="5">
-            <el-input v-model="staffForm.name"></el-input>
+            <el-input v-model="managerForm.username" :placeholder="$t('inputUsername')"></el-input>
           </el-col>
         </el-form-item>
-        <el-form-item :label="$t('managerList').shop">
+        <el-form-item :label="$t('shop')">
           <el-col :span="10">
-            <el-select v-model="staffForm.shop" :placeholder="$t('staff').choiceShop">
+            <el-select v-model="managerForm.shop" :placeholder="$t('choiceShop')">
               <el-option label="代理店一" value="shop1"></el-option>
               <el-option label="代理店二" value="shop2"></el-option>
             </el-select>
@@ -75,32 +75,32 @@ export default {
   data () {
     return {
       filter:{
-        name:'',
+        username:'',
         shop:''
       },
       tableData: [{
-        userID: 1,
-        name: '老王',
+        id: 1,
+        username: '老王',
         shop: '×××官方旗舰店',
       }, {
-        userID: 1,
-        name: '老王',
+        id: 1,
+        username: '老王',
         shop: '×××官方旗舰店',
       }, {
-        userID: 1,
-        name: '老王',
+        id: 1,
+        username: '老王',
         shop: '×××官方旗舰店',
       }, {
-        userID: 1,
-        name: '老王',
+        id: 1,
+        username: '老王',
         shop: '×××官方旗舰店',
       }],
       // 是否显示添加表单
       dialogFormVisible: false,
       // 添加表单信息
-      staffForm: {
-        userID:'',
-        name: '',
+      managerForm: {
+        id:'',
+        username: '',
         shop: ''
       },
       which:''
@@ -119,10 +119,18 @@ export default {
     }
   },
   methods:{
-    staffFormFun(type,row){
+    managerFormFun(type,row){
       this.dialogFormVisible = true
       this.which = type
-      if(row) this.staffForm = row
+      if(row) {
+        this.managerForm = row
+      }else{
+        this.managerForm = {
+          id:'',
+          username: '',
+          shop: ''
+        }
+      }
     },
     remove({userID}){
 

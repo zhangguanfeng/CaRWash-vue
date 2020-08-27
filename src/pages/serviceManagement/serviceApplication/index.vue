@@ -25,9 +25,9 @@
     <el-card class="container">
       <!-- 表格部分 -->
       <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="uesrID" :label="$t('serviceApplication').userID">
+        <el-table-column prop="id" label="ID">
         </el-table-column>
-        <el-table-column prop="username" :label="$t('serviceApplication').username">
+        <el-table-column prop="username" :label="$t('username')">
         </el-table-column>
         <el-table-column prop="serviceCategory" :label="$t('serviceApplication').category">
         </el-table-column>
@@ -54,41 +54,41 @@ export default {
   data () {
     return {
       filter:{
-      searchByCategory: '',
-      searchByID: '',
-      searchByShop: '',
-      orderTime: ''
+        searchByCategory: '',
+        searchByID: '',
+        searchByShop: '',
+        orderTime: ''
       },
       tableData: [{
-        uesrID: '1001',
+        id: '1001',
         username:'12321',
         serviceCategory: '洗车',
         orderTime: '2020-08-26'
       }, {
-        uesrID: '1001',
+        id: '1001',
         username:'12321',
         serviceCategory: '洗车',
         orderTime: '2020-08-26'
       }, {
-        uesrID: '1001',
+        id: '1001',
         username:'12321',
         serviceCategory: '洗车',
         orderTime: '2020-08-26'
       }, {
-        uesrID: '1001',
+        id: '1001',
         username:'12321',
         serviceCategory: '洗车',
         orderTime: '2020-08-26'
       }],
       // 是否显示添加表单
-      dialogFormVisible: false,
+      // dialogFormVisible: false,
       // 添加表单信息
-      addStaffForm: {
-        username: '',
-        phone: '',
-        userID: '',
-        shop: ''
-      },
+      // addStaffForm: {
+      //   username: '',
+      //   phone: '',
+      //   id: '',
+      //   shop: ''
+      // },
       
     }
   },
@@ -96,11 +96,9 @@ export default {
     go(type){
       switch(type){
         case 1:
-          this.$router.push('serviceApplication/detail')
-          break;
+          return this.$router.push('serviceApplication/detail')
         case 2:
-          this.$router.push('serviceApplication/edit')
-          break;
+          return this.$router.push('serviceApplication/edit')
       }
     }
   }

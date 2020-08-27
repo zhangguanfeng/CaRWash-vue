@@ -19,6 +19,9 @@ const serviceOrderDetail = () => import('@/pages/serviceManagement/serviceApplic
 const serviceOrderEdit = () => import('@/pages/serviceManagement/serviceApplication/edit')
 const managerList = () => import('@/pages/managerList')
 const shopManagement = () => import('@/pages/shopManagement')
+const shopDetail = () => import('@/pages/shopManagement/detail')
+const shopEdit = () => import('@/pages/shopManagement/edit')
+const scheduleManagement = () => import('@/pages/scheduleManagement')
 Vue.use(VueRouter)
 
 const routes = [
@@ -61,14 +64,48 @@ const routes = [
       // 代理店管理
       {
         path: 'shopManagement',
-        name: 'shopManagement',
-        component: shopManagement,
+        component: Transform,
+        redirect: 'shopManagement',
         meta: {
           limit: true,
           requiresAuth: true,
           noCache: true,
           title: 'tShopManagement'
-        }
+        },
+        children:[
+          // 代理店管理
+          {
+            path: '',
+            name: 'shopManagement',
+            component: shopManagement,
+            meta: {
+              requiresAuth: true,
+              noCache: true
+            },
+          },
+          // 代理店编辑
+          {
+            path: 'edit',
+            name: 'shopEdit',
+            component: shopEdit,
+            meta: {
+              requiresAuth: true,
+              noCache: false,
+              title: 'tEdit'
+            },
+          },
+          // 代理店详情
+          {
+            path: 'detail',
+            name: 'shopDetail',
+            component: shopDetail,
+            meta: {
+              requiresAuth: true,
+              noCache: false,
+              title: 'tDetail'
+            },
+          }
+        ]
       },
       // 会员管理
       {
@@ -226,6 +263,16 @@ const routes = [
           }
         ]
       },
+      {
+        path: 'scheduleManagement',
+        name: 'scheduleManagement',
+        component: scheduleManagement,
+        meta: {
+          requiresAuth: true,
+          noCache: false,
+          title: 'tScheduleManagement'
+        }
+      }
     ]
   },
   // 登录
