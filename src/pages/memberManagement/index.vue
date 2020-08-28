@@ -20,11 +20,10 @@
                 <el-button class="search" icon="el-icon-search" round>{{$t('search_zh')}}</el-button>
             </div>
         </el-card>
-
         <el-card class="container">
             <el-table :data="tableData" border style="width: 100%" highlight-current-row>
-                <el-table-column prop="userID" :label="$t('member').userID_zh" width="250"></el-table-column>
-                <el-table-column prop="phoneNum" :label="$t('member').phone_zh" width="250"></el-table-column>
+                <el-table-column prop="id" label="ID" width="250"></el-table-column>
+                <el-table-column prop="phone" :label="$t('phone')" width="250"></el-table-column>
                 <el-table-column :label="$t('operation')">
                     <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
                         <el-button icon="el-icon-user-solid" type="success" size="mini" @click="go(1)"></el-button>
@@ -51,20 +50,20 @@ export default {
             },
             tableData: [
                 {
-                    userID: "1111",
-                    phoneNum: "13507643552",
+                    id: "1111",
+                    phone: "13507643552",
                 },
                 {
-                    userID: "1222222",
-                    phoneNum: "13507643552",
+                    id: "1222222",
+                    phone: "13507643552",
                 },
                 {
-                    userID: "133332",
-                    phoneNum: "13507643552",
+                    id: "133332",
+                    phone: "13507643552",
                 },
                 {
-                    userID: "14442",
-                    phoneNum: "13507643552",
+                    id: "14442",
+                    phone: "13507643552",
                 },
             ]
         };

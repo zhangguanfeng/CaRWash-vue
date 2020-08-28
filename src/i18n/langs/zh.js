@@ -23,20 +23,43 @@ const zh = {
   tManagerList: '管理员列表',
   // 代理店管理
   tShopManagement: '代理店管理',
+  // 日程管理
+  tScheduleManagement: '日程管理',
+  // 结果管理
+  tResultManagement: '洗车结果管理',
+  // 结算管理
+  tSettlementManagement: '结算管理',
+  // 结算列表
+  tSettlementList: '结算列表',
+  // 内容管理
+  tContentManagement: '内容管理',
+  // 评价列表
+  tCommentList: '评价列表',
+  // 车型列表
+  tCarList: '车型列表',
+  // 客服中心
+  tServiceCenter: '客服中心',
+  // 消息通知
+  tMessage: '消息通知',
+  // 常见疑问
+  tCommonQuestion: '常见疑问',
+  // 疑难解答
+  tDifficultQuestion: '疑难解答',
+  // 服务条款管理
+  tSetting: '服务条款管理',
+  // 服务使用条款
+  tUse: '服务使用条款',
+  // 个人信息管理条款
+  tInformation: '个人信息管理条款',
+  // 位置信息使用条款
+  tPosition: '位置信息使用条款',
   // 会员管理页面部分
   member: {
-    userID_zh: '用户ID',
-    phone_zh: '手机号'
+   
   },
   // 职员管理页面部分
   staff: {
-    username: '姓名',
-    shop: '代理店',
-    phone: '电话号码',
-    userID: '用户ID',
-    addStaff: '添加职员',
-    choiceShop: '请选择代理店',
-    finishForm: '添加',
+    addStaff: '添加职员'
   },
   // 服务列表页面部分
   serviceList: {
@@ -45,20 +68,34 @@ const zh = {
   },
   // 服务订单管理部分
   serviceApplication: {
-    userID: '用户ID',
-    category: '服务种类',
-    username: '姓名',
-    time: '下单时间'
+    
   },
   // 管理员列表
   managerList: {
-    username: '姓名',
-    shop: '代理店',
-    userID: '用户ID',
-    choiceShop: '请选择代理店',
     addManagerList:'添加管理员'
   },
+  // 代理店管理
+  shopManagement:{
+    area:'选择区域',
+    addShop: '添加代理店',
+    scoped: '服务范围',
+    contact: '联系方式',
+    business: '营业时间'
+  },
+  // 日程管理
+  shecheduleManagement:{
+    time:'洗车时间',
+    state:'洗车状态'
+  },
   // 复用部分
+  choiceShop: '请选择代理店',
+  phone: '手机号',
+  username: '姓名',
+  shop: '代理店',
+  address: '地址',
+  introduce: '介绍',
+  time: '下单时间',
+  category:'服务种类',
   search_title: '筛选查询',
   inputUserID: '请输入用户ID',
   inputPhoneNum: '请输入手机号',
