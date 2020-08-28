@@ -20,7 +20,6 @@ const serviceOrderEdit = () => import('@/pages/serviceManagement/serviceApplicat
 const managerList = () => import('@/pages/managerList')
 const shopManagement = () => import('@/pages/shopManagement')
 Vue.use(VueRouter)
-
 const routes = [
   {
     path: '/',
@@ -28,7 +27,7 @@ const routes = [
     // 是否需要验证登录
     meta: {
       requiresAuth: true,
-      title: 'tIndex',
+      // title: 'tIndex',
       noCache: true,
     },
     component: index,
@@ -138,7 +137,7 @@ const routes = [
         redirect: '/serviceManagement/serviceList',
         meta: {
           requiresAuth: true,
-          noCache: false,
+          noCache: true,
           icon: 'iconfont iconfuwu1',
           title: 'tServiceManagement'
         },
@@ -193,7 +192,7 @@ const routes = [
             redirect: 'serviceApplication',
             meta: {
               requiresAuth: true,
-              noCache: false,
+              noCache: true,
               title: 'tServiceApplication'
             },
             children: [

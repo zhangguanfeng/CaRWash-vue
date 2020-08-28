@@ -13,25 +13,23 @@ export default {
   data () {
     return {
       breadList: [],
-
     }
   },
   watch: {
     $route: {
       handler (route) {
-
         let allList = route.matched.filter(item => {
           if (item.meta && item.meta.title) {
-            if (item.redirect == "/home") {
-              item.path = "/";
+            if (item.name == "home") {
+              item.path = "/home";
             } else {
               item.path = ''
             }
             return true;
           }
         });
-        if (allList[0].path !== "/" && allList[0].path !== "/home") {
-          allList.unshift({ path: "/", meta: { title: "tIndex" } });
+        if (allList[0].path !== "/home") {
+          allList.unshift({ path: "/home", meta: { title: "tIndex" } });
         }
         this.breadList = allList;
       },
