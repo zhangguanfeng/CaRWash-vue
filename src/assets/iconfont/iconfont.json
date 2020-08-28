@@ -6,6 +6,20 @@
   "description": "韩国洗车项目",
   "glyphs": [
     {
+      "icon_id": "7897596",
+      "name": "管理后台",
+      "font_class": "guanlihoutai",
+      "unicode": "e890",
+      "unicode_decimal": 59536
+    },
+    {
+      "icon_id": "3596320",
+      "name": "登录箭头",
+      "font_class": "ziyuan",
+      "unicode": "e697",
+      "unicode_decimal": 59031
+    },
+    {
       "icon_id": "45384",
       "name": "会员",
       "font_class": "huiyuan",

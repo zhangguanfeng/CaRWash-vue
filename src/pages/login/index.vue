@@ -1,35 +1,35 @@
 <template>
   <div class="main" :style="loginContainerStyle">
-    <bg-canvas :color="0x097bdb"></bg-canvas>
-    <div class="login">
-      <h4>汽车服务后台管理系统</h4>
-      <div class="loginDiv">
-        <el-form :model = "ruleForm" :rules = "rules" ref = "adminForm">
-          <el-form-item prop = "username">
-            <el-input
-                placeholder="请输入账号/用户名"
-                prefix-icon="el-icon-user"
+    <!-- <bg-canvas :color="0x097bdb"></bg-canvas> -->
+    <div class="centen-box">
+      <div class="login">
+        <h4><i class="iconfont iconguanlihoutai logoIcon"></i>汽车服务后台管理系统</h4>
+        <div class="loginDiv">
+          <el-form :model="ruleForm" :rules="rules" ref="adminForm" :inline="true">
+            <el-form-item prop="username">
+              <el-input placeholder="请输入账号/用户名" prefix-icon="el-icon-user"
                 v-model="ruleForm.username">
               </el-input>
-          </el-form-item>
-          <el-form-item prop = "password">
-            <el-input
-              placeholder="请输入密码"
-              prefix-icon="el-icon-lock"
-              v-model="ruleForm.password"
-              show-password>
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input placeholder="请输入密码" prefix-icon="el-icon-lock" v-model="ruleForm.password"
+                show-password>
               </el-input>
-          </el-form-item>
-          <div class="btn">
-            <el-button :loading = "isShow" type = "primary" @click = "submitAdmin('adminForm')">{{isShow ? '登录中' : '登录'}}</el-button>
-          </div>
-          <div class="forget">
-            <!-- <router-link to = '/xx'>忘记密码?</router-link> -->
-            <!-- <router-link to = '/reg'>
+            </el-form-item>
+            <el-form-item>
+              <div class="btn" :loading="isShow" @click="submitAdmin('adminForm')">
+                <i class="iconfont iconziyuan loginBut"></i>
+              </div>
+            </el-form-item>
+
+            <div class="forget">
+              <!-- <router-link to = '/xx'>忘记密码?</router-link> -->
+              <!-- <router-link to = '/reg'>
               极速注册
             </router-link> -->
-          </div>
-        </el-form>
+            </div>
+          </el-form>
+        </div>
       </div>
     </div>
   </div>
@@ -38,13 +38,13 @@
 <script>
 // 引入粒子背景
 import bgCanvas from '@/components/bgCanvas'
-import bgImg from '@/assets/img/background.png'
+import bgImg from '@/assets/img/login.png'
 // 登录api
 // import {postLogin} from '@/api/api'
 // 引入storage
 import storage from '@/utils/storage.js'
 // 引入vuex
-import {mapMutations} from 'vuex'
+import { mapMutations } from 'vuex'
 export default {
   name: 'login',
   data () {
@@ -61,12 +61,12 @@ export default {
       // 表单验证规则
       rules: {
         username: [
-          {required: true, message: '请输入用户名', trigger: 'blur'},
-          {min: 3, message: '长度不少于3个字符', trigger: 'blur'}
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { min: 3, message: '长度不少于3个字符', trigger: 'blur' }
         ],
         password: [
-          {required: true, message: '请输入密码', trigger: 'blur'},
-          {min: 6, message: '长度不少于6个字符', trigger: 'blur'}
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, message: '长度不少于6个字符', trigger: 'blur' }
         ]
       }
     }
@@ -102,21 +102,21 @@ export default {
     // 用户名 name, 密码 pwd, 重定向 url
     async loginHandle (ruleForm) {
       this.isShow = true
-      if(ruleForm.username==='admin'&&ruleForm.password==123456){
+      if (ruleForm.username === 'admin' && ruleForm.password == 123456) {
         this.$message.success('超级管理登录成功')
         storage.setLocal('token', 123)
-        this.saveUserInfo({auth:true,token:123})
+        this.saveUserInfo({ auth: true, token: 123 })
         this.$router.push('/')
-      }else if(ruleForm.username==='admin123'&&ruleForm.password==123456){
+      } else if (ruleForm.username === 'admin123' && ruleForm.password == 123456) {
         this.$message.success('普通管理登录成功')
         storage.setLocal('token', 123)
-        this.saveUserInfo({auth:false,token:123})
+        this.saveUserInfo({ auth: false, token: 123 })
         this.$router.push('/')
-      }else{
+      } else {
         this.$message.error('帐号或密码错误')
       }
       this.isShow = false
-      
+
       // const res = await postLogin(
       //   this.ruleForm.username,
       //   this.ruleForm.password,
@@ -172,50 +172,66 @@ export default {
 </script>
 
 <style lang = "scss" scoped>
-  .main {
+.main {
+  width: 100%;
+  height: 100%;
+  .centen-box {
     width: 100%;
-    height: 100%;
-    .login {
-      width: 420px;
-      height: 400px;
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      top: 0;
-      margin: auto;
-      text-align: center;
-      h4 {
-        color: #fff;
-        font-size: 36px;
-        height: 50px;
-      }
-      .loginDiv {
-        background: rgba(255, 255, 255, .4);
-        box-shadow: rgba(255, 255, 255, 0.9);
-        border-radius: 5px;
-        margin-top: 20px;
-        box-sizing: border-box;
-        padding: 30px;
-        -webkit-box-reflect: below 10px -webkit-gradient(linear, left top, left bottom, from(transparent), to(rgba(250, 250, 250, 0.1)));
-        .btn button {
-          width: 100%;
-        }
-        .forget {
-          margin: 5px 0 0 0;
-          text-align: left;
-          a {
-            color: #fff
-          }
+    height: 220px;
+    position: absolute;
+    top: calc(50% - 110px);
+    /* left: 0;
+    right: 0; */
+    /* bottom: 0; */
+    background: rgba(0, 0, 0, 0.4);
+  }
+  .login {
+    /* width: 420px;
+    height: 400px; */
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    text-align: center;
+    h4 {
+      color: #fff;
+      margin-left: -50px;
+      font-size: 36px;
+      height: 50px;
+    }
+    .loginDiv {
+      border-radius: 5px;
+      box-sizing: border-box;
+      padding: 30px;
+      .forget {
+        margin: 5px 0 0 0;
+        text-align: left;
+        a {
+          color: #fff;
         }
       }
     }
+    .loginBut {
+      font-size: 35px;
+      color: #fff;
+      cursor: pointer;
+      &:hover {
+        color: #409eff;
+      }
+    }
+    .logoIcon {
+      font-size: 40px;
+      color: #fff;
+      margin-right: 20px;
+    }
   }
-  #indexLizi {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    bottom: 0;
-    overflow: hidden;
-  }
+}
+#indexLizi {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  overflow: hidden;
+}
 </style>
