@@ -1,6 +1,6 @@
 <template>
   <el-container class="main">
-    <el-header>
+    <el-header height='70px'>
       <v-header @changeCollapse="changeCollapse"></v-header>
     </el-header>
     <el-container class="middle_content">
@@ -15,11 +15,11 @@
 
           </transition>-->
           <cTransition>
-          <!-- <keep-alive v-if="$route.meta.noCache">
+            <!-- <keep-alive v-if="$route.meta.noCache">
             <router-view></router-view>
           </keep-alive>
           <router-view v-if="!$route.meta.noCache"></router-view> -->
-		      </cTransition>
+          </cTransition>
         </el-main>
       </el-scrollbar>
     </el-container>
@@ -39,14 +39,14 @@ import breadcrumb from "@/components/global/breadcrumb";
 import { mapState, mapMutations } from "vuex";
 export default {
   name: "index",
-  data() {
+  data () {
     return {
       collapse: false,
     };
   },
   methods: {
     // 切换导航栏显示方式
-    changeCollapse() {
+    changeCollapse () {
       this.collapse = !this.collapse;
     },
   },
@@ -57,9 +57,9 @@ export default {
     timeShow,
     // 面包屑
     breadcrumb,
-	"v-header": header,
-	// 动画效果 缓存
-	  cTransition
+    "v-header": header,
+    // 动画效果 缓存
+    cTransition
   },
 };
 </script>
@@ -70,6 +70,7 @@ export default {
   }
   .el-header {
     padding: 0;
+    background: #e9eef3;
   }
 }
 </style>

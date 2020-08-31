@@ -21,7 +21,6 @@
                 <i class="iconfont iconziyuan loginBut"></i>
               </div>
             </el-form-item>
-
             <div class="forget">
               <!-- <router-link to = '/xx'>忘记密码?</router-link> -->
               <!-- <router-link to = '/reg'>
