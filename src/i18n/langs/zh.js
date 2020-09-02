@@ -5,6 +5,8 @@ const zh = {
   exit: '退出',
   // 首页
   tIndex: '首页',
+  // 后台名字
+  backstageName: '汽车服务后台管理系统',
   // 会员管理
   tMemberManagement: '会员管理',
   // 职员管理

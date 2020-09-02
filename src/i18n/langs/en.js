@@ -5,6 +5,8 @@ const en = {
   exit: 'Logout',
   // 首页
   tIndex: 'Home',
+  // 后台名字
+  backstageName: 'Management system译',
   // 会员管理
   tMemberManagement: 'Member Management',
   // 职员管理

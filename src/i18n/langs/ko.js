@@ -5,6 +5,8 @@ const ko = {
   exit: '로그아웃',
   // 首页
   tIndex: '홈',
+  // 后台名字
+  backstageName: '자동차 서비스 배경 관리 시스템译',
   // 会员管理
   tMemberManagement: '회원관리',
   // 职员管理

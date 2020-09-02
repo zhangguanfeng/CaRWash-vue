@@ -4,7 +4,7 @@
       <a href="javascript:;" class="logoLink">
         <i class="iconfont iconguanlihoutai logoIcon">
         </i>
-        后台管理系统</a>
+        {{$t('backstageName')}}</a>
     </div>
     <div class="rightTop flexBC header_r">
       <div class="flex rightTopLeft">
@@ -117,7 +117,7 @@ export default {
   width: 100%;
   padding: 0;
   .header-logo {
-    width: 200px;
+    width: 250px;
     height: 59px;
     float: left;
     background-color: #333744;
