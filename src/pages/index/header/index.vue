@@ -149,7 +149,7 @@ export default {
     // }
   }
   .rightTop {
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.1);
     background: #fff;
     line-height: 59px;
     .rightTopLeft,

@@ -2,7 +2,7 @@
 import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 const zh = {
   // 退出
-  exit:'退出',
+  exit: '退出',
   // 首页
   tIndex: '首页',
   // 会员管理
@@ -16,7 +16,7 @@ const zh = {
   // 编辑
   tEdit: '编辑',
   //详情
-  tDetail: '详情', 
+  tDetail: '详情',
   // 服务订单管理
   tServiceApplication: '服务订单管理',
   // 管理员列表
@@ -55,7 +55,7 @@ const zh = {
   tPosition: '位置信息使用条款',
   // 会员管理页面部分
   member: {
-   
+    service: '服务',
   },
   // 职员管理页面部分
   staff: {
@@ -68,24 +68,24 @@ const zh = {
   },
   // 服务订单管理部分
   serviceApplication: {
-    
+
   },
   // 管理员列表
   managerList: {
-    addManagerList:'添加管理员'
+    addManagerList: '添加管理员'
   },
   // 代理店管理
-  shopManagement:{
-    area:'选择区域',
+  shopManagement: {
+    area: '选择区域',
     addShop: '添加代理店',
     scoped: '服务范围',
     contact: '联系方式',
     business: '营业时间'
   },
   // 日程管理
-  shecheduleManagement:{
-    time:'洗车时间',
-    state:'洗车状态'
+  shecheduleManagement: {
+    time: '洗车时间',
+    state: '洗车状态'
   },
   // 复用部分
   choiceShop: '请选择代理店',
@@ -95,7 +95,7 @@ const zh = {
   address: '地址',
   introduce: '介绍',
   time: '下单时间',
-  category:'服务种类',
+  category: '服务种类',
   search_title: '筛选查询',
   inputUserID: '请输入用户ID',
   inputPhoneNum: '请输入手机号',
