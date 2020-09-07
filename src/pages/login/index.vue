@@ -3,7 +3,7 @@
     <!-- <bg-canvas :color="0x097bdb"></bg-canvas> -->
     <div class="centen-box">
       <div class="login">
-        <h4><i class="iconfont iconguanlihoutai logoIcon"></i>汽车服务后台管理系统</h4>
+        <h4><i class="iconfont iconguanlihoutai logoIcon"></i>{{$t('backstageName')}}</h4>
         <div class="loginDiv">
           <el-form :model="ruleForm" :rules="rules" ref="adminForm" :inline="true">
             <el-form-item prop="username">
@@ -21,7 +21,6 @@
                 <i class="iconfont iconziyuan loginBut"></i>
               </div>
             </el-form-item>
-
             <div class="forget">
               <!-- <router-link to = '/xx'>忘记密码?</router-link> -->
               <!-- <router-link to = '/reg'>

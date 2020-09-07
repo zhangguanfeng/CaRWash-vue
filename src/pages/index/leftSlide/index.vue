@@ -3,7 +3,7 @@
     <el-scrollbar style="height:100%;width:auto">
       <el-menu router unique-opened :default-active="$route.path" class="el-menu-vertical-demo"
         @open="handleOpen" @close="handleClose" @select="handleselect" :collapse="collapse"
-        background-color="#545c64" text-color="#fff" active-text-color="#409EFF">
+        background-color="#333744" text-color="#fff" active-text-color="#409EFF">
         <!-- <template v-for="(item , index) in routerList">
 
           <el-submenu :index="item.path" v-if="!item.meta.hide && item.children">
@@ -60,7 +60,7 @@
           <i class="iconfont iconhuiyuan"></i>
           <span slot="title">{{$t('tScheduleManagement')}}</span>
         </el-menu-item>
-         <el-menu-item index="/resultManagement">
+        <el-menu-item index="/resultManagement">
           <i class="iconfont iconhuiyuan1"></i>
           <span slot="title">{{$t('tResultManagement')}}</span>
         </el-menu-item>
@@ -158,7 +158,6 @@ export default {
   },
   mounted () {
     this.routerList = this.$router.options.routes[0].children
-    // console.log(this.routerList,this.$router, ' this.routerList');
   },
   watch: {
 
@@ -167,16 +166,17 @@ export default {
 </script>
 <style lang="scss">
 .el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
+  width: 250px;
   min-height: 400px;
   i {
     margin-right: 10px;
   }
 }
 .leftSlide {
-  background: #545c64;
+  background: #333744;
   position: relative;
-  height: 100%;
+  top: -10px;
+  height: 101%;
   overflow: hidden;
   .el-menu {
     border: none;
