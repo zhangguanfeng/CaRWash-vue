@@ -5,7 +5,7 @@
  @returns {Object} mixin对象
 **/
 
-export const mixin_list = (axios_get) => {
+export const mixin_list = (axios_get,config={}) => {
 	return {
 		data() {
 			return {
@@ -16,7 +16,8 @@ export const mixin_list = (axios_get) => {
 				page:1,
 				pageSize:20,
 				selete: [],
-				ordering: ""
+				ordering: "",
+				...config
 			}
 		},
 		methods: {
