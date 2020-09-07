@@ -14,6 +14,7 @@ const server = axios.create({
 })
 
 server.interceptors.request.use(config => {
+	const token = storage.getLocal('token')
 	return config
 }, err => {
 	Message.error({ message: 'Request timeout, please try again' });
@@ -21,6 +22,7 @@ server.interceptors.request.use(config => {
 })
 
 server.interceptors.response.use(res => {
+	console.log(res)
 	if (res.data.error_code != 0) {
 		Message.error({ message: res.data.message });
 	}
