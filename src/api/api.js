@@ -346,5 +346,58 @@ export const editServiceTerm = ({ id, ...data }) => {
     data
   })
 }
+/**
+ * @description: 添加评价
+ * @return {Promise} promise
+ * */
+export const addEvalution = (data) => {
+  return server({
+    url: '/admin/evaluation',
+    methdo: 'POST',
+    data
+  })
+}
+/**
+ * @description: 获取评价列表
+ * @return {Promise} promise
+ * */
+export const getEvalution = () => {
+  return server({
+    url: '/admin/evaluation',
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 获取评价详情
+ * @return {Promise} promise
+ * */
+export const getEvalutionDetail = (id) => {
+  return server({
+    url: `/admin/evaluation/${id}`,
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 编辑评价
+ * @return {Promise} promise
+ * */
+export const editEvalution = ({ id, ...data }) => {
+  return server({
+    url: `/admin/evaluation/${id}`,
+    methdo: 'PUT',
+    data
+  })
+}
+/**
+ * @description: 删除评价
+ * @return {Promise} promise
+ * */
+export const editEvalution = (id) => {
+  return server({
+    url: `/admin/evaluation/${id}`,
+    methdo: 'DELETE'
+  })
+}
+
 
 
