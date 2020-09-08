@@ -74,7 +74,10 @@ const zh = {
   },
   // 管理员列表
   managerList: {
-    addManagerList: '添加管理员'
+    addManagerList: '添加管理员',
+    auth: '权限等级',
+    superManager: '超级管理员',
+    shopManager: '代理店管理员'
   },
   // 代理店管理
   shopManagement: {
@@ -90,6 +93,7 @@ const zh = {
     state: '洗车状态'
   },
   // 复用部分
+  choiceAuth: '请选择管理员权限',
   choiceShop: '请选择代理店',
   phone: '手机号',
   username: '姓名',
@@ -107,6 +111,10 @@ const zh = {
   inputTime: '请选择下单时间',
   operation: '操作',
   search_zh: '搜索',
+  account: '账号名',
+  inputAccount: '请输入帐号名',
+  password: '密码',
+  inputPassword: '请输入密码',
   btnTip: {
     check: '查看',
     edit: '编辑',

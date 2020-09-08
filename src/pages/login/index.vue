@@ -6,9 +6,9 @@
         <h4><i class="iconfont iconguanlihoutai logoIcon"></i>{{$t('backstageName')}}</h4>
         <div class="loginDiv">
           <el-form :model="ruleForm" :rules="rules" ref="adminForm" :inline="true">
-            <el-form-item prop="username">
+            <el-form-item prop="account">
               <el-input placeholder="请输入账号/用户名" prefix-icon="el-icon-user"
-                v-model="ruleForm.username">
+                v-model="ruleForm.account">
               </el-input>
             </el-form-item>
             <el-form-item prop="password">
@@ -39,7 +39,7 @@
 import bgCanvas from '@/components/bgCanvas'
 import bgImg from '@/assets/img/login.png'
 // 登录api
-// import {postLogin} from '@/api/api'
+import {login} from '@/api/api'
 // 引入storage
 import storage from '@/utils/storage.js'
 // 引入vuex
@@ -53,13 +53,13 @@ export default {
       // 表单数据
       ruleForm: {
         // 用户名
-        username: 'admin',
+        account: 'admin',
         // 密码
-        password: '123456'
+        password: 'admin123456'
       },
       // 表单验证规则
       rules: {
-        username: [
+        account: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
           { min: 3, message: '长度不少于3个字符', trigger: 'blur' }
         ],
@@ -86,85 +86,24 @@ export default {
     // vuex
     ...mapMutations(['saveUserInfo']),
     // 判断表单验证
-    submitAdmin (formName) {
-      this.$refs[formName].validate((valid) => {
-        console.log(valid)
-        if (valid) {
-          this.loginHandle(this.ruleForm)
-        } else {
-          console.log('失败')
-          return false
-        }
-      })
+    async submitAdmin (formName) {
+      await this.$refs[formName].validate()
+      this.loginHandle(this.ruleForm)
     },
     // 登录
     // 用户名 name, 密码 pwd, 重定向 url
     async loginHandle (ruleForm) {
       this.isShow = true
-      if (ruleForm.username === 'admin' && ruleForm.password == 123456) {
-        this.$message.success('超级管理登录成功')
-        storage.setLocal('token', 123)
-        this.saveUserInfo({ auth: true, token: 123 })
-        this.$router.push('/')
-      } else if (ruleForm.username === 'admin123' && ruleForm.password == 123456) {
-        this.$message.success('普通管理登录成功')
-        storage.setLocal('token', 123)
-        this.saveUserInfo({ auth: false, token: 123 })
-        this.$router.push('/')
-      } else {
-        this.$message.error('帐号或密码错误')
-      }
-      this.isShow = false
-
-      // const res = await postLogin(
-      //   this.ruleForm.username,
-      //   this.ruleForm.password,
-      //   '/'
-      // )
-      // switch (res.errcode) {
-      //   case 5001:
-      //     this.$message.error(this.$t('tGlobal.tError'))
-      //     break
-      //   case 5002:
-      //     this.$message.error('用户不存在，请重新输入')
-      //     this.ruleForm.username = ''
-      //     this.ruleForm.password = ''
-      //     break
-      //   case 5003:
-      //     this.$message.error('用户名或密码错误')
-      //     this.ruleForm.username = ''
-      //     this.ruleForm.password = ''
-      //     break
-      //   case 5004:
-      //     this.$message.error('账号被删除或禁用')
-      //     this.ruleForm.username = ''
-      //     this.ruleForm.password = ''
-      //     break
-      //   case 5005:
-      //     this.$message.error('设置session失败')
-      //     this.ruleForm.username = ''
-      //     this.ruleForm.password = ''
-      //     break
-      //   default:
-      //     this.$message.success('登录成功')
-      //     // storage.setLocal('token', res.token)
-      //     // storage.setLocal('role', res.auth)
-      //     this.saveUserInfo(res)
-      //     this.$router.push('/')
-      // }
-      // if (res.errcode) {
-      //   this.isShow = false
-      // }
-      // console.log(res)
-      // postLogin(
-      //   name,
-      //   pwd,
-      //   url
-      // ).then(res => {
-      //   console.log(res)
-      // }, err => {
-      //   console.log(err)
-      // })
+      try{
+				let res = await login(ruleForm)
+        this.saveUserInfo(res.data);
+				this.$router.push("/home");
+				this.$message.success("登录成功!");
+				this.isShow = false;
+			}catch(e){
+				console.log(e)
+				this.isShow = false;
+			}
     }
   }
 }

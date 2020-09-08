@@ -1,9 +1,14 @@
 
+
+import { clean } from "@/utils/object"
+
 /**
  @description: table封装mixin
  @param {Promise} axios_get  axios请求函数
  @returns {Object} mixin对象
 **/
+
+
 
 export const mixin_list = (axios_get,config={}) => {
 	return {
@@ -32,16 +37,17 @@ export const mixin_list = (axios_get,config={}) => {
 				this.ordering = order === "ascending" ? prop : `-${prop}`;
 			},
 			async get_list() {
-				const { page_size, page } = this;
+				const { pageSize, page } = this;
 				const filter = this.filter
-				const { results, count } = await axios_get({
-					page_size,
-					page,
+				const data = clean({
+					limit:pageSize,
+					cursor:page,
 					...filter
 				})
+				const { list, total } = await axios_get(data)
 				this.list_data = {
-					list: results,
-					total: count
+					list: list,
+					total: total
 				};
 			}
 		},

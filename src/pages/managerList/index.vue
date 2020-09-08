@@ -9,10 +9,10 @@
       <!-- 上半部分 -->
       <div class="search_card_bottom">
         <el-input :placeholder="$t('inputUsername')" class="searchByName" clearable
-          v-model="filter.username">
+          v-model="filter.search">
         </el-input>
-        <el-input :placeholder="$t('inputShop')" class="searchByShop" clearable v-model="filter.shop">
-        </el-input>
+        <!-- <el-input :placeholder="$t('inputShop')" class="searchByShop" clearable v-model="filter.store">
+        </el-input> -->
         <el-button class="search" round>{{$t('search_zh')}}</el-button>
       </div>
     </el-card>
@@ -24,27 +24,36 @@
       </el-button>
 
       <!-- 表格部分 -->
-      <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="id" label="ID" width="250">
+      <el-table :data="list_data.list" border style="width: 100%" @selection-change="allSelect" @sort-change="sort_change">
+        <!-- <el-table-column type="selection" width="55">
+        </el-table-column> -->
+        <el-table-column prop="id" label="ID" width="100">
         </el-table-column>
-        <el-table-column prop="username" :label="$t('username')" width="250">
+        <el-table-column prop="name" :label="$t('username')">
         </el-table-column>
-        <el-table-column prop="shop" :label="$t('shop')" width="250">
+        <el-table-column prop="account" :label="$t('account')">
         </el-table-column>
-        <el-table-column :label="$t('operation')">
+        <el-table-column prop="phone" :label="$t('phone')" >
+        </el-table-column>
+        <el-table-column prop="store.name" :label="$t('shop')">
+        </el-table-column>
+        <el-table-column prop="auth" :label="$t('managerList.auth')">
+        </el-table-column>
+        <el-table-column :label="$t('operation')" width="250">
           <template slot-scope="scope">
             <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
-              <el-button  @click="managerFormFun('check',scope.row)" icon="el-icon-user-solid" type="success" size="mini"></el-button>
+              <el-button  @click="managerFormFun('check',scope.row.id)" icon="el-icon-user-solid" type="success" size="mini"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
-              <el-button  @click="managerFormFun('edit',scope.row)" icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
+              <el-button  @click="managerFormFun('edit',scope.row.id)" icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
-              <el-button  @click="remove(scope.row)" icon="el-icon-delete" type="danger" size="mini"></el-button>
+              <el-button  @click="remove([scope.row.id])" icon="el-icon-delete" type="danger" size="mini"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
       </el-table>
+      <page :total="list_data.total" :page_size.sync="pageSize" :page.sync="page" />
     </el-card>
 
     <!-- 添加表单 -->
@@ -52,17 +61,25 @@
       <el-form ref="managerForm" :model="managerForm" label-width="90px" label-position="left"
         style="padding-left:30px;">
         <el-form-item :label="$t('username')">
-          <el-col :span="5">
-            <el-input v-model="managerForm.username" :placeholder="$t('inputUsername')"></el-input>
-          </el-col>
+          <el-input v-model="managerForm.name" :placeholder="$t('inputUsername')"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('account')">
+          <el-input v-model="managerForm.account" :placeholder="$t('inputAccount')"></el-input>
+        </el-form-item>
+        <el-form-item v-if="which==='add'" :label="$t('password')">
+          <el-input v-model="managerForm.password" :placeholder="$t('inputPassword')"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('phone')">
+          <el-input v-model="managerForm.phone" :placeholder="$t('inputPhoneNum')"></el-input>
         </el-form-item>
         <el-form-item :label="$t('shop')">
-          <el-col :span="10">
-            <el-select v-model="managerForm.shop" :placeholder="$t('choiceShop')">
-              <el-option label="代理店一" value="shop1"></el-option>
-              <el-option label="代理店二" value="shop2"></el-option>
-            </el-select>
-          </el-col>
+          <el-input v-model="managerForm.store" :placeholder="$t('inputShop')"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('managerList.auth')">
+          <el-select v-model="managerForm.auth" :placeholder="$t('choiceAuth')">
+            <el-option :label="$t('managerList.superManager')" :value="0"></el-option>
+            <el-option :label="$t('managerList.shopManager')" :value="1"></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <el-button @click="done" type="primary" style="margin-left:30px;">{{title}}</el-button>
@@ -71,41 +88,36 @@
 </template>
 
 <script>
+import {mixin_pickerOptions,mixin_list} from "@/mixins"
+import page from "@/components/page";
+import { getManagementList, deleteManagement, addManagement, editManagement, getManagementDetail } from '@/api/api';
 export default {
+  name: "managerList",
+  components: {
+    page
+	},
+  mixins:[mixin_pickerOptions,mixin_list(getManagementList)],
   data () {
     return {
       filter:{
-        username:'',
-        shop:''
+        search:'',
+        // store:''
       },
-      tableData: [{
-        id: 1,
-        username: '老王',
-        shop: '×××官方旗舰店',
-      }, {
-        id: 1,
-        username: '老王',
-        shop: '×××官方旗舰店',
-      }, {
-        id: 1,
-        username: '老王',
-        shop: '×××官方旗舰店',
-      }, {
-        id: 1,
-        username: '老王',
-        shop: '×××官方旗舰店',
-      }],
       // 是否显示添加表单
       dialogFormVisible: false,
       // 添加表单信息
       managerForm: {
-        id:'',
-        username: '',
-        shop: ''
+        name: '',
+        account: '',
+        password: '',
+        phone: '',
+        auth: '',
+        store: ''
       },
       which:''
     }
   },
+  
   computed:{
     title(){
       switch(this.which){
@@ -119,32 +131,50 @@ export default {
     }
   },
   methods:{
-    managerFormFun(type,row){
+    async managerFormFun(type,id){
       this.dialogFormVisible = true
       this.which = type
-      if(row) {
-        this.managerForm = row
+      if(id) {
+        const res = await getManagementDetail(id)
+        console.log(res)
+        this.managerForm = {...res,store:res.store.name}
       }else{
         this.managerForm = {
-          id:'',
-          username: '',
-          shop: ''
+          name: '',
+          account: '',
+          password: '',
+          phone: '',
+          auth: '',
+          store: ''
         }
       }
     },
-    remove({userID}){
-
+    async remove(arr){
+      console.log(arr)
+      this.$msgbox()
+      // const res = await deleteManagement()
     },
     done(){
-      this.dialogFormVisible = false
+      console.log(this.managerForm)
       switch(this.which){
         case 'add': 
-          return 
+          return this.addManager(this.managerForm)
         case 'check':
-          return 
+          return this.dialogFormVisible = false
         case 'edit':
-          return 
+          return this.editManager(this.managerForm.id,this.managerForm)
       }
+    },
+    async addManager(managerForm){
+      const data=
+      await addManagement(managerForm)
+      this.dialogFormVisible = false
+      this.get_list()
+    },
+    async editManager(id,managerForm){
+      await editManagement(id,managerForm)
+      this.dialogFormVisible = false
+      this.get_list()
     }
   }
 }
@@ -159,9 +189,10 @@ export default {
   }
   .search_card_bottom {
     height: 50px;
-    width: 790px;
+    // width: 790px;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    // justify-content: space-between;
     .searchByName,
     .searchByShop {
       position: relative;
@@ -207,6 +238,7 @@ export default {
       border-radius: 10px;
       background-color: #545c64ac;
       // border: none;
+      margin-left:40px;
       transition: all 0.3s linear;
     }
     .search:hover {

@@ -1,6 +1,6 @@
 //1.定义所有环境服务器地址
 const server = {
-	pro: "https://n2h-plus.centralus.cloudapp.azure.com",//生产环境
+	pro: "http://54.180.154.173:8000",//生产环境
 	dev: "http://54.180.154.173:8000",//测试环境
 	util: "",//其他环境，可以为空，为空则适配到测试环境
 }

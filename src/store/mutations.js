@@ -4,6 +4,7 @@ import storage from '@/utils/storage.js'
 const mutations = {
   // 保存用户数据
   saveUserInfo (state, data) {
+    storage.setLocal('token',data.token)
     storage.setLocal('userinfo', data)
     state.adminUser = data
   },

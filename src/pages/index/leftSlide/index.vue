@@ -26,11 +26,11 @@
           <i class="iconfont iconicon95"></i>
           <span slot="title">{{$t('tIndex')}}</span>
         </el-menu-item>
-        <el-menu-item index="/managerList" v-if="adminUser.auth">
+        <el-menu-item index="/managerList" v-if="adminUser.auth===0">
           <i class="iconfont iconhuiyuan1"></i>
           <span slot="title">{{$t('tManagerList')}}</span>
         </el-menu-item>
-        <el-menu-item index="/shopManagement" v-if="adminUser.auth">
+        <el-menu-item index="/shopManagement" v-if="adminUser.auth===0">
           <i class="iconfont iconhuiyuan1"></i>
           <span slot="title">{{$t('tShopManagement')}}</span>
         </el-menu-item>

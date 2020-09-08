@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <!-- <el-row class="infoCrads" :gutter="30">
+        <el-row class="infoCrads" :gutter="30">
             <el-col :span="6">
                 <el-card class="cardItem">
                     <div class="cardItem_txt">
@@ -72,7 +72,7 @@
         </el-row>
         <div class="bottom-img animated lightSpeedIn">
             <img src="@/assets/img/background.png" alt />
-        </div> -->
+        </div>
 		<!-- <Page /> -->
     </div>
 </template>

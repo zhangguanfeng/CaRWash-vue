@@ -21,6 +21,15 @@ import VueRouter from 'vue-router'
 Vue.use(animated)
 Vue.config.productionTip = false
 
+// // 提示
+// Vue.prototype.$message = Message
+// // 提示框
+// Vue.prototype.$msgbox = MessageBox
+// // 确认框
+// Vue.prototype.$confirm = MessageBox.confirm
+// // 弹窗
+// Vue.prototype.$alert = MessageBox.alert
+
 router.afterEach(() => {
 	window.scrollTo(0, 0)
 })
@@ -36,7 +45,7 @@ router.beforeEach((to, from, next) => {
 	const type = to.meta.requiresAuth
 	if (type) {
 		if (storage.getLocal('userinfo') && storage.getLocal('userinfo').token) {
-			if (!storage.getLocal('userinfo').auth && to.meta.limit) {
+			if (storage.getLocal('userinfo').auth===1 && to.meta.limit) {
 				next('/login')
 			} else {
 				next()
@@ -49,7 +58,7 @@ router.beforeEach((to, from, next) => {
 		next()
 	}
 })
-new Vue({
+export default new Vue({
 	router,
 	store,
 	i18n,
