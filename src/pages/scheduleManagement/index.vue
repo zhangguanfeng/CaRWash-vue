@@ -134,7 +134,7 @@ export default {
         select(e){
             let dom = e.target;
             let index= dom.getAttribute("data-index")
-            console.log("index",index)
+            // console.log("index",index)
         },
         go(type){
             switch(type){

@@ -142,11 +142,11 @@ export default {
   methods: {
     // 导航栏打开事件
     handleOpen (key, keyPath) {
-      console.log(key, keyPath);
+    //   console.log(key, keyPath);
     },
     // 导航栏关闭事件
     handleClose (key, keyPath) {
-      console.log(key, keyPath);
+    //   console.log(key, keyPath);
     },
     // 选中的栏目
     handleselect (key, keyPath) {
@@ -158,7 +158,6 @@ export default {
   },
   mounted () {
     this.routerList = this.$router.options.routes[0].children
-    console.log(this.routerList, this.$router, ' this.routerList');
   },
   watch: {
 
