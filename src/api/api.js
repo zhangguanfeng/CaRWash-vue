@@ -274,5 +274,46 @@ export const deleteFAQ = (id) => {
     methdo: 'DELETE'
   })
 }
+/**
+ * @description: 获取疑问答复列表
+ * @return {Promise} promise
+ * */
+export const getQA = () => {
+  return server({
+    url: '/admin/qa',
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 获取疑问答复详情
+ * @return {Promise} promise
+ * */
+export const getQADetail = (id) => {
+  return server({
+    url: `/admin/qa/${id}`,
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 编辑回答
+ * @return {Promise} promise
+ * */
+export const editQA = ({ id, ...data }) => {
+  return server({
+    url: `/admin/qa/${id}`,
+    methdo: 'PUT',
+    data
+  })
+}
+/**
+ * @description: 删除疑问
+ * @return {Promise} promise
+ * */
+export const deleteQA = (id) => {
+  return server({
+    url: `/admin/qa/${id}`,
+    methdo: 'DELETE'
+  })
+}
 
 
