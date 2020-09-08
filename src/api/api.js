@@ -398,6 +398,59 @@ export const editEvalution = (id) => {
     methdo: 'DELETE'
   })
 }
+/**
+ * @description: 添加消息
+ * @return {Promise} promise
+ * */
+export const addMessage = (data) => {
+  return server({
+    url: '/admin/message',
+    methdo: 'POST',
+    data
+  })
+}
+/**
+ * @description: 删除消息
+ * @return {Promise} promise
+ * */
+export const deleteMessage = (id) => {
+  return server({
+    url: `/admin/message/${id}`,
+    methdo: 'DELETE'
+  })
+}
+/**
+ * @description: 获取消息详情
+ * @return {Promise} promise
+ * */
+export const getMessageDetail = (id) => {
+  return server({
+    url: `/admin/message/${id}`,
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 编辑消息
+ * @return {Promise} promise
+ * */
+export const editMessage = ({ id, ...data }) => {
+  return server({
+    url: `/admin/message/${id}`,
+    methdo: 'PUT',
+    data
+  })
+}
+/**
+ * @description: 获取消息列表
+ * @return {Promise} promise
+ * */
+export const getMessage = () => {
+  return server({
+    url: '/admin/message',
+    methdo: 'GET'
+  })
+}
+
 
 
 
