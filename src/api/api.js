@@ -107,4 +107,58 @@ export const deleteBlog = (id) => {
     method: 'DELETE'
   })
 }
+/**
+ * @description: 添加代理店
+ * @return {Promise} promise
+ * */
+export const addStore = (data) => {
+  return server({
+    url: '/admin/store',
+    method: 'POST',
+    data
+  })
+}
+/**
+ * @description: 获取代理店列表
+ * @return {Promise} promise
+ * */
+export const getStore = (params) => {
+  return server({
+    url: '/admin/store',
+    methdo: 'GET',
+    params
+  })
+}
+/**
+ * @description: 获取代理店详情
+ * @return {Promise} promise
+ * */
+export const getStoreDetail = (id) => {
+  return server({
+    url: `/admin/store/${id}`,
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 编辑代理店
+ * @return {Promise} promise
+ * */
+export const editStore = ({ id, ...data }) => {
+  return server({
+    url: `/admin/store/${id}`,
+    methdo: 'PUT',
+    data
+  })
+}
+/**
+ * @description: 删除代理店
+ * @return {Promise} promise
+ * */
+export const deleteStore = (id) => {
+  return server({
+    url: `/admin/store/${id}`,
+    methdo: 'DELETE'
+  })
+}
+
 
