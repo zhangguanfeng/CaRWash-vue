@@ -96,7 +96,7 @@ export default {
       this.isShow = true
       try{
 				let res = await login(ruleForm)
-        this.saveUserInfo(res.data);
+        this.saveUserInfo(res);
 				this.$router.push("/home");
 				this.$message.success("登录成功!");
 				this.isShow = false;

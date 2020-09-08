@@ -63,13 +63,13 @@
         <el-form-item :label="$t('username')">
           <el-input v-model="managerForm.name" :placeholder="$t('inputUsername')"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('account')">
+        <el-form-item v-if="which!=='edit'" :label="$t('account')">
           <el-input v-model="managerForm.account" :placeholder="$t('inputAccount')"></el-input>
         </el-form-item>
         <el-form-item v-if="which==='add'" :label="$t('password')">
           <el-input v-model="managerForm.password" :placeholder="$t('inputPassword')"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('phone')">
+        <el-form-item  :label="$t('phone')">
           <el-input v-model="managerForm.phone" :placeholder="$t('inputPhoneNum')"></el-input>
         </el-form-item>
         <el-form-item :label="$t('shop')">
@@ -131,12 +131,14 @@ export default {
     }
   },
   methods:{
+    // filter(auth){
+    //   return auth===0?"$t{'managerList.superManager'}":"$t{'managerList.shopManager'}"
+    // },
     async managerFormFun(type,id){
       this.dialogFormVisible = true
       this.which = type
       if(id) {
         const res = await getManagementDetail(id)
-        console.log(res)
         this.managerForm = {...res,store:res.store.name}
       }else{
         this.managerForm = {
@@ -149,13 +151,20 @@ export default {
         }
       }
     },
-    async remove(arr){
+    remove(arr){
       console.log(arr)
-      this.$msgbox()
-      // const res = await deleteManagement()
+      this.$confirm('确定删除管理员吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async() => {
+        await deleteManagement(arr[0])
+        this.get_list()
+      }).catch({
+
+      }) 
     },
     done(){
-      console.log(this.managerForm)
       switch(this.which){
         case 'add': 
           return this.addManager(this.managerForm)
@@ -166,15 +175,26 @@ export default {
       }
     },
     async addManager(managerForm){
-      const data=
-      await addManagement(managerForm)
-      this.dialogFormVisible = false
-      this.get_list()
+      delete managerForm.id
+      managerForm.store=Number(managerForm.store)
+      try{
+        await addManagement(managerForm)
+        this.dialogFormVisible = false
+        this.get_list()
+      }catch(err){
+        return
+      }
     },
     async editManager(id,managerForm){
-      await editManagement(id,managerForm)
-      this.dialogFormVisible = false
-      this.get_list()
+      delete managerForm.id
+      delete managerForm.account
+      try{
+        await editManagement({id,managerForm})
+        this.dialogFormVisible = false
+        this.get_list()
+      }catch(err){
+        return
+      }
     }
   }
 }

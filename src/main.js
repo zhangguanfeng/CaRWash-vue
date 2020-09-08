@@ -45,11 +45,12 @@ router.beforeEach((to, from, next) => {
 	const type = to.meta.requiresAuth
 	if (type) {
 		if (storage.getLocal('userinfo') && storage.getLocal('userinfo').token) {
-			if (storage.getLocal('userinfo').auth===1 && to.meta.limit) {
-				next('/login')
-			} else {
-				next()
-			}
+			next()
+			// if (storage.getLocal('userinfo').auth===1 && to.meta.limit) {
+			// 	next('/login')
+			// } else {
+			// 	next()
+			// }
 		} else {
 			storage.removeLocal('userinfo')
 			next('/login')
