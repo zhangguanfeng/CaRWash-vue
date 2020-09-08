@@ -315,5 +315,36 @@ export const deleteQA = (id) => {
     methdo: 'DELETE'
   })
 }
+/**
+ * @description: 获取服务条款列表
+ * @return {Promise} promise
+ * */
+export const getServiceTerm = () => {
+  return server({
+    url: '/admin/service_term',
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 获取服务条款详情
+ * @return {Promise} promise
+ * */
+export const getServiceTermDetail = (id) => {
+  return server({
+    url: `/admin/service_term/${id}`,
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 编辑服务条款
+ * @return {Promise} promise
+ * */
+export const editServiceTerm = ({ id, ...data }) => {
+  return server({
+    url: `/admin/service_term/${id}`,
+    methdo: 'PUT',
+    data
+  })
+}
 
 
