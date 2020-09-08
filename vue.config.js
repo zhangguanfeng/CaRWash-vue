@@ -1,47 +1,45 @@
-// const path = require("path");
-// const resolve = function (dir) {
-//   return path.join(__dirname, dir);
-// };
-// module.exports = {
-//   publicPath: process.env.NODE_ENV === "production" ? "./" : "./",
-//   outputDir: "dist",
-//   assetsDir: "static",
-//   lintOnSave: false, // 是否开启eslint保存检测
-//   productionSourceMap: false, // 是否在构建生产包时生成sourcdeMap
-//   // chainWebpack: config => {
-//   //   config.resolve.alias
-//   //     .set("@", resolve("src"))
-//   //     .set("@v", resolve("src/views"))
-//   //     .set("@c", resolve("src/components"))
-//   //     .set("@u", resolve("src/utils"))
-//   //     .set("@s", resolve("src/service")); /* 别名配置 */
-//   //   config.optimization.runtimeChunk("single");
-//   // },
-//   devServer: {
-//     host: "localhost",
-//     /* 本地ip地址 */
-//     // host: "192.168.1.109",
-//     host: "0.0.0.0", //局域网和本地访问
-//     port: "8080",
-//     hot: true,
-//     /* 自动打开浏览器 */
-//     open: false,
-//     overlay: {
-//       warning: false,
-//       error: true
-//     },
-//     /* 跨域代理 */
-//     proxy: {
-//       "/api": {
-//         /* 目标代理服务器地址 */
-//         target: "",
-//         /* 允许跨域 */
-//         changeOrigin: true,
-//         ws: true,
-//         pathRewrite: {
-//           "^/api": ""
-//         }
-//       }
-//     }
-//   }
-// };
+// const path = require('path')
+module.exports = {
+  /** 区分打包环境与开发环境
+   * process.env.NODE_ENV==='production'  (打包环境)
+   * process.env.NODE_ENV==='development' (开发环境)
+   */
+  // 基本路径
+  publicPath:
+    process.env.NODE_ENV === 'production' ? './' : '/', // 从 Vue CLI 3.3 起baseUrl已弃用，请使用publicPath
+  // 输出文件目录
+  outputDir: 'dist',
+  lintOnSave: false,
+  devServer: {
+    open: true,
+    host: '0.0.0.0',
+    port: 8080,
+    https: false,
+    hotOnly: false,
+    proxy: {
+      // 设置代理
+      '/api': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      }
+    },
+    disableHostCheck: true
+  },
+  // css: {
+  //   loaderOptions: {
+  //     // 给 sass-loader 传递选项
+  //     sass: {
+  //       // @/ 是 src/ 的别名
+  //       // 所以这里假设你有 `src/variables.scss` 这个文件
+  //       data: `@import "@/assets/scss/common.scss";`
+  //     }
+  //   }
+  // },
+
+  pluginOptions: {
+
+  }
+}
