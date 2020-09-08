@@ -66,48 +66,6 @@ export const getManagementDetail = (id) => {
   })
 }
 /**
- * @description: 获取blog列表
- * @return {Promise} promise
- * */
-export const getBlog = () => {
-  return server({
-    url: '/blog/getForm',
-    method: 'GET'
-  })
-}
-/**
- * @description: 修改blog数据
- * @return {Promise} promise
- * */
-export const editBlog = (data) => {
-  return server({
-    url: '/blog/editForm',
-    method: 'POST',
-    data
-  })
-}
-/**
- * @description: 添加blog数据
- * @return {Promise} promise
- * */
-export const addBlog = (data) => {
-  return server({
-    url: '/blog/addForm',
-    method: 'POST',
-    data
-  })
-}
-/**
- * @description: 删除blog数据
- * @return {Promise} promise
- * */
-export const deleteBlog = (id) => {
-  return server({
-    url: `/blog/delForm/${id}`,
-    method: 'DELETE'
-  })
-}
-/**
  * @description: 添加代理店
  * @return {Promise} promise
  * */
@@ -262,6 +220,58 @@ export const editPrice = ({ id, ...data }) => {
     url: `/admin/price/${id}`,
     methdo: 'PUT',
     data
+  })
+}
+/**
+ * @description: 添加常见疑问
+ * @return {Promise} promise
+ * */
+export const addFAQ = (data) => {
+  return server({
+    url: '/admin/faq',
+    methdo: 'POST',
+    data
+  })
+}
+/**
+ * @description: 编辑常见疑问
+ * @return {Promise} promise
+ * */
+export const editFAQ = ({ id, ...data }) => {
+  return server({
+    url: `/admin/faq//${id}`,
+    methdo: 'PUT',
+    data
+  })
+}
+/**
+ * @description: 获取常见疑问列表
+ * @return {Promise} promise
+ * */
+export const getFAQ = () => {
+  return server({
+    url: '/admin/faq',
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 获取常见疑问详情
+ * @return {Promise} promise
+ * */
+export const getFAQDetail = (id) => {
+  return server({
+    url: `/admin/faq/${id}`,
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 删除常见疑问
+ * @return {Promise} promise
+ * */
+export const deleteFAQ = (id) => {
+  return server({
+    url: `/admin/faq/${id}`,
+    methdo: 'DELETE'
   })
 }
 
