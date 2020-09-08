@@ -160,5 +160,57 @@ export const deleteStore = (id) => {
     methdo: 'DELETE'
   })
 }
+/**
+ * @description: 添加职员
+ * @return {Promise} promise
+ * */
+export const addStaff = (data) => {
+  return server({
+    url: '/admin/staff',
+    methdo: 'POST',
+    data
+  })
+}
+/**
+ * @description: 编辑职员
+ * @return {Promise} promise
+ * */
+export const editStaff = ({ id, ...data }) => {
+  return server({
+    url: `/admin/staff/${id}`,
+    methdo: 'PUT',
+    data
+  })
+}
+/**
+ * @description: 获取职员列表
+ * @return {Promise} promise
+ * */
+export const getStaff = () => {
+  return server({
+    url: '/admin/staff',
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 获取职员详情
+ * @return {Promise} promise
+ * */
+export const getStaffDetail = (id) => {
+  return server({
+    url: `/admin/staff/${id}`,
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 删除职员
+ * @return {Promise} promise
+ * */
+export const deleteStaff = (id) => {
+  return server({
+    url: `/admin/staff/${id}`,
+    methdo: 'DELETE'
+  })
+}
 
 
