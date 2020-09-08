@@ -392,7 +392,7 @@ export const editEvalution = ({ id, ...data }) => {
  * @description: 删除评价
  * @return {Promise} promise
  * */
-export const editEvalution = (id) => {
+export const deleteEvalution = (id) => {
   return server({
     url: `/admin/evaluation/${id}`,
     methdo: 'DELETE'
