@@ -212,5 +212,36 @@ export const deleteStaff = (id) => {
     methdo: 'DELETE'
   })
 }
+/**
+ * @description: 获取服务列表
+ * @return {Promise} promise
+ * */
+export const getService = () => {
+  return server({
+    url: '/admin/service',
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 获取服务详情
+ * @return {Promise} promise
+ * */
+export const getServiceDetail = (id) => {
+  return server({
+    url: `/admin/service/${id}`,
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 编辑服务
+ * @return {Promise} promise
+ * */
+export const editService = ({ id, ...data }) => {
+  return server({
+    url: `/admin/service/${id}`,
+    methdo: 'PUT',
+    data
+  })
+}
 
 
