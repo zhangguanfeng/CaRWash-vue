@@ -243,5 +243,26 @@ export const editService = ({ id, ...data }) => {
     data
   })
 }
+/**
+ * @description: 获取价格
+ * @return {Promise} promise
+ * */
+export const getPrice = () => {
+  return server({
+    url: '/admin/price',
+    methdo: 'GET'
+  })
+}
+/**
+ * @description: 修改价格
+ * @return {Promise} promise
+ * */
+export const editPrice = ({ id, ...data }) => {
+  return server({
+    url: `/admin/price/${id}`,
+    methdo: 'PUT',
+    data
+  })
+}
 
 
