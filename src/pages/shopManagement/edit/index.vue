@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="box">
-            <el-page-header @back="$router.go(-1)"></el-page-header>
+            <el-page-header @back="$router.go(-1)" :content="content"></el-page-header>
         </div>
         <el-card class="content mt20">
             <el-form label-position="left" :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -18,12 +18,14 @@
                     <el-input v-model="ruleForm.phone"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('shopManagement.scoped')" prop="service_range">
-                    <el-input v-model="ruleForm.service_range"></el-input>
+                    <el-select v-model="ruleForm.service_range" :placeholder="$t('shopManagement.selectScoped')">
+                        <el-option v-for="(item, index) in serviceList" :key="index" :label="item.list" :value="item.name"></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item :label="$t('shopManagement.business')" prop="open_hours">
                     <el-time-select
-                        placeholder="起始时间"
-                        v-model="ruleForm.startTime"
+                        :placeholder="$t('startTime')"
+                        v-model="startTime"
                         :picker-options="{
                         start: '08:30',
                         step: '00:15',
@@ -31,18 +33,18 @@
                         }">
                     </el-time-select>
                     <el-time-select
-                        placeholder="结束时间"
-                        v-model="ruleForm.endTime"
+                        :placeholder="$t('endTime')"
+                        v-model="endTime"
                         :picker-options="{
                         start: '08:30',
                         step: '00:15',
                         end: '23:30',
-                        minTime: ruleForm.startTime
+                        minTime: startTime
                         }">
                     </el-time-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+                    <el-button type="primary" @click="submitForm('ruleForm')">{{id === undefined ? $t('btnTip.add'):$t('btnTip.edit')}}</el-button>
                 </el-form-item>
             </el-form>
             <!-- 店铺地址 -->
@@ -58,11 +60,13 @@
 </template>
 <script>
 import vueMapSmall from '@/components/global/vueMap'
-import {getStoreDetail} from '@/api/api'
+import {getStoreDetail, getService, editStore, addStore} from '@/api/api'
 export default {
     name:'shopEdit',
     data(){
         return {
+            startTime:'',
+            endTime:'',
             // 地图弹窗
             mapDialog: false,
             // 修改之后地图
@@ -73,8 +77,7 @@ export default {
                 description: '',
                 phone: '',
                 service_range: '',
-                startTime: '',
-                endTime: ''
+                open_hours: ''
             },
             rules: {
                 name: [
@@ -95,15 +98,44 @@ export default {
                 open_hours: [
                     { required: true, message: '请选择营业时间', trigger: 'change' }
                 ]
-            }
+            },
+            serviceList:''
         }
     },
     components: {
         vueMapSmall
     },
+    computed:{
+        id(){
+			return Number.isNaN(Number(this.$route.query.id)) ? undefined : Number(this.$route.query.id)
+        },
+        content(){
+			return this.id === undefined ? "添加店铺" : "修改店铺"
+		},
+    },
+    watch:{
+        startTime(){
+            const arr = this.ruleForm.open_hours.split('-')
+            arr[0]=this.startTime
+            this.ruleForm.open_hours=arr.join('-')
+        },
+        endTime(){
+            const arr = this.ruleForm.open_hours.split('-')
+            arr[1]=this.endTime
+            this.ruleForm.open_hours=arr.join('-')
+        }
+    },
     methods:{
         async submitForm(formName) {
             await this.$refs[formName].validate()
+            if(this.id === undefined){
+                await addStore(this.ruleForm)
+                this.$message.success('创建成功')
+            }else{
+                await editStore(this.ruleForm)
+                this.$message.success('修改成功')
+            }
+            this.$router.go(-1)
         },
         // 地图传值
         getMapData (data) {
@@ -121,11 +153,18 @@ export default {
         openMap () {
         this.mapDialog = true
         },
+        async get_info(){
+            const information = await getStoreDetail(this.id)
+            this.ruleForm = information
+            this.startTime = information.open_hours.split('-')[0]
+            this.endTime = information.open_hours.split('-')[1]
+        },
     },
-    async create(){
+    async created(){
         const res = await getService()
-        console.log('service',res)
-        this.ruleForm = res
+        this.serviceList = res.list
+        if(this.id === undefined) return
+		this.get_info()
     },
     
 }

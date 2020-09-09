@@ -61,7 +61,7 @@
 
     <!-- 添加表单 -->
     <el-dialog :title="title" :visible.sync="dialogFormVisible">
-      <el-form :rules="which==='check'?'':rules" ref="managerForm" :model="managerForm" label-width="90px" label-position="left"
+      <el-form :rules="rules" ref="managerForm" :model="managerForm" label-width="90px" label-position="left"
         style="padding-left:30px;">
         <el-form-item prop="name" :label="$t('username')">
           <template v-if="which==='check'">{{managerForm.name}}</template>
@@ -79,7 +79,7 @@
           <template v-if="which==='check'">{{managerForm.phone}}</template>
           <el-input v-else v-model="managerForm.phone" :placeholder="$t('inputPhoneNum')"></el-input>
         </el-form-item>
-        <el-form-item prop="shopRule" :label="$t('shop')">
+        <el-form-item prop="store" :label="$t('shop')">
           <template v-if="which==='check'">{{managerForm.store}}</template>
           <el-select v-else v-model="managerForm.store" :placeholder="$t('choiceShop')">
             <el-option v-for="(item, index) in shopList" :key="index" :label="item.name" :value="item.id"></el-option>
@@ -140,9 +140,9 @@ export default {
           phone: [
             { required: true, message: '请输入联系方式', trigger: 'blur' }
           ],
-          // shopRule: [
-          //   { required: true, message: '请输入代理店', trigger: 'blur' }
-          // ],
+          store: [
+            { required: true, message: '请输入代理店', trigger: 'blur' }
+          ],
           auth: [
             { required: true, message: '请选择权限等级', trigger: 'blur' }
           ],
@@ -171,10 +171,13 @@ export default {
     auth_filters(auth){
       return auth===0?this.$t('managerList.superManager'):this.$t('managerList.shopManager')
     },
-
     async managerFormFun(type,id){
       this.dialogFormVisible = true
       this.which = type
+      if(type!=='check'){
+        const shop = await getStore()
+        this.shopList=shop.list
+      }
       if(id) {
         const res = await getManagementDetail(id)
         this.managerForm = {...res,store:res.store.id}
@@ -188,8 +191,7 @@ export default {
           store: ''
         }
       }
-      const shop = await getStore()
-      this.shopList=shop.list
+      
     },
     remove(arr){
       console.log(arr)
@@ -205,37 +207,35 @@ export default {
       }) 
     },
     async done(name){
-      console.log(this.managerForm)
-      await this.$refs[name].validate()
+      console.log(this.which)
+      
       switch(this.which){
         case 'add': 
-          return this.addManager(this.managerForm)
+          await this.$refs[name].validate()
+          this.addManager(this.managerForm)
+          return 
         case 'check':
-          return this.dialogFormVisible = false
+          this.dialogFormVisible = false
+          return 
         case 'edit':
-          return this.editManager(this.managerForm)
+          await this.$refs[name].validate()
+          this.editManager(this.managerForm)
+          return 
       }
     },
     async addManager(managerForm){
       delete managerForm.id
       managerForm.store=Number(managerForm.store)
-      try{
-        await addManagement(managerForm)
-        this.dialogFormVisible = false
-        this.get_list()
-      }catch(err){
-        return
-      }
+      await addManagement(managerForm)
+      this.dialogFormVisible = false
+      this.get_list()
+      
     },
     async editManager(managerForm){
       delete managerForm.account
-      try{
-        await editManagement(managerForm)
-        this.dialogFormVisible = false
-        this.get_list()
-      }catch(err){
-        return
-      }
+      await editManagement(managerForm)
+      this.dialogFormVisible = false
+      this.get_list()
     }
   }
 }
