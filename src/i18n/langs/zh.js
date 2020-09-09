@@ -98,6 +98,8 @@ const zh = {
   phone: '手机号',
   username: '姓名',
   shop: '代理店',
+  shopID: '代理店id',
+  shopName: '代理店名称',
   address: '地址',
   introduce: '介绍',
   time: '下单时间',

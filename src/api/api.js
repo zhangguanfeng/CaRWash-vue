@@ -83,7 +83,7 @@ export const addStore = (data) => {
 export const getStore = (params) => {
   return server({
     url: '/admin/store',
-    methdo: 'GET',
+    method: 'GET',
     params
   })
 }
@@ -94,7 +94,7 @@ export const getStore = (params) => {
 export const getStoreDetail = (id) => {
   return server({
     url: `/admin/store/${id}`,
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -104,7 +104,7 @@ export const getStoreDetail = (id) => {
 export const editStore = ({ id, ...data }) => {
   return server({
     url: `/admin/store/${id}`,
-    methdo: 'PUT',
+    method: 'PUT',
     data
   })
 }
@@ -115,7 +115,7 @@ export const editStore = ({ id, ...data }) => {
 export const deleteStore = (id) => {
   return server({
     url: `/admin/store/${id}`,
-    methdo: 'DELETE'
+    method: 'DELETE'
   })
 }
 /**
@@ -125,7 +125,7 @@ export const deleteStore = (id) => {
 export const addStaff = (data) => {
   return server({
     url: '/admin/staff',
-    methdo: 'POST',
+    method: 'POST',
     data
   })
 }
@@ -136,7 +136,7 @@ export const addStaff = (data) => {
 export const editStaff = ({ id, ...data }) => {
   return server({
     url: `/admin/staff/${id}`,
-    methdo: 'PUT',
+    method: 'PUT',
     data
   })
 }
@@ -147,7 +147,7 @@ export const editStaff = ({ id, ...data }) => {
 export const getStaff = () => {
   return server({
     url: '/admin/staff',
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -157,7 +157,7 @@ export const getStaff = () => {
 export const getStaffDetail = (id) => {
   return server({
     url: `/admin/staff/${id}`,
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -167,7 +167,7 @@ export const getStaffDetail = (id) => {
 export const deleteStaff = (id) => {
   return server({
     url: `/admin/staff/${id}`,
-    methdo: 'DELETE'
+    method: 'DELETE'
   })
 }
 /**
@@ -177,7 +177,7 @@ export const deleteStaff = (id) => {
 export const getService = () => {
   return server({
     url: '/admin/service',
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -187,7 +187,7 @@ export const getService = () => {
 export const getServiceDetail = (id) => {
   return server({
     url: `/admin/service/${id}`,
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -197,7 +197,7 @@ export const getServiceDetail = (id) => {
 export const editService = ({ id, ...data }) => {
   return server({
     url: `/admin/service/${id}`,
-    methdo: 'PUT',
+    method: 'PUT',
     data
   })
 }
@@ -208,7 +208,7 @@ export const editService = ({ id, ...data }) => {
 export const getPrice = () => {
   return server({
     url: '/admin/price',
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -218,7 +218,7 @@ export const getPrice = () => {
 export const editPrice = ({ id, ...data }) => {
   return server({
     url: `/admin/price/${id}`,
-    methdo: 'PUT',
+    method: 'PUT',
     data
   })
 }
@@ -229,7 +229,7 @@ export const editPrice = ({ id, ...data }) => {
 export const addFAQ = (data) => {
   return server({
     url: '/admin/faq',
-    methdo: 'POST',
+    method: 'POST',
     data
   })
 }
@@ -240,7 +240,7 @@ export const addFAQ = (data) => {
 export const editFAQ = ({ id, ...data }) => {
   return server({
     url: `/admin/faq//${id}`,
-    methdo: 'PUT',
+    method: 'PUT',
     data
   })
 }
@@ -251,7 +251,7 @@ export const editFAQ = ({ id, ...data }) => {
 export const getFAQ = () => {
   return server({
     url: '/admin/faq',
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -261,7 +261,7 @@ export const getFAQ = () => {
 export const getFAQDetail = (id) => {
   return server({
     url: `/admin/faq/${id}`,
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -271,7 +271,7 @@ export const getFAQDetail = (id) => {
 export const deleteFAQ = (id) => {
   return server({
     url: `/admin/faq/${id}`,
-    methdo: 'DELETE'
+    method: 'DELETE'
   })
 }
 /**
@@ -281,7 +281,7 @@ export const deleteFAQ = (id) => {
 export const getQA = () => {
   return server({
     url: '/admin/qa',
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -291,7 +291,7 @@ export const getQA = () => {
 export const getQADetail = (id) => {
   return server({
     url: `/admin/qa/${id}`,
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -301,7 +301,7 @@ export const getQADetail = (id) => {
 export const editQA = ({ id, ...data }) => {
   return server({
     url: `/admin/qa/${id}`,
-    methdo: 'PUT',
+    method: 'PUT',
     data
   })
 }
@@ -312,7 +312,7 @@ export const editQA = ({ id, ...data }) => {
 export const deleteQA = (id) => {
   return server({
     url: `/admin/qa/${id}`,
-    methdo: 'DELETE'
+    method: 'DELETE'
   })
 }
 /**
@@ -322,7 +322,7 @@ export const deleteQA = (id) => {
 export const getServiceTerm = () => {
   return server({
     url: '/admin/service_term',
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -332,7 +332,7 @@ export const getServiceTerm = () => {
 export const getServiceTermDetail = (id) => {
   return server({
     url: `/admin/service_term/${id}`,
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -342,7 +342,7 @@ export const getServiceTermDetail = (id) => {
 export const editServiceTerm = ({ id, ...data }) => {
   return server({
     url: `/admin/service_term/${id}`,
-    methdo: 'PUT',
+    method: 'PUT',
     data
   })
 }
@@ -353,7 +353,7 @@ export const editServiceTerm = ({ id, ...data }) => {
 export const addEvalution = (data) => {
   return server({
     url: '/admin/evaluation',
-    methdo: 'POST',
+    method: 'POST',
     data
   })
 }
@@ -364,7 +364,7 @@ export const addEvalution = (data) => {
 export const getEvalution = () => {
   return server({
     url: '/admin/evaluation',
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -374,7 +374,7 @@ export const getEvalution = () => {
 export const getEvalutionDetail = (id) => {
   return server({
     url: `/admin/evaluation/${id}`,
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -384,7 +384,7 @@ export const getEvalutionDetail = (id) => {
 export const editEvalution = ({ id, ...data }) => {
   return server({
     url: `/admin/evaluation/${id}`,
-    methdo: 'PUT',
+    method: 'PUT',
     data
   })
 }
@@ -395,7 +395,7 @@ export const editEvalution = ({ id, ...data }) => {
 export const deleteEvalution = (id) => {
   return server({
     url: `/admin/evaluation/${id}`,
-    methdo: 'DELETE'
+    method: 'DELETE'
   })
 }
 /**
@@ -405,7 +405,7 @@ export const deleteEvalution = (id) => {
 export const addMessage = (data) => {
   return server({
     url: '/admin/message',
-    methdo: 'POST',
+    method: 'POST',
     data
   })
 }
@@ -416,7 +416,7 @@ export const addMessage = (data) => {
 export const deleteMessage = (id) => {
   return server({
     url: `/admin/message/${id}`,
-    methdo: 'DELETE'
+    method: 'DELETE'
   })
 }
 /**
@@ -426,7 +426,7 @@ export const deleteMessage = (id) => {
 export const getMessageDetail = (id) => {
   return server({
     url: `/admin/message/${id}`,
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 /**
@@ -436,7 +436,7 @@ export const getMessageDetail = (id) => {
 export const editMessage = ({ id, ...data }) => {
   return server({
     url: `/admin/message/${id}`,
-    methdo: 'PUT',
+    method: 'PUT',
     data
   })
 }
@@ -447,7 +447,7 @@ export const editMessage = ({ id, ...data }) => {
 export const getMessage = () => {
   return server({
     url: '/admin/message',
-    methdo: 'GET'
+    method: 'GET'
   })
 }
 
