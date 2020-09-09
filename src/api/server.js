@@ -7,12 +7,12 @@ import storage from '@/utils/storage'
 import Load from "./loading"
 
 const server = axios.create({
-	baseURL: baseURL.DOMIN,
-	timeout: 50000,
-	headers: {
-		'Accept': 'application/json',
-		'Content-Type': 'application/json'
-	}
+  baseURL: baseURL.DOMIN,
+  timeout: 50000,
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  }
 })
 
 server.interceptors.request.use(config => {
@@ -23,9 +23,9 @@ server.interceptors.request.use(config => {
 	Load.showLoading()
 	return config
 }, err => {
-	Message.error({ message: 'Request timeout, please try again' });
-	Load.hideLoading()
-	return Promise.reject(err)
+  Message.error({ message: 'Request timeout, please try again' });
+  Load.hideLoading()
+  return Promise.reject(err)
 })
 
 server.interceptors.response.use(res => {
@@ -38,16 +38,16 @@ server.interceptors.response.use(res => {
 	}
 	return res.data.data
 }, err => {
-	console.log(err)
-	Load.hideLoading()
-	if(err.response && err.response.status === 401){
-		Vue.$router.push('/login')
-		storage.removeLocal('userinfo')
-		Vue.$message.error("登录状态过期，请重新登录")
-		return Promise.reject(err)
-	}
-	Vue.$message.error('数据响应发生错误,请重试')
-	return Promise.reject(err)
+  console.log(err)
+  Load.hideLoading()
+  if (err.response && err.response.status === 401) {
+    Vue.$router.push('/login')
+    storage.removeLocal('userinfo')
+    Vue.$message.error("登录状态过期，请重新登录")
+    return Promise.reject(err)
+  }
+  Vue.$message.error('数据响应发生错误,请重试')
+  return Promise.reject(err)
 })
 
 
