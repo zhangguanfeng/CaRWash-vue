@@ -93,6 +93,7 @@ const zh = {
     state: '洗车状态'
   },
   // 复用部分
+  search: '请输入关键字',
   choiceAuth: '请选择管理员权限',
   choiceShop: '请选择代理店',
   phone: '手机号',
@@ -107,6 +108,7 @@ const zh = {
   inputPhoneNum: '请输入手机号',
   inputUsername: '请输入用户姓名',
   inputShop: '请输入代理店',
+  inputShopAddress: '请输入代理店名称/地址',
   inputCategory: '请输入服务种类',
   inputTime: '请选择下单时间',
   operation: '操作',
@@ -115,6 +117,7 @@ const zh = {
   inputAccount: '请输入帐号名',
   password: '密码',
   inputPassword: '请输入密码',
+  back:'返回',
   btnTip: {
     check: '查看',
     edit: '编辑',

@@ -68,8 +68,8 @@ export default {
     ...mapMutations(['saveUserInfo', 'saveLanguage']),
     exit () {
       this.$message.success('退出成功')
+      // this.saveUserInfo(null)
       storage.removeLocal('token')
-      this.saveUserInfo(null)
       storage.removeLocal('userinfo')
       this.$router.push('/login')
     },

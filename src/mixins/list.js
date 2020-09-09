@@ -42,7 +42,8 @@ export const mixin_list = (axios_get,config={}) => {
 				const data = clean({
 					limit:pageSize,
 					cursor:page,
-					...filter
+					...filter,
+					order:this.ordering
 				})
 				const { list, total } = await axios_get(data)
 				this.list_data = {

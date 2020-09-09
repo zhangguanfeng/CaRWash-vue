@@ -11,7 +11,9 @@ import {
   Scrollbar,
   Select,
 
-
+	// 时间选择
+	TimeSelect,
+	TimePicker,
   Row,
   Col,
   Form,
@@ -45,6 +47,7 @@ import {
   Upload,
   Carousel,
   CarouselItem,
+  PageHeader,
 } from "element-ui";
 Message.install = () => {
   Vue.prototype.$message = Message;
@@ -67,9 +70,9 @@ Vue.use(MessageBox);
 Vue.use(Notification);
 Vue.use(Scrollbar);
 
-
-
-
+Vue.use(TimeSelect)
+Vue.use(TimePicker);
+Vue.use(PageHeader);
 Vue.use(Row);
 Vue.use(Col);
 Vue.use(Form);

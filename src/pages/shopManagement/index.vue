@@ -7,11 +7,11 @@
             </div>
             <!-- 上半部分 -->
             <div class="search_card_bottom">
-                <el-input :placeholder="$t('inputShop')" class="searchByShop" clearable v-model="filter.shop">
+                <el-input :placeholder="$t('inputShopAddress')" class="searchByShop" clearable v-model="filter.search">
                 </el-input>
-                <el-input :placeholder="$t('shopManagement').area" class="searchByArea" clearable v-model="filter.area">
-                </el-input>
-                <el-button class="search" round>{{$t('search_zh')}}</el-button>
+                <!-- <el-input :placeholder="$t('shopManagement').area" class="searchByArea" clearable v-model="filter.area">
+                </el-input> -->
+                <el-button @click="get_list" class="search" round>{{$t('search_zh')}}</el-button>
             </div>
         </el-card>
         <el-card class="container">
@@ -19,22 +19,22 @@
         {{$t('shopManagement').addShop}}
             </el-button>
             <!-- 表单部分 -->
-            <el-table :data="tableData" border style="width: 100%">
-                <el-table-column prop="id" label="ID">
+            <el-table :data="list_data.list" border style="width: 100%">
+                <el-table-column sortable prop="id" label="ID">
                 </el-table-column>
-                <el-table-column prop="shop" :label="$t('shop')">
+                <el-table-column prop="name" :label="$t('shop')">
                 </el-table-column>
                 <el-table-column prop="address" :label="$t('address')">
                 </el-table-column>
-                <el-table-column prop="introduce" :label="$t('introduce')">
+                <el-table-column prop="description" :label="$t('introduce')">
                 </el-table-column>
-                <el-table-column prop="scoped" :label="$t('shopManagement').scoped">
+                <el-table-column prop="service_range" :label="$t('shopManagement').scoped">
                 </el-table-column>
-                <el-table-column prop="contact" :label="$t('shopManagement').contact">
+                <el-table-column prop="phone" :label="$t('shopManagement').contact">
                 </el-table-column>
-                <el-table-column prop="business" :label="$t('shopManagement').business">
+                <el-table-column sortable prop="open_hours" :label="$t('shopManagement').business">
                 </el-table-column>
-                <el-table-column :label="$t('operation')">
+                <el-table-column :label="$t('operation')" width="250">
                 <template slot-scope="scope">
                     <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
                     <el-button  @click="go(1)" icon="el-icon-user-solid" type="success" size="mini"></el-button>
@@ -48,53 +48,27 @@
                 </template>
                 </el-table-column>
             </el-table>
+             <page :total="list_data.total" :page_size.sync="pageSize" :page.sync="page" />
         </el-card>
     </div>
 </template>
 <script>
+import {mixin_pickerOptions,mixin_list} from "@/mixins"
+import page from "@/components/page";
+import {getStore} from "@/api/api"
 export default {
     name: 'shopManagement',
     data () {
         return {
             filter: {
-                name:'',
-                area:'',
+              search:''
             },
-            tableData: [{
-                id: 1,
-                shop: '×××官方旗舰店',
-                address:'xx街道',
-                introduce: '服务周到',
-                scoped: 'xx区域',
-                contact: '400-66666666',
-                business: '每天08:00-18:00'
-            }, {
-                id: 1,
-                shop: '×××官方旗舰店',
-                address:'xx街道',
-                introduce: '服务周到',
-                scoped: 'xx区域',
-                contact: '400-66666666',
-                business: '每天08:00-18:00'
-            }, {
-                id: 1,
-                shop: '×××官方旗舰店',
-                address:'xx街道',
-                introduce: '服务周到',
-                scoped: 'xx区域',
-                contact: '400-66666666',
-                business: '每天08:00-18:00'
-            }, {
-               id: 1,
-                shop: '×××官方旗舰店',
-                address:'xx街道',
-                introduce: '服务周到',
-                scoped: 'xx区域',
-                contact: '400-66666666',
-                business: '每天08:00-18:00'
-            }],
         }
     },
+    components: {
+      page
+    },
+    mixins:[mixin_pickerOptions,mixin_list(getStore)],
     methods:{
         go(type){
       switch(type){
@@ -116,11 +90,11 @@ export default {
   }
   .search_card_bottom {
     height: 50px;
-    width: 790px;
     display: flex;
-    justify-content: space-between;
+    align-items: center;
     .searchByArea,
     .searchByShop {
+      margin-right:40px;
       position: relative;
       width: 245px;
       input {

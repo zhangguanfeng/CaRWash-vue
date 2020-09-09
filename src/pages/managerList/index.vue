@@ -8,12 +8,12 @@
       </div>
       <!-- 上半部分 -->
       <div class="search_card_bottom">
-        <el-input :placeholder="$t('inputUsername')" class="searchByName" clearable
+        <el-input :placeholder="$t('search')" class="searchByName" clearable
           v-model="filter.search">
         </el-input>
         <!-- <el-input :placeholder="$t('inputShop')" class="searchByShop" clearable v-model="filter.store">
         </el-input> -->
-        <el-button class="search" round>{{$t('search_zh')}}</el-button>
+        <el-button @click="get_list" class="search" round>{{$t('search_zh')}}</el-button>
       </div>
     </el-card>
 
@@ -27,7 +27,7 @@
       <el-table :data="list_data.list" border style="width: 100%" @selection-change="allSelect" @sort-change="sort_change">
         <!-- <el-table-column type="selection" width="55">
         </el-table-column> -->
-        <el-table-column prop="id" label="ID" width="100">
+        <el-table-column sortable prop="id" label="ID" width="100">
         </el-table-column>
         <el-table-column prop="name" :label="$t('username')">
         </el-table-column>
@@ -38,6 +38,9 @@
         <el-table-column prop="store.name" :label="$t('shop')">
         </el-table-column>
         <el-table-column prop="auth" :label="$t('managerList.auth')">
+          <template slot-scope="scope">
+            <span>{{ auth_filters(scope.row.auth) }}</span>
+          </template>
         </el-table-column>
         <el-table-column :label="$t('operation')" width="250">
           <template slot-scope="scope">
@@ -58,31 +61,39 @@
 
     <!-- 添加表单 -->
     <el-dialog :title="title" :visible.sync="dialogFormVisible">
-      <el-form ref="managerForm" :model="managerForm" label-width="90px" label-position="left"
+      <el-form :rules="which==='check'?'':rules" ref="managerForm" :model="managerForm" label-width="90px" label-position="left"
         style="padding-left:30px;">
-        <el-form-item :label="$t('username')">
-          <el-input v-model="managerForm.name" :placeholder="$t('inputUsername')"></el-input>
+        <el-form-item prop="name" :label="$t('username')">
+          <template v-if="which==='check'">{{managerForm.name}}</template>
+          <el-input v-else v-model="managerForm.name" :placeholder="$t('inputUsername')"></el-input>
         </el-form-item>
-        <el-form-item v-if="which!=='edit'" :label="$t('account')">
-          <el-input v-model="managerForm.account" :placeholder="$t('inputAccount')"></el-input>
+        <el-form-item prop="account" v-if="which!=='edit'" :label="$t('account')">
+          <template v-if="which==='check'">{{managerForm.account}}</template>
+          <el-input v-else v-model="managerForm.account" :placeholder="$t('inputAccount')"></el-input>
         </el-form-item>
-        <el-form-item v-if="which==='add'" :label="$t('password')">
-          <el-input v-model="managerForm.password" :placeholder="$t('inputPassword')"></el-input>
+        <el-form-item prop="password" v-if="which==='add'" :label="$t('password')">
+          <template v-if="which==='check'">{{managerForm.password}}</template>
+          <el-input v-else v-model="managerForm.password" :placeholder="$t('inputPassword')"></el-input>
         </el-form-item>
-        <el-form-item  :label="$t('phone')">
-          <el-input v-model="managerForm.phone" :placeholder="$t('inputPhoneNum')"></el-input>
+        <el-form-item prop="phone" :label="$t('phone')">
+          <template v-if="which==='check'">{{managerForm.phone}}</template>
+          <el-input v-else v-model="managerForm.phone" :placeholder="$t('inputPhoneNum')"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('shop')">
-          <el-input v-model="managerForm.store" :placeholder="$t('inputShop')"></el-input>
+        <el-form-item prop="shopRule" :label="$t('shop')">
+          <template v-if="which==='check'">{{managerForm.store}}</template>
+          <el-select v-else v-model="managerForm.store" :placeholder="$t('choiceShop')">
+            <el-option v-for="(item, index) in shopList" :key="index" :label="item.name" :value="item.id"></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item :label="$t('managerList.auth')">
-          <el-select v-model="managerForm.auth" :placeholder="$t('choiceAuth')">
+        <el-form-item prop="auth" :label="$t('managerList.auth')">
+          <template v-if="which==='check'">{{managerForm.auth===0?$t('managerList.superManager'):$t('managerList.shopManager')}}</template>
+          <el-select v-else v-model="managerForm.auth" :placeholder="$t('choiceAuth')">
             <el-option :label="$t('managerList.superManager')" :value="0"></el-option>
             <el-option :label="$t('managerList.shopManager')" :value="1"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
-      <el-button @click="done" type="primary" style="margin-left:30px;">{{title}}</el-button>
+      <el-button @click="done('managerForm')" type="primary" style="margin-left:30px;">{{title}}</el-button>
     </el-dialog>
   </div>
 </template>
@@ -90,7 +101,7 @@
 <script>
 import {mixin_pickerOptions,mixin_list} from "@/mixins"
 import page from "@/components/page";
-import { getManagementList, deleteManagement, addManagement, editManagement, getManagementDetail } from '@/api/api';
+import { getManagementList, deleteManagement, addManagement, editManagement, getManagementDetail, getStore } from '@/api/api';
 export default {
   name: "managerList",
   components: {
@@ -101,7 +112,6 @@ export default {
     return {
       filter:{
         search:'',
-        // store:''
       },
       // 是否显示添加表单
       dialogFormVisible: false,
@@ -114,7 +124,29 @@ export default {
         auth: '',
         store: ''
       },
-      which:''
+      which:'',
+      shopList:'',
+      rules: {
+          name: [
+            { required: true, message: '请输入名称', trigger: 'blur' },
+          ],
+          account: [
+            { required: true, message: '请输入账户名', trigger: 'blur' }
+          ],
+          password: [
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'change' }
+          ],
+          phone: [
+            { required: true, message: '请输入联系方式', trigger: 'blur' }
+          ],
+          // shopRule: [
+          //   { required: true, message: '请输入代理店', trigger: 'blur' }
+          // ],
+          auth: [
+            { required: true, message: '请选择权限等级', trigger: 'blur' }
+          ],
+        }
     }
   },
   
@@ -130,16 +162,22 @@ export default {
       }
     }
   },
+
+  filters:{
+    
+  },
+
   methods:{
-    // filter(auth){
-    //   return auth===0?"$t{'managerList.superManager'}":"$t{'managerList.shopManager'}"
-    // },
+    auth_filters(auth){
+      return auth===0?this.$t('managerList.superManager'):this.$t('managerList.shopManager')
+    },
+
     async managerFormFun(type,id){
       this.dialogFormVisible = true
       this.which = type
       if(id) {
         const res = await getManagementDetail(id)
-        this.managerForm = {...res,store:res.store.name}
+        this.managerForm = {...res,store:res.store.id}
       }else{
         this.managerForm = {
           name: '',
@@ -150,6 +188,8 @@ export default {
           store: ''
         }
       }
+      const shop = await getStore()
+      this.shopList=shop.list
     },
     remove(arr){
       console.log(arr)
@@ -164,14 +204,16 @@ export default {
 
       }) 
     },
-    done(){
+    async done(name){
+      console.log(this.managerForm)
+      await this.$refs[name].validate()
       switch(this.which){
         case 'add': 
           return this.addManager(this.managerForm)
         case 'check':
           return this.dialogFormVisible = false
         case 'edit':
-          return this.editManager(this.managerForm.id,this.managerForm)
+          return this.editManager(this.managerForm)
       }
     },
     async addManager(managerForm){
@@ -185,11 +227,10 @@ export default {
         return
       }
     },
-    async editManager(id,managerForm){
-      delete managerForm.id
+    async editManager(managerForm){
       delete managerForm.account
       try{
-        await editManagement({id,managerForm})
+        await editManagement(managerForm)
         this.dialogFormVisible = false
         this.get_list()
       }catch(err){
@@ -215,6 +256,7 @@ export default {
     // justify-content: space-between;
     .searchByName,
     .searchByShop {
+      margin-right:40px;
       position: relative;
       width: 245px;
       input {
@@ -258,7 +300,6 @@ export default {
       border-radius: 10px;
       background-color: #545c64ac;
       // border: none;
-      margin-left:40px;
       transition: all 0.3s linear;
     }
     .search:hover {
