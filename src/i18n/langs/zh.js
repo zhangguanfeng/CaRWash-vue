@@ -66,7 +66,9 @@ const zh = {
   // 服务列表页面部分
   serviceList: {
     name: '服务名称',
-    frequentness: '每周次数'
+    frequentness: '每月次数',
+    id: '服务id',
+    img: '服务'
   },
   // 服务订单管理部分
   serviceApplication: {
@@ -119,7 +121,7 @@ const zh = {
   inputAccount: '请输入帐号名',
   password: '密码',
   inputPassword: '请输入密码',
-  back:'返回',
+  back: '返回',
   btnTip: {
     check: '查看',
     edit: '编辑',

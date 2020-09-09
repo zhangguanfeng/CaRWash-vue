@@ -2,21 +2,37 @@
   <div>
     <el-card class="container">
       <!-- 表格部分 -->
-      <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="serviceName" :label="$t('serviceList').name" width="250">
+      <el-table :data="list_data.list " border style="width: 100%">
+        <el-table-column prop="id" :label="$t('serviceList').id" width="250">
         </el-table-column>
-        <el-table-column prop="frequentness" :label="$t('serviceList').frequentness" width="250">
+        <el-table-column prop="name" :label="$t('serviceList').name" width="250">
+        </el-table-column>
+        <el-table-column prop="times" :label="$t('serviceList').frequentness" width="250">
+        </el-table-column>
+        <el-table-column :label="$t('serviceList').img" width="250">
+          <template slot-scope="scope">
+            <img slot="reference" :src="scope.row.image" style="width: 5vw;height: 5vw">
+          </template>
         </el-table-column>
         <el-table-column :label="$t('operation')">
-          <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
-            <el-button @click="go(1)" icon="el-icon-user-solid" type="success" size="mini"></el-button>
-          </el-tooltip>
-          <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
-            <el-button @click="go(2)" icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
-          </el-tooltip>
-          <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
-            <el-button icon="el-icon-delete" type="danger" size="mini"></el-button>
-          </el-tooltip>
+          <template slot-scope="scope">
+
+            <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
+              <el-button @click="go(1)" icon="el-icon-user-solid" type="success" size="mini">
+              </el-button>
+            </el-tooltip>
+
+            <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
+              <el-button @click="go(2,scope.row)" icon="el-icon-edit-outline" type="primary"
+                size="mini">
+              </el-button>
+            </el-tooltip>
+
+            <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
+              <el-button icon="el-icon-delete" type="danger" size="mini"></el-button>
+            </el-tooltip>
+
+          </template>
         </el-table-column>
       </el-table>
     </el-card>
@@ -24,32 +40,27 @@
 </template>
 
 <script>
+import { mixin_pickerOptions, mixin_list, get_list } from "@/mixins";
+import page from "@/components/page";
+import { getService, getServiceDetail, editService } from '@/api/api';
+
 export default {
+  mixins: [mixin_pickerOptions, mixin_list(getService)],
   data () {
     return {
-      tableData: [{
-        serviceName: '洗车',
-        frequentness: '5',
-      }, {
-        serviceName: '洗车',
-        frequentness: '5',
-      }, {
-        serviceName: '洗车',
-        frequentness: '5',
-      }, {
-        serviceName: '洗车',
-        frequentness: '5',
-      }]
     }
   },
-  methods:{
-    go(type){
-      switch(type){
+  methods: {
+    go (type, row) {
+      switch (type) {
         case 1:
           this.$router.push('serviceList/detail')
           break;
         case 2:
-          this.$router.push('serviceList/edit')
+          this.$router.push({
+            name: 'serviceListEdit',
+            params: row
+          })
           break;
       }
     }
