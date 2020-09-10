@@ -450,7 +450,28 @@ export const getMessage = () => {
     method: 'GET'
   })
 }
-
+/**
+ * @description: 上传图片
+ * @return {Promise} promise
+ * */
+export const uploadImg = (data) => {
+  return server({
+    url: '/file_upload',
+    method: 'POST',
+    data
+  })
+}
+/**
+ * @description: 删除图片
+ * @return {Promise} promise
+ * */
+export const unloadImg = (data) => {
+  return server({
+    url: '/file_delete',
+    method: 'POST',
+    data
+  })
+}
 
 
 

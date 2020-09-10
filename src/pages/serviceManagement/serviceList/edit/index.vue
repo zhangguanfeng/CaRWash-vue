@@ -11,11 +11,29 @@
         <el-form-item :label="$t('serviceList').frequentness" prop="name">
           <el-input v-model="list_data.times"></el-input>
         </el-form-item>
-        <el-upload class="upload-demo" action="https://jsonplaceholder.typicode.com/posts/"
-          :file-list="fileList" list-type="picture">
-          <el-button size="small" type="primary">选择图片</el-button>
-          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+        <!-- 图片上传 -->
+        <el-upload action="#" list-type="picture-card" :auto-upload="false">
+          <i slot="default" class="el-icon-plus"></i>
+          <div slot="file" slot-scope="{file}">
+            <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+            <span class="el-upload-list__item-actions">
+              <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
+                <i class="el-icon-zoom-in"></i>
+              </span>
+              <span v-if="!disabled" class="el-upload-list__item-delete"
+                @click="handleDownload(file)">
+                <i class="el-icon-download"></i>
+              </span>
+              <span v-if="!disabled" class="el-upload-list__item-delete"
+                @click="handleRemove(file)">
+                <i class="el-icon-delete"></i>
+              </span>
+            </span>
+          </div>
         </el-upload>
+        <el-dialog :visible.sync="dialogVisible">
+          <img width="100%" :src="dialogImageUrl" alt="">
+        </el-dialog>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">
             {{$t('btnTip').edit}}
@@ -27,17 +45,16 @@
 </template>
 <script>
 import vueMapSmall from '@/components/global/vueMap'
-import { getStoreDetail } from '@/api/api'
+import { getStoreDetail, uploadImg, unloadImg } from '@/api/api'
 export default {
   name: 'serviceEdit',
   created () {
   },
   data () {
     return {
-      fileList: [{
-        name: this.$route.params.name,
-        url: this.$route.params.image
-      }],
+      dialogImageUrl: '',
+      dialogVisible: false,
+      disabled: false,
       // 地图弹窗
       mapDialog: false,
       // 修改之后地图
@@ -51,15 +68,29 @@ export default {
         startTime: '',
         endTime: ''
       },
-      list_data: this.$route.params
+      list_data: this.$route.params,
+      fileUrl: ''
     }
   },
   components: {
     vueMapSmall
   },
   methods: {
+    async handleRemove (file) {
+      const res = await unloadImg(file.url)
+      console.log(res)
+    },
+    handlePictureCardPreview (file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    async handleDownload (file) {
+      const res = await uploadImg(file)
+      this.fileUrl = file.url
+      console.log(this.fileUrl)
+    },
     submitForm () {
-      console.log(this.fileList)
+      console.log(this.dialogImageUrl)
     }
   }
 }
