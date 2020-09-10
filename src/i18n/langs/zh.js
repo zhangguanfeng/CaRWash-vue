@@ -122,13 +122,10 @@ const zh = {
   inputAccount: '请输入帐号名',
   password: '密码',
   inputPassword: '请输入密码',
-<<<<<<< HEAD
   back: '返回',
-=======
   startTime: '启始时间',
   endTime: '结束时间',
-  back:'返回',
->>>>>>> 9fc503b23aca49f7b5681e13a84fff7261679cf4
+  back: '返回',
   btnTip: {
     check: '查看',
     edit: '编辑',
