@@ -35,7 +35,9 @@ server.interceptors.response.use(res => {
 		Message.error({ message: res.data.errmsg });
 		Vue.$router.push('/login')
 		storage.removeLocal('userinfo')
-	}
+	}else if(res.data.errcode!==2000){
+    Message.error({ message: res.data.errmsg });
+  }
 	return res.data.data
 }, err => {
   console.log(err)

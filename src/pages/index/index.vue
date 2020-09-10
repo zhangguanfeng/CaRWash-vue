@@ -65,6 +65,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .main /deep/ {
+  height:100%;
   .el-scrollbar__wrap {
     overflow-x: hidden;
   }

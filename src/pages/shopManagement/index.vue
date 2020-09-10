@@ -15,7 +15,7 @@
             </div>
         </el-card>
         <el-card class="container">
-            <el-button type="primary" @click="go(2)" class="addManager">
+            <el-button type="primary" @click="add" class="addManager">
         {{$t('shopManagement').addShop}}
             </el-button>
             <!-- 表单部分 -->
@@ -37,13 +37,13 @@
                 <el-table-column :label="$t('operation')" width="250">
                 <template slot-scope="scope">
                     <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
-                    <el-button  @click="go(1)" icon="el-icon-user-solid" type="success" size="mini"></el-button>
+                    <el-button  @click="check(scope.row.id)" icon="el-icon-user-solid" type="success" size="mini"></el-button>
                     </el-tooltip>
                     <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
-                    <el-button  @click="go(2)" icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
+                    <el-button  @click="edit(scope.row.id)" icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
                     </el-tooltip>
                     <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
-                    <el-button  @click="remove(scope.row)" icon="el-icon-delete" type="danger" size="mini"></el-button>
+                    <el-button  @click="remove([scope.row.id])" icon="el-icon-delete" type="danger" size="mini"></el-button>
                     </el-tooltip>
                 </template>
                 </el-table-column>
@@ -55,7 +55,7 @@
 <script>
 import {mixin_pickerOptions,mixin_list} from "@/mixins"
 import page from "@/components/page";
-import {getStore} from "@/api/api"
+import {getStore, deleteStore} from "@/api/api"
 export default {
     name: 'shopManagement',
     data () {
@@ -70,14 +70,29 @@ export default {
     },
     mixins:[mixin_pickerOptions,mixin_list(getStore)],
     methods:{
-        go(type){
-      switch(type){
-        case 1:
-          return this.$router.push('shopManagement/detail')
-        case 2:
-          return this.$router.push('shopManagement/edit')
+      add(){
+        this.$router.push("/shopManagement/edit")
+      },
+      check(id){
+        this.$router.push(`/shopManagement/detail?id=${id}`)
+      },
+      edit(id){
+        this.$router.push(`/shopManagement/edit?id=${id}`)
+      },
+      remove(arr){
+        console.log('arr',arr)
+        const id = arr[0]
+         this.$confirm('确定删除店铺吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async() => {
+          await delete deleteStore(id)
+          this.get_list()
+        }).catch({
+
+        }) 
       }
-    }
     }
 }
 </script>

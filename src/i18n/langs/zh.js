@@ -87,7 +87,8 @@ const zh = {
     addShop: '添加代理店',
     scoped: '服务范围',
     contact: '联系方式',
-    business: '营业时间'
+    business: '营业时间',
+    selectScoped: '选择服务范围'
   },
   // 日程管理
   shecheduleManagement: {
@@ -121,7 +122,13 @@ const zh = {
   inputAccount: '请输入帐号名',
   password: '密码',
   inputPassword: '请输入密码',
+<<<<<<< HEAD
   back: '返回',
+=======
+  startTime: '启始时间',
+  endTime: '结束时间',
+  back:'返回',
+>>>>>>> 9fc503b23aca49f7b5681e13a84fff7261679cf4
   btnTip: {
     check: '查看',
     edit: '编辑',
