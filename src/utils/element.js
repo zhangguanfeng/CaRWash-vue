@@ -10,10 +10,11 @@ import {
   MessageBox,
   Scrollbar,
   Select,
+  Image,
 
-	// 时间选择
-	TimeSelect,
-	TimePicker,
+  // 时间选择
+  TimeSelect,
+  TimePicker,
   Row,
   Col,
   Form,
@@ -69,6 +70,7 @@ Vue.use(Message);
 Vue.use(MessageBox);
 Vue.use(Notification);
 Vue.use(Scrollbar);
+Vue.use(Image);
 
 Vue.use(TimeSelect)
 Vue.use(TimePicker);

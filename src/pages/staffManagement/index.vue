@@ -45,8 +45,8 @@
         <el-table-column :label="$t('operation')">
           <template slot-scope="scope">
             <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
-              <el-button @click="staffFormFun('check',scope.row)" icon="el-icon-user-solid"
-                type="success" size="mini"></el-button>
+              <el-button @click="staffFormFun('check',scope.row)" icon="el-icon-view" type="success"
+                size="mini"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
               <el-button @click="staffFormFun('edit',scope.row)" icon="el-icon-edit-outline"

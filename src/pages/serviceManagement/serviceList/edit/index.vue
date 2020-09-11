@@ -82,6 +82,7 @@ export default {
     vueMapSmall
   },
   methods: {
+    // 删除图片
     async handleRemove (file) {
       var box = document.getElementsByClassName('el-upload--picture-card')[0]
       box.style.display = 'inline-block'
@@ -112,14 +113,9 @@ export default {
       if (this.file.length > 0) {
         box.style.display = 'none'
       }
-      // string转blob
-      var blob = new Blob([file.url], {
-        type: 'text/plain'
-      })
-      // blob转file
-      // var files = new File([blob], filename, { type: contentType, lastModified: Date.now() });
-
-      // const res = await uploadImg(files)
+      console.log(file.raw)
+      const res = await uploadImg(file)
+      console.log(res)
     },
     handleExceed (file) {
       this.$message('最多只允许添加一张图片')

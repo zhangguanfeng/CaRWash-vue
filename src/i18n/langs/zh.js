@@ -97,6 +97,15 @@ const zh = {
     time: '洗车时间',
     state: '洗车状态'
   },
+  // 常见疑问
+  FAQ: {
+    ask: '新建疑问',
+    id: '编号',
+    create_time: '创建时间',
+    category: '分类',
+    title: '标题',
+    answer: '回答'
+  },
   // 复用部分
   search: '请输入关键字',
   choiceAuth: '请选择管理员权限',

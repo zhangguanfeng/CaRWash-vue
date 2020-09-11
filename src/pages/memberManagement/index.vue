@@ -19,7 +19,7 @@
         <el-table-column prop="phone" :label="$t('member.service')" width="250"></el-table-column>
         <el-table-column :label="$t('operation')">
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
-            <el-button icon="el-icon-user-solid" type="success" size="mini" @click="go(1)">
+            <el-button icon="el-icon-view" type="success" size="mini" @click="go(1)">
             </el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">

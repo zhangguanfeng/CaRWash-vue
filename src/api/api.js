@@ -205,10 +205,11 @@ export const editService = ({ id, ...data }) => {
  * @description: 获取价格
  * @return {Promise} promise
  * */
-export const getPrice = (id) => {
+export const getPrice = (params) => {
   return server({
-    url: `/admin/price/${id}`,
-    method: 'GET'
+    url: '/admin/price',
+    method: 'GET',
+    params
   })
 }
 /**

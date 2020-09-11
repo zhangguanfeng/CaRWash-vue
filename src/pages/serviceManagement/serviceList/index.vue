@@ -29,10 +29,6 @@
               </el-button>
             </el-tooltip>
 
-            <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
-              <el-button icon="el-icon-delete" type="danger" size="mini"></el-button>
-            </el-tooltip>
-
           </template>
         </el-table-column>
       </el-table>

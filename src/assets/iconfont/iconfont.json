@@ -6,6 +6,13 @@
   "description": "韩国洗车项目",
   "glyphs": [
     {
+      "icon_id": "3170981",
+      "name": "汽车",
+      "font_class": "qiche",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
       "icon_id": "7897596",
       "name": "管理后台",
       "font_class": "guanlihoutai",

@@ -11,11 +11,17 @@
         <el-form-item :label="$t('serviceList').frequentness + '：'" prop="name">
           <span>{{basicData.times}}</span>
         </el-form-item>
-        <el-form-item :label="$t('serviceList').category + '：'" prop="name">
-          <span>{{list_data.car_type}}</span>
+        <el-form-item :label="$t('serviceList').price + '：'">
+          <el-table stripe :data="list_data.list" border style="width: 100%">
+            <el-table-column prop="car_type" :label="$t('serviceList').category" min-width="50%">
+            </el-table-column>
+            <el-table-column prop="amount" :label="$t('serviceList').price" min-width="50%">
+            </el-table-column>
+          </el-table>
         </el-form-item>
-        <el-form-item :label="$t('serviceList').price + '：'" prop="name">
-          <span>{{list_data.amount}}</span>
+        <el-form-item :label="$t('serviceList').img + '：'">
+          <el-image style="width: 100px; height: 100px" :src="url" :preview-src-list="srcList">
+          </el-image>
         </el-form-item>
       </el-form>
     </el-card>
@@ -27,8 +33,8 @@ import page from "@/components/page";
 import { getPrice } from '@/api/api';
 
 export default {
-  async created () {
-    this.list_data = await getPrice(this.$route.params.id)
+  created () {
+    this.getPriceInfo()
   },
   data () {
     return {
@@ -46,10 +52,19 @@ export default {
         endTime: ''
       },
       basicData: this.$route.params,
-      list_data: {}
+      list_data: [],
+      url: this.$route.params.image,
+      srcList: [
+        this.$route.params.image
+      ]
     }
   },
   methods: {
+    async getPriceInfo () {
+      this.list_data = await getPrice({
+        service: this.$route.params.times / 4
+      })
+    }
   }
 }
 </script>

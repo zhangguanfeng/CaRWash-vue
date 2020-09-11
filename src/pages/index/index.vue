@@ -5,22 +5,21 @@
     </el-header>
     <el-container class="middle_content">
       <left-slide :collapse="collapse"></left-slide>
-      <el-scrollbar style="height: 100%;background: #E9EEF3;flex:1" ref="box">
-        <el-main>
-          <!-- 面包屑 -->
-          <breadcrumb></breadcrumb>
-          <!-- 视图内容 -->
-          <!-- <transition name="fade-page" mode="out-in">
+      <el-main style="height: 100%;background: #E9EEF3;">
+        <!-- 面包屑 -->
+        <breadcrumb></breadcrumb>
+        <!-- 视图内容 -->
+        <!-- <transition name="fade-page" mode="out-in">
             <router-view></router-view>
 
           </transition>-->
-          <cTransition>
-            <!-- <keep-alive v-if="$route.meta.noCache">
+        <cTransition>
+          <!-- <keep-alive v-if="$route.meta.noCache">
             <router-view></router-view>
           </keep-alive>
           <router-view v-if="!$route.meta.noCache"></router-view> -->
-          </cTransition>
-        </el-main>
+        </cTransition>
+      </el-main>
       </el-scrollbar>
     </el-container>
   </el-container>
@@ -65,7 +64,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .main /deep/ {
-  height:100%;
+  height: 100%;
   .el-scrollbar__wrap {
     overflow-x: hidden;
   }
