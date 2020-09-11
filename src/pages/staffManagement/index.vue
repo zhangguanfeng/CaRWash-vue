@@ -53,8 +53,7 @@
                 type="primary" size="mini"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
-              <el-button @click="remove(scope.row.id)" icon="el-icon-delete" type="danger"
-                size="mini">
+              <el-button @click="remove(scope.row)" icon="el-icon-delete" type="danger" size="mini">
               </el-button>
             </el-tooltip>
           </template>
@@ -66,39 +65,48 @@
     <el-dialog :title="title" :visible.sync="dialogFormVisible">
       <el-form ref="staffForm" :model="staffForm" label-width="90px" label-position="left"
         style="padding-left:30px;">
-        <el-form-item :label="$t('username')">
+        <el-form-item :label="$t('username') + '：'">
           <el-col :span="5">
-            <el-input v-model="staffForm.name" :placeholder="$t('inputUserID')"></el-input>
+            <el-input v-if="title !== '关闭'" v-model="staffForm.name"
+              :placeholder="$t('inputUserID') + '：'"></el-input>
+            <span v-else :disabled="true">{{staffForm.name}}</span>
           </el-col>
         </el-form-item>
-        <el-form-item :label="$t('account')">
+        <el-form-item :label="$t('account') + '：'">
           <el-col :span="8">
-            <el-input v-model="staffForm.account" autocomplete="off"
+            <el-input v-if="title !== '关闭'" v-model="staffForm.account" autocomplete="off"
               :placeholder="$t('inputAccount')"></el-input>
+            <span v-else :disabled="true">{{staffForm.account}}</span>
           </el-col>
         </el-form-item>
-        <el-form-item :label="$t('password')">
+        <el-form-item :label="$t('password') + '：'">
           <el-col :span="8">
-            <el-input show-password v-model="staffForm.password" :placeholder="$t('inputPassword')">
+            <el-input v-if="title !== '关闭'" show-password v-model="staffForm.password"
+              :placeholder="$t('inputPassword')">
             </el-input>
+            <span v-else show-password :disabled="true">{{list_data.list.password}}</span>
           </el-col>
         </el-form-item>
-        <el-form-item :label="$t('phone')">
+        <el-form-item :label="$t('phone') + '：'">
           <el-col :span="8">
-            <el-input v-model="staffForm.phone" :placeholder="$t('inputPhoneNum')"></el-input>
+            <el-input v-if="title !== '关闭'" v-model="staffForm.phone"
+              :placeholder="$t('inputPhoneNum')"></el-input>
+            <span v-else :disabled="true">{{staffForm.phone}}</span>
           </el-col>
         </el-form-item>
-        <el-form-item :label="$t('managerList.auth')">
+        <el-form-item :label="$t('managerList.auth') + '：'">
           <el-col :span="8">
-            <el-input v-model="staffForm.auth" :disabled="true"></el-input>
+            <span :disabled="true">{{staffForm.auth}}</span>
           </el-col>
         </el-form-item>
-        <el-form-item :label="$t('shop')">
+        <el-form-item :label="$t('shop') + '：'">
           <el-col :span="10">
-            <el-select v-model="staffForm.store" :placeholder="$t('choiceShop')">
+            <el-select v-if="title !== '关闭'" v-model="staffForm.store"
+              :placeholder="$t('choiceShop')">
               <el-option v-for="item in storeList" :key="item.id" :label="item.name"
                 :value="item.id"></el-option>
             </el-select>
+            <span v-else :disabled="true">{{staffForm.store}}</span>
           </el-col>
         </el-form-item>
       </el-form>
@@ -132,7 +140,8 @@ export default {
         name: '',
         phone: '',
         store: '',
-        auth: '1'
+        auth: '1',
+        id: ''
       },
       which: '',
       storeList: '',
@@ -167,7 +176,8 @@ export default {
           name: row.name,
           phone: row.phone,
           store: row.store.name,
-          auth: '1'
+          auth: '1',
+          id: row.id
         }
       } else {
         this.staffFrom = {
@@ -180,13 +190,27 @@ export default {
         }
       }
     },
-    async remove (id) {
-      await deleteStaff(id)
-      const res = await getStaff()
-      this.list_data.list = res.list
-      this.$message({
-        type: 'success',
-        message: '已删除'
+    remove (row) {
+      this.$confirm('是否删除' + row.name, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async () => {
+        await deleteStaff(row.id)
+        this.list_data.list.forEach((item, index) => {
+          if (row.id === item.id) {
+            this.list_data.list.splice(index, 1)
+          }
+        })
+        this.$message({
+          type: 'success',
+          message: '删除成功'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
       })
     },
     async done (title) {
@@ -216,12 +240,25 @@ export default {
               account: this.staffForm.account,
               password: this.staffForm.password,
               phone: this.staffForm.phone,
-              store: this.storeIDToEdit
+              store: this.staffForm.store
             }
-            console.log(data)
-            const result = await editStaff(data)
-            const res2 = await getStaff()
-            this.list_data.list = res2.list
+            await editStaff(data)
+            this.list_data.list.forEach((item, index) => {
+              if (item.id === this.staffForm.id) {
+                var name = ''
+                this.storeList.forEach((item, index) => {
+                  if (item.id === this.staffForm.store) {
+                    name = item.name
+                  }
+                })
+                item.name = this.staffForm.name,
+                  item.account = this.staffForm.account,
+                  item.password = this.staffForm.password,
+                  item.phone = this.staffForm.phone,
+                  item.store.id = this.staffForm.store,
+                  item.store.name = name
+              }
+            })
             this.dialogFormVisible = false
             break;
           case '关闭':

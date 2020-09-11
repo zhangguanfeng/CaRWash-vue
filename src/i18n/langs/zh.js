@@ -68,7 +68,9 @@ const zh = {
     name: '服务名称',
     frequentness: '每月次数',
     id: '服务id',
-    img: '服务'
+    img: '服务',
+    price: '价格',
+    category: '车型'
   },
   // 服务订单管理部分
   serviceApplication: {
@@ -113,6 +115,7 @@ const zh = {
   inputPhoneNum: '请输入手机号',
   inputUsername: '请输入用户姓名',
   inputShop: '请输入代理店',
+  inputImage: '请选择图片',
   inputShopAddress: '请输入代理店名称/地址',
   inputCategory: '请输入服务种类',
   inputTime: '请选择下单时间',

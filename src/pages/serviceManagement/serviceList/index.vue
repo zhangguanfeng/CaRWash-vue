@@ -18,7 +18,8 @@
           <template slot-scope="scope">
 
             <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
-              <el-button @click="go(1)" icon="el-icon-user-solid" type="success" size="mini">
+              <el-button @click="go(1,scope.row)" icon="el-icon-user-solid" type="success"
+                size="mini">
               </el-button>
             </el-tooltip>
 
@@ -54,7 +55,10 @@ export default {
     go (type, row) {
       switch (type) {
         case 1:
-          this.$router.push('serviceList/detail')
+          this.$router.push({
+            name: 'serviceListDetail',
+            params: row
+          })
           break;
         case 2:
           this.$router.push({

@@ -85,7 +85,7 @@ const routes = [
           icon: 'iconfont iconhuiyuan1',
           title: 'tShopManagement'
         },
-        children:[
+        children: [
           // 代理店管理
           {
             path: '',
@@ -291,32 +291,32 @@ const routes = [
         },
         children: [
           {
-            path:'',
-            name:'scheduleManagement',
-            component:scheduleManagement,
+            path: '',
+            name: 'scheduleManagement',
+            component: scheduleManagement,
             meta: {
               requiresAuth: true,
               noCache: true,
             }
           },
           {
-            path:'edit',
-            name:'scheduleEdit',
-            component:scheduleEdit,
+            path: 'edit',
+            name: 'scheduleEdit',
+            component: scheduleEdit,
             meta: {
               requiresAuth: true,
               noCache: false,
-              title:'tEdit'
+              title: 'tEdit'
             }
           },
           {
-            path:'detail',
-            name:'scheduleDetail',
-            component:scheduleDetail,
+            path: 'detail',
+            name: 'scheduleDetail',
+            component: scheduleDetail,
             meta: {
               requiresAuth: true,
               noCache: false,
-              title:'tDetail'
+              title: 'tDetail'
             }
           }
         ]
@@ -333,9 +333,9 @@ const routes = [
         },
         children: [
           {
-            path:'',
-            name:'resultManagementt',
-            component:resultManagement,
+            path: '',
+            name: 'resultManagementt',
+            component: resultManagement,
             meta: {
               requiresAuth: true,
               noCache: true,
@@ -363,12 +363,12 @@ const routes = [
               noCache: false,
               title: 'tSettlementList'
             },
-            children:[
+            children: [
               {
-                path:'',
-                name:'settlementList',
+                path: '',
+                name: 'settlementList',
                 component: settlementList,
-                meta:{
+                meta: {
                   requiresAuth: true,
                   noCache: false
                 }
@@ -398,12 +398,12 @@ const routes = [
               noCache: false,
               title: 'tCommentList'
             },
-            children:[
+            children: [
               {
-                path:'',
-                name:'commentList',
+                path: '',
+                name: 'commentList',
                 component: commentList,
-                meta:{
+                meta: {
                   requiresAuth: true,
                   noCache: false
                 }
@@ -420,12 +420,12 @@ const routes = [
               noCache: false,
               title: 'tCarList'
             },
-            children:[
+            children: [
               {
-                path:'',
-                name:'carList',
+                path: '',
+                name: 'carList',
                 component: carList,
-                meta:{
+                meta: {
                   requiresAuth: true,
                   noCache: false
                 }
@@ -455,12 +455,12 @@ const routes = [
               noCache: false,
               title: 'tUse'
             },
-            children:[
+            children: [
               {
-                path:'',
-                name:'use',
+                path: '',
+                name: 'use',
                 component: use,
-                meta:{
+                meta: {
                   requiresAuth: true,
                   noCache: false
                 }
@@ -477,12 +477,12 @@ const routes = [
               noCache: false,
               title: 'tInformation'
             },
-            children:[
+            children: [
               {
-                path:'',
-                name:'information',
+                path: '',
+                name: 'information',
                 component: information,
-                meta:{
+                meta: {
                   requiresAuth: true,
                   noCache: false
                 }
@@ -499,12 +499,12 @@ const routes = [
               noCache: false,
               title: 'tPosition'
             },
-            children:[
+            children: [
               {
-                path:'',
-                name:'position',
+                path: '',
+                name: 'position',
                 component: position,
-                meta:{
+                meta: {
                   requiresAuth: true,
                   noCache: false
                 }
@@ -534,12 +534,12 @@ const routes = [
               noCache: false,
               title: 'tMessage'
             },
-            children:[
+            children: [
               {
-                path:'',
-                name:'message',
+                path: '',
+                name: 'message',
                 component: message,
-                meta:{
+                meta: {
                   requiresAuth: true,
                   noCache: false
                 }
@@ -556,12 +556,12 @@ const routes = [
               noCache: false,
               title: 'tCommonQuestion'
             },
-            children:[
+            children: [
               {
-                path:'',
-                name:'commonQuestion',
+                path: '',
+                name: 'commonQuestion',
                 component: commonQuestion,
-                meta:{
+                meta: {
                   requiresAuth: true,
                   noCache: false
                 }
@@ -578,12 +578,12 @@ const routes = [
               noCache: false,
               title: 'tDifficultQuestion'
             },
-            children:[
+            children: [
               {
-                path:'',
-                name:'difficultQuestion',
+                path: '',
+                name: 'difficultQuestion',
                 component: difficultQuestion,
-                meta:{
+                meta: {
                   requiresAuth: true,
                   noCache: false
                 }

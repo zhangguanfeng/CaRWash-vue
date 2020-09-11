@@ -12,25 +12,24 @@
           <el-input v-model="list_data.times"></el-input>
         </el-form-item>
         <!-- 图片上传 -->
-        <el-upload action="#" list-type="picture-card" :auto-upload="false">
-          <i slot="default" class="el-icon-plus"></i>
-          <div slot="file" slot-scope="{file}">
-            <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
-            <span class="el-upload-list__item-actions">
-              <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
-                <i class="el-icon-zoom-in"></i>
+        <el-form-item :label="$t('inputImage')">
+          <el-upload ref="showUp" action="#" list-type="picture-card" :auto-upload="false"
+            :limit="1" :on-exceed="handleExceed" :file-list="file" :on-change="handleChange">
+            <i slot="default" class="el-icon-plus"></i>
+            <div slot="file" slot-scope="{file}">
+              <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
+              <span class="el-upload-list__item-actions">
+                <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
+                  <i class="el-icon-zoom-in"></i>
+                </span>
+                <span v-if="!disabled" class="el-upload-list__item-delete"
+                  @click="handleRemove(file)">
+                  <i class="el-icon-delete"></i>
+                </span>
               </span>
-              <span v-if="!disabled" class="el-upload-list__item-delete"
-                @click="handleDownload(file)">
-                <i class="el-icon-download"></i>
-              </span>
-              <span v-if="!disabled" class="el-upload-list__item-delete"
-                @click="handleRemove(file)">
-                <i class="el-icon-delete"></i>
-              </span>
-            </span>
-          </div>
-        </el-upload>
+            </div>
+          </el-upload>
+        </el-form-item>
         <el-dialog :visible.sync="dialogVisible">
           <img width="100%" :src="dialogImageUrl" alt="">
         </el-dialog>
@@ -45,13 +44,20 @@
 </template>
 <script>
 import vueMapSmall from '@/components/global/vueMap'
-import { getStoreDetail, uploadImg, unloadImg } from '@/api/api'
+import { uploadImg, unloadImg, editServiceTerm } from '@/api/api'
 export default {
   name: 'serviceEdit',
-  created () {
+  mounted () {
+    var box = document.getElementsByClassName('el-upload--picture-card')[0]
+    box.style.display = 'none'
   },
   data () {
     return {
+      hideUpload: false,
+      file: [{
+        name: this.$route.params.name,
+        url: this.$route.params.image
+      }],
       dialogImageUrl: '',
       dialogVisible: false,
       disabled: false,
@@ -77,20 +83,46 @@ export default {
   },
   methods: {
     async handleRemove (file) {
+      var box = document.getElementsByClassName('el-upload--picture-card')[0]
+      box.style.display = 'inline-block'
       const res = await unloadImg(file.url)
-      console.log(res)
+      this.file = []
     },
     handlePictureCardPreview (file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
-    async handleDownload (file) {
-      const res = await uploadImg(file)
-      this.fileUrl = file.url
-      console.log(this.fileUrl)
+    async submitForm () {
+      var data = {
+        id: this.list_data.id,
+        name: this.list_data.name,
+        times: this.list_data.times,
+        image: this.file.url
+      }
+      const res = await editServiceTerm(data)
+      console.log(res)
     },
-    submitForm () {
-      console.log(this.dialogImageUrl)
+    // 选中图片
+    async handleChange (file, fileList) {
+      var box = document.getElementsByClassName('el-upload--picture-card')[0]
+      this.file.push({
+        name: file.name,
+        url: file.url
+      })
+      if (this.file.length > 0) {
+        box.style.display = 'none'
+      }
+      // string转blob
+      var blob = new Blob([file.url], {
+        type: 'text/plain'
+      })
+      // blob转file
+      // var files = new File([blob], filename, { type: contentType, lastModified: Date.now() });
+
+      // const res = await uploadImg(files)
+    },
+    handleExceed (file) {
+      this.$message('最多只允许添加一张图片')
     }
   }
 }

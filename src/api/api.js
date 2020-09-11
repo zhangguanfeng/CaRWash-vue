@@ -205,9 +205,9 @@ export const editService = ({ id, ...data }) => {
  * @description: 获取价格
  * @return {Promise} promise
  * */
-export const getPrice = () => {
+export const getPrice = (id) => {
   return server({
-    url: '/admin/price',
+    url: `/admin/price/${id}`,
     method: 'GET'
   })
 }
