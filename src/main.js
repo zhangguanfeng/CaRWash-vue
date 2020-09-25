@@ -19,10 +19,11 @@ import VueAMap from 'vue-amap'
 // 按需引入需要使用的element
 import "@/utils/element.js";
 import 'element-ui/lib/theme-chalk/index.css'
+import initRules from '@/utils/initRules'
 import VueRouter from 'vue-router'
 Vue.use(animated)
 Vue.config.productionTip = false
-
+Vue.prototype.$initRules = initRules
 router.afterEach(() => {
 	window.scrollTo(0, 0)
 })

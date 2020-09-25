@@ -38,7 +38,7 @@ server.interceptors.response.use(res => {
 	}else if(res.data.errcode!==2000){
     Message.error({ message: res.data.errmsg });
   }
-	return res.data.data
+	return res.data.data || res.data
 }, err => {
   console.log(err)
   Load.hideLoading()

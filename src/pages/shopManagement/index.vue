@@ -20,38 +20,31 @@
         {{$t('shopManagement').addShop}}
       </el-button>
       <!-- 表单部分 -->
-      <el-table :data="list_data.list" border style="width: 100%">
-        <el-table-column sortable prop="id" label="ID">
-        </el-table-column>
-        <el-table-column prop="name" :label="$t('shop')">
-        </el-table-column>
-        <el-table-column prop="address" :label="$t('address')">
-        </el-table-column>
-        <el-table-column prop="description" :label="$t('introduce')">
-        </el-table-column>
-        <el-table-column prop="service_range" :label="$t('shopManagement').scoped">
-        </el-table-column>
-        <el-table-column prop="phone" :label="$t('shopManagement').contact">
-        </el-table-column>
-        <el-table-column sortable prop="open_hours" :label="$t('shopManagement').business">
-        </el-table-column>
-        <el-table-column :label="$t('operation')" width="250">
-          <template slot-scope="scope">
-            <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
-              <el-button @click="check(scope.row.id)" icon="el-icon-view" type="success"
+      <my-table
+        :columns="columns"
+        :data="list_data.list"
+        :showIndex="false"
+        :showSelection="false"
+        :cellStyle="{padding: '6px 0'}"
+        :headerCellStyle="{background:'rgba(51, 55, 68)',color:'#fff'}"
+        @emitSelection="allSelect"
+        @sortChange="sort_change"
+      >
+        <template v-slot:operation="slotProps">
+          <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
+              <el-button @click="check(slotProps.callback.row.id)" icon="el-icon-view" type="success"
                 size="mini"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
-              <el-button @click="edit(scope.row.id)" icon="el-icon-edit-outline" type="primary"
+              <el-button @click="edit(slotProps.callback.row.id)" icon="el-icon-edit-outline" type="primary"
                 size="mini"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
-              <el-button @click="remove([scope.row.id])" icon="el-icon-delete" type="danger"
+              <el-button @click="remove([slotProps.callback.row.id])" icon="el-icon-delete" type="danger"
                 size="mini"></el-button>
             </el-tooltip>
-          </template>
-        </el-table-column>
-      </el-table>
+        </template>
+      </my-table>
       <page :total="list_data.total" :page_size.sync="pageSize" :page.sync="page" />
     </el-card>
   </div>
@@ -59,6 +52,7 @@
 <script>
 import { mixin_pickerOptions, mixin_list } from "@/mixins"
 import page from "@/components/page";
+import myTable from '@/components/Table'
 import { getStore, deleteStore } from "@/api/api"
 export default {
   name: 'shopManagement',
@@ -67,10 +61,47 @@ export default {
       filter: {
         search: ''
       },
+      columns: [
+        {
+          label: 'ID',
+          sortable: true,
+          prop: 'id',
+        }, {
+          label: this.$t('shop'),
+          prop: 'name',
+        }, {
+          label: this.$t('address'),
+          prop: 'address',
+        },
+        {
+          label: this.$t('introduce'),
+          prop: 'description',
+        },
+        {
+          label: this.$t('shopManagement.scoped'),
+          prop: 'service_range',
+        },
+        {
+          label: this.$t('shopManagement.contact'),
+          prop: 'phone',
+        },
+        {
+          label: this.$t('shopManagement.business'),
+          prop: 'open_hours',
+          sortable: true,
+        },
+        {
+          label: this.$t('operation'),
+          prop: '',
+          width: 200,
+          align: 'left',
+          slot: 'operation'
+        }],
     }
   },
   components: {
-    page
+    page,
+    myTable
   },
   mixins: [mixin_pickerOptions, mixin_list(getStore)],
   methods: {
@@ -125,8 +156,8 @@ export default {
       }
     }
     .searchByArea:before {
-      content: "\e625";
-      font-family: "iconfont" !important;
+      content: '\e625';
+      font-family: 'iconfont' !important;
       font-size: 16px;
       font-style: normal;
       -webkit-font-smoothing: antialiased;
@@ -138,8 +169,8 @@ export default {
       color: #545c64ac;
     }
     .searchByShop:before {
-      content: "\e62f";
-      font-family: "iconfont" !important;
+      content: '\e62f';
+      font-family: 'iconfont' !important;
       font-size: 16px;
       font-style: normal;
       -webkit-font-smoothing: antialiased;

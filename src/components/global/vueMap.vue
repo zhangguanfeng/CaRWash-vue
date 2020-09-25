@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import {AMapManager, lazyAMapApiLoaderInstance} from 'vue-amap'
+import { AMapManager, lazyAMapApiLoaderInstance } from 'vue-amap'
 let amapManager = new AMapManager()
 export default {
   props: ['locationInfo'],
@@ -235,14 +235,13 @@ export default {
       })
     }
   },
-  mounted () {}
+  mounted () { }
 }
 </script>
 
 <style lang="css">
 .container {
   width: 100%;
-  height: 500px;
 }
 .search-box {
   position: absolute;

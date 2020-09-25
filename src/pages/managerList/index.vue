@@ -16,7 +16,6 @@
         <el-button @click="get_list" class="search" round>{{$t('search_zh')}}</el-button>
       </div>
     </el-card>
-
     <el-card class="container">
       <!-- 添加管理员部分 -->
       <el-button type="primary" @click="managerFormFun('add')" class="addManager">
@@ -24,98 +23,75 @@
       </el-button>
 
       <!-- 表格部分 -->
-      <el-table :data="list_data.list" border style="width: 100%" @selection-change="allSelect"
-        @sort-change="sort_change">
-        <!-- <el-table-column type="selection" width="55">
-        </el-table-column> -->
-        <el-table-column sortable prop="id" label="ID" width="100">
-        </el-table-column>
-        <el-table-column prop="name" :label="$t('username')">
-        </el-table-column>
-        <el-table-column prop="account" :label="$t('account')">
-        </el-table-column>
-        <el-table-column prop="phone" :label="$t('phone')">
-        </el-table-column>
-        <el-table-column prop="store.name" :label="$t('shop')">
-        </el-table-column>
-        <el-table-column prop="auth" :label="$t('managerList.auth')">
-          <template slot-scope="scope">
-            <span>{{ auth_filters(scope.row.auth) }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column :label="$t('operation')" width="250">
-          <template slot-scope="scope">
-            <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
-              <el-button @click="managerFormFun('check',scope.row.id)" icon="el-icon-view"
-                type="success" size="mini"></el-button>
-            </el-tooltip>
-            <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
-              <el-button @click="managerFormFun('edit',scope.row.id)" icon="el-icon-edit-outline"
-                type="primary" size="mini"></el-button>
-            </el-tooltip>
-            <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
-              <el-button @click="remove([scope.row.id])" icon="el-icon-delete" type="danger"
-                size="mini"></el-button>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-      </el-table>
+      <my-table
+        :columns="columns"
+        :data="list_data.list"
+        :showIndex="false"
+        :showSelection="false"
+        :cellStyle="{padding: '6px 0'}"
+        :headerCellStyle="{background:'rgba(51, 55, 68)',color:'#fff'}"
+        @emitSelection="allSelect"
+        @sortChange="sort_change"
+      >
+        <template v-slot:auth="slotProps">
+          <span>{{ auth_filters(slotProps.callback.row.auth) }}</span>
+        </template>
+        <template v-slot:operation="slotProps">
+          <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
+            <el-button @click="managerFormFun('check',slotProps.callback.row)" icon="el-icon-view"
+              type="success" size="mini"></el-button>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
+            <el-button @click="managerFormFun('edit',slotProps.callback.row)" icon="el-icon-edit-outline"
+              type="primary" size="mini"></el-button>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
+            <el-button @click="remove(slotProps.callback.row.id)" icon="el-icon-delete" type="danger"
+              size="mini"></el-button>
+          </el-tooltip>
+        </template>
+      </my-table>
       <page :total="list_data.total" :page_size.sync="pageSize" :page.sync="page" />
     </el-card>
-
     <!-- 添加表单 -->
-    <el-dialog :title="title" :visible.sync="dialogFormVisible">
-      <el-form :rules="rules" ref="managerForm" :model="managerForm" label-width="90px"
-        label-position="left" style="padding-left:30px;">
-        <el-form-item prop="name" :label="$t('username')">
-          <template v-if="which==='check'">{{managerForm.name}}</template>
-          <el-input v-else v-model="managerForm.name" :placeholder="$t('inputUsername')"></el-input>
-        </el-form-item>
-        <el-form-item prop="account" v-if="which!=='edit'" :label="$t('account')">
-          <template v-if="which==='check'">{{managerForm.account}}</template>
-          <el-input v-else v-model="managerForm.account" :placeholder="$t('inputAccount')">
-          </el-input>
-        </el-form-item>
-        <el-form-item prop="password" v-if="which==='add'" :label="$t('password')">
-          <template v-if="which==='check'">{{managerForm.password}}</template>
-          <el-input v-else v-model="managerForm.password" :placeholder="$t('inputPassword')">
-          </el-input>
-        </el-form-item>
-        <el-form-item prop="phone" :label="$t('phone')">
-          <template v-if="which==='check'">{{managerForm.phone}}</template>
-          <el-input v-else v-model="managerForm.phone" :placeholder="$t('inputPhoneNum')">
-          </el-input>
-        </el-form-item>
-        <el-form-item prop="store" :label="$t('shop')">
-          <template v-if="which==='check'">{{managerForm.store}}</template>
-          <el-select v-else v-model="managerForm.store" :placeholder="$t('choiceShop')">
-            <el-option v-for="(item, index) in shopList" :key="index" :label="item.name"
-              :value="item.id"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item prop="auth" :label="$t('managerList.auth')">
-          <template
-            v-if="which==='check'">{{managerForm.auth===0?$t('managerList.superManager'):$t('managerList.shopManager')}}</template>
-          <el-select v-else v-model="managerForm.auth" :placeholder="$t('choiceAuth')">
-            <el-option :label="$t('managerList.superManager')" :value="0"></el-option>
-            <el-option :label="$t('managerList.shopManager')" :value="1"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <el-button @click="done('managerForm')" type="primary" style="margin-left:30px;">{{title}}
-      </el-button>
+    <el-dialog :title="title" :visible.sync="dialogFormVisible" width="500px">
+      <form-page
+        :ref-obj.sync="formInfo.ref"
+        :data="formInfo.data"
+        :field-list="formInfo.fieldList"
+        :rules="formInfo.rules"
+        :label-width="formInfo.labelWidth"
+        :list-type-info="listTypeInfo"
+        :disabled="formInfo.disabled"
+      ></form-page>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="done('managerForm')" type="primary" style="margin-left:30px;">{{title}}
+        </el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import { mixin_pickerOptions, mixin_list } from "@/mixins"
-import page from "@/components/page";
+import page from "@/components/page"
+import myTable from '@/components/Table'
+import FormPage from '@/components/FormPage'
 import { getManagementList, deleteManagement, addManagement, editManagement, getManagementDetail, getStore } from '@/api/api';
+const formInfoData = {
+  name: '',
+  account: '',
+  password: '',
+  phone: '',
+  auth: '',
+  store: ''
+}
 export default {
   name: "managerList",
   components: {
-    page
+    page,
+    FormPage,
+    myTable
   },
   mixins: [mixin_pickerOptions, mixin_list(getManagementList)],
   data () {
@@ -126,37 +102,63 @@ export default {
       // 是否显示添加表单
       dialogFormVisible: false,
       // 添加表单信息
-      managerForm: {
-        name: '',
-        account: '',
-        password: '',
-        phone: '',
-        auth: '',
-        store: ''
-      },
       which: '',
       shopList: '',
-      rules: {
-        name: [
-          { required: true, message: '请输入名称', trigger: 'blur' },
+      listTypeInfo: {
+        shopList: [],
+        authList: [
+          { label: this.$t('managerList.superManager'), value: 0 },
+          { label: this.$t('managerList.shopManager'), value: 1 },
         ],
-        account: [
-          { required: true, message: '请输入账户名', trigger: 'blur' }
+      },
+      columns: [
+        {
+          label: 'ID',
+          sortable: true,
+          prop: 'id',
+        }, {
+          label: this.$t('username'),
+          prop: 'name',
+        }, {
+          label: this.$t('account'),
+          prop: 'account',
+        },
+        {
+          label: this.$t('phone'),
+          prop: 'phone',
+        },
+        {
+          label: this.$t('shop'),
+          prop: 'store.name',
+        },
+        {
+          label: this.$t('managerList.auth'),
+          prop: '',
+          slot: 'auth'
+        },
+        {
+          label: this.$t('operation'),
+          prop: '',
+          width: 200,
+          align: 'left',
+          slot: 'operation'
+        }],
+      formInfo: {
+        ref: null,
+        disabled: false,
+        data: formInfoData,
+        fieldList: [
+          { label: this.$t('username'), value: 'name', width: '260', type: 'input', className: 'el-form-block', required: true },
+          { label: this.$t('account'), value: 'account', type: 'input', width: '260', className: 'el-form-block', required: true, hidden: false },
+          { label: this.$t('password'), value: 'password', type: 'input', width: '260', className: 'el-form-block', required: true, hidden: false },
+          { label: this.$t('phone'), value: 'phone', type: 'input', width: '260', className: 'el-form-block', required: true, disabled: false },
+          { label: this.$t('shop'), value: 'store', type: 'select', width: '260', className: 'el-form-block', list: 'shopList', required: true, disabled: false },
+          { label: this.$t('managerList.auth'), value: 'auth', type: 'select', width: '260', className: 'el-form-block', list: 'authList', required: true, disabled: false },
         ],
-        password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, max: 12, message: '长度在 6 到 12 个字符', trigger: 'change' }
-        ],
-        phone: [
-          { required: true, message: '请输入联系方式', trigger: 'blur' }
-        ],
-        store: [
-          { required: true, message: '请输入代理店', trigger: 'blur' }
-        ],
-        auth: [
-          { required: true, message: '请选择权限等级', trigger: 'blur' }
-        ],
-      }
+        rules: {
+        },
+        labelWidth: '120px'
+      },
     }
   },
 
@@ -174,62 +176,85 @@ export default {
   },
 
   filters: {
-
   },
-
+  created () {
+    this.getShopList()
+    this.initRules()
+  },
   methods: {
+    initRules () {
+      const formInfo = this.formInfo
+      formInfo.rules = this.$initRules(formInfo.fieldList)
+    },
     auth_filters (auth) {
       return auth === 0 ? this.$t('managerList.superManager') : this.$t('managerList.shopManager')
     },
-    async managerFormFun (type, id) {
+    async getShopList () {
+      const res = await getStore()
+      this.listTypeInfo.shopList = res.list.map((item) => {
+        return { label: item.name, value: item.id }
+      })
+    },
+    async managerFormFun (type, data) {
+      switch (type) {
+        case 'check':
+          this.formInfo.data = { ...data, store: data.store.id }
+          this.formInfo.fieldList[1].hidden = false
+          this.formInfo.fieldList[2].hidden = true
+          break;
+        case 'edit':
+          this.formInfo.data = { ...data, store: data.store.id }
+          this.formInfo.fieldList[2].required = false
+          this.formInfo.fieldList[1].hidden = true
+          this.formInfo.fieldList[2].hidden = true
+          this.initRules()
+          break;
+        case 'add':
+          this.formInfo.data = formInfoData
+          this.formInfo.fieldList[1].hidden = false
+          this.formInfo.fieldList[2].hidden = false
+          this.formInfo.fieldList[2].required = true
+          this.initRules()
+          break;
+      }
+      this.formInfo.disabled = type !== 'check' ? false : true
       this.dialogFormVisible = true
       this.which = type
-      if (type !== 'check') {
-        const shop = await getStore()
-        this.shopList = shop.list
-      }
-      if (id) {
-        const res = await getManagementDetail(id)
-        this.managerForm = { ...res, store: res.store.id }
-      } else {
-        this.managerForm = {
-          name: '',
-          account: '',
-          password: '',
-          phone: '',
-          auth: '',
-          store: ''
-        }
-      }
-
     },
-    remove (arr) {
-      console.log(arr)
+    remove (id) {
       this.$confirm('确定删除管理员吗?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        await deleteManagement(arr[0])
-        this.get_list()
+        let res = await deleteManagement(id)
+        if (res.errcode == 2000) {
+          this.list_data.list = this.list_data.list.filter((value) => {
+            return value.id != id
+          })
+        }
       }).catch({
-
       })
     },
     async done (name) {
-      console.log(this.which)
 
       switch (this.which) {
         case 'add':
-          await this.$refs[name].validate()
-          this.addManager(this.managerForm)
+          this.formInfo.ref.validate((valid) => {
+            if (valid) {
+              this.addManager(this.formInfo.data)
+            }
+          })
           return
         case 'check':
           this.dialogFormVisible = false
           return
         case 'edit':
-          await this.$refs[name].validate()
-          this.editManager(this.managerForm)
+          this.formInfo.ref.validate((valid) => {
+            if (valid) {
+              this.editManager(this.formInfo.data)
+            }
+          })
           return
       }
     },
@@ -246,7 +271,8 @@ export default {
       await editManagement(managerForm)
       this.dialogFormVisible = false
       this.get_list()
-    }
+    },
+
   }
 }
 </script>
@@ -278,8 +304,8 @@ export default {
       }
     }
     .searchByName:before {
-      content: "\e625";
-      font-family: "iconfont" !important;
+      content: '\e625';
+      font-family: 'iconfont' !important;
       font-size: 16px;
       font-style: normal;
       -webkit-font-smoothing: antialiased;
@@ -291,8 +317,8 @@ export default {
       color: #545c64ac;
     }
     .searchByShop:before {
-      content: "\e62f";
-      font-family: "iconfont" !important;
+      content: '\e62f';
+      font-family: 'iconfont' !important;
       font-size: 16px;
       font-style: normal;
       -webkit-font-smoothing: antialiased;
