@@ -5,10 +5,18 @@
         <h2>{{$t('search_title')}}</h2>
       </div>
       <div class="search_card_bottom">
-        <el-input :placeholder="$t('inputUserID')" class="searchById" clearable
-          v-model="filter.searchById"></el-input>
-        <el-input :placeholder="$t('inputPhoneNum')" class="searchByPhone" clearable
-          v-model="filter.searchByPhone"></el-input>
+        <el-input
+          :placeholder="$t('inputUserID')"
+          class="searchById"
+          clearable
+          v-model="filter.searchById"
+        ></el-input>
+        <el-input
+          :placeholder="$t('inputPhoneNum')"
+          class="searchByPhone"
+          clearable
+          v-model="filter.searchByPhone"
+        ></el-input>
         <el-button class="search" icon="el-icon-search" round>{{$t('search_zh')}}</el-button>
       </div>
     </el-card>
@@ -19,12 +27,10 @@
         <el-table-column prop="phone" :label="$t('member.service')" width="250"></el-table-column>
         <el-table-column :label="$t('operation')">
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
-            <el-button icon="el-icon-view" type="success" size="mini" @click="go(1)">
-            </el-button>
+            <el-button icon="el-icon-view" type="success" size="mini" @click="go(1)"></el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
-            <el-button icon="el-icon-edit-outline" type="primary" size="mini" @click="go(2)">
-            </el-button>
+            <el-button icon="el-icon-edit-outline" type="primary" size="mini" @click="go(2)"></el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
             <el-button icon="el-icon-delete" type="danger" size="mini"></el-button>
@@ -37,6 +43,7 @@
 
 <script>
 export default {
+  name: 'memberManagement',
   data () {
     return {
       filter: {
@@ -103,8 +110,8 @@ export default {
       }
     }
     .searchById:before {
-      content: "\e696";
-      font-family: "iconfont" !important;
+      content: '\e696';
+      font-family: 'iconfont' !important;
       font-size: 16px;
       font-style: normal;
       -webkit-font-smoothing: antialiased;
@@ -116,8 +123,8 @@ export default {
       color: #545c64ac;
     }
     .searchByPhone:before {
-      content: "\e602";
-      font-family: "iconfont" !important;
+      content: '\e602';
+      font-family: 'iconfont' !important;
       font-size: 16px;
       font-style: normal;
       -webkit-font-smoothing: antialiased;

@@ -1,9 +1,19 @@
 <template>
   <el-aside class="leftSlide" style="width:auto">
     <el-scrollbar style="height:100%;width:auto">
-      <el-menu router unique-opened :default-active="$route.path" class="el-menu-vertical-demo"
-        @open="handleOpen" @close="handleClose" @select="handleselect" :collapse="collapse"
-        background-color="#333744" text-color="#fff" active-text-color="#409EFF">
+      <el-menu
+        router
+        unique-opened
+        :default-active="$route.path"
+        class="el-menu-vertical-demo"
+        @open="handleOpen"
+        @close="handleClose"
+        @select="handleselect"
+        :collapse="collapse"
+        background-color="#333744"
+        text-color="#fff"
+        active-text-color="#409EFF"
+      >
         <!-- <template v-for="(item , index) in routerList">
 
           <el-submenu :index="item.path" v-if="!item.meta.hide && item.children">
@@ -20,7 +30,7 @@
             <i :class="item.meta.icon"></i>
             <span slot="title">{{$t(`${item.meta.title}`)}}</span>
           </el-menu-item>
-        </template> -->
+        </template>-->
 
         <el-menu-item index="/">
           <i class="iconfont iconicon95"></i>
@@ -48,30 +58,29 @@
             <span slot="title">{{$t('tServiceManagement')}}</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="/serviceManagement/serviceList">{{$t('tServiceList')}}
-            </el-menu-item>
+            <el-menu-item index="/serviceManagement/serviceList">{{$t('tServiceList')}}</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group>
-            <el-menu-item index="/serviceManagement/serviceApplication">
-              {{$t('tServiceApplication')}}</el-menu-item>
+            <el-menu-item
+              index="/serviceManagement/serviceApplication"
+            >{{$t('tServiceApplication')}}</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
         <el-menu-item index="/scheduleManagement">
           <i class="iconfont iconhuiyuan"></i>
           <span slot="title">{{$t('tScheduleManagement')}}</span>
         </el-menu-item>
-        <el-menu-item index="/resultManagement">
+        <!-- <el-menu-item index="/resultManagement">
           <i class="iconfont iconhuiyuan1"></i>
           <span slot="title">{{$t('tResultManagement')}}</span>
-        </el-menu-item>
+        </el-menu-item>-->
         <el-submenu index="3">
           <template slot="title">
             <i class="iconfont iconfuwu1"></i>
             <span slot="title">{{$t('tSettlementManagement')}}</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="/settlementManagement/settlementList">{{$t('tSettlementList')}}
-            </el-menu-item>
+            <el-menu-item index="/settlementManagement/settlementList">{{$t('tSettlementList')}}</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
         <el-submenu index="4">
@@ -80,13 +89,12 @@
             <span slot="title">{{$t('tContentManagement')}}</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="/contentManagement/commentList">{{$t('tCommentList')}}
-            </el-menu-item>
+            <el-menu-item index="/contentManagement/commentList">{{$t('tCommentList')}}</el-menu-item>
           </el-menu-item-group>
-          <el-menu-item-group>
+          <!-- <el-menu-item-group>
             <el-menu-item index="/contentManagement/carList">{{$t('tCarList')}}
             </el-menu-item>
-          </el-menu-item-group>
+          </el-menu-item-group>-->
         </el-submenu>
         <el-submenu index="5">
           <template slot="title">
@@ -94,16 +102,13 @@
             <span slot="title">{{$t('tServiceCenter')}}</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="/serviceCenter/message">{{$t('tMessage')}}
-            </el-menu-item>
+            <el-menu-item index="/serviceCenter/message">{{$t('tMessage')}}</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group>
-            <el-menu-item index="/serviceCenter/commonQuestion">{{$t('tCommonQuestion')}}
-            </el-menu-item>
+            <el-menu-item index="/serviceCenter/commonQuestion">{{$t('tCommonQuestion')}}</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group>
-            <el-menu-item index="/serviceCenter/difficultQuestion">{{$t('tDifficultQuestion')}}
-            </el-menu-item>
+            <el-menu-item index="/serviceCenter/difficultQuestion">{{$t('tDifficultQuestion')}}</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
         <el-submenu index="6">
@@ -112,17 +117,14 @@
             <span slot="title">{{$t('tSetting')}}</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="/setting/use">{{$t('tUse')}}
-            </el-menu-item>
+            <el-menu-item index="/setting/use">{{$t('tUse')}}</el-menu-item>
+          </el-menu-item-group>
+          <!-- <el-menu-item-group>
+            <el-menu-item index="/setting/information">{{$t('tInformation')}}</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group>
-            <el-menu-item index="/setting/information">{{$t('tInformation')}}
-            </el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group>
-            <el-menu-item index="/setting/position">{{$t('tPosition')}}
-            </el-menu-item>
-          </el-menu-item-group>
+            <el-menu-item index="/setting/position">{{$t('tPosition')}}</el-menu-item>
+          </el-menu-item-group>-->
         </el-submenu>
       </el-menu>
     </el-scrollbar>
@@ -142,11 +144,11 @@ export default {
   methods: {
     // 导航栏打开事件
     handleOpen (key, keyPath) {
-    //   console.log(key, keyPath);
+      //   console.log(key, keyPath);
     },
     // 导航栏关闭事件
     handleClose (key, keyPath) {
-    //   console.log(key, keyPath);
+      //   console.log(key, keyPath);
     },
     // 选中的栏目
     handleselect (key, keyPath) {

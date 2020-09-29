@@ -33,6 +33,7 @@
       />
       <el-input
         v-if="item.type === 'textarea'"
+        :style="{width:item.width+'px'}"
         v-model="data[item.value]"
         :type="item.type"
         :disabled="item.disabled"

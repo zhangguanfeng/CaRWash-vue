@@ -11,7 +11,7 @@ import {
   Scrollbar,
   Select,
   Image,
-
+  Rate,
   // 时间选择
   TimeSelect,
   TimePicker,
@@ -71,6 +71,7 @@ Vue.use(MessageBox);
 Vue.use(Notification);
 Vue.use(Scrollbar);
 Vue.use(Image);
+Vue.use(Rate);
 
 Vue.use(TimeSelect)
 Vue.use(TimePicker);

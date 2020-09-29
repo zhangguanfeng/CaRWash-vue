@@ -106,6 +106,30 @@ const zh = {
     title: '标题',
     answer: '回答'
   },
+  // 消息通知
+  message: {
+    type: '消息类型',
+    title: '标题',
+    content: '消息内容',
+    typeText0: '全体',
+    typeText1: '所有客户',
+    typeText2: '所有职员',
+    typeText3: '单个用户',
+  },
+  // 服务条款
+  serviceTerms: {
+    type: '类型',
+    content: '内容',
+  },
+  // 评价列表
+  commentList: {
+    address: '地址',
+    car_type: '车型',
+    content: '评价',
+    service: '服务类型',
+    name: '姓名',
+    star: '好评'
+  },
   // 复用部分
   search: '请输入关键字',
   choiceAuth: '请选择管理员权限',
@@ -139,6 +163,7 @@ const zh = {
   endTime: '结束时间',
   back: '返回',
   btnTip: {
+    submit: '确认',
     check: '查看',
     edit: '编辑',
     delete: '删除',

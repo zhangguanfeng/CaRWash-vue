@@ -16,12 +16,12 @@ const server = axios.create({
 })
 
 server.interceptors.request.use(config => {
-	const token = storage.getLocal('token')
-	if (token) {
-		config.headers.Authorization = 'token=' + token
-	}
-	Load.showLoading()
-	return config
+  const token = storage.getLocal('token')
+  if (token) {
+    config.headers.Authorization = 'token=' + token
+  }
+  Load.showLoading()
+  return config
 }, err => {
   Message.error({ message: 'Request timeout, please try again' });
   Load.hideLoading()
@@ -29,16 +29,16 @@ server.interceptors.request.use(config => {
 })
 
 server.interceptors.response.use(res => {
-	Load.hideLoading()
-	console.log(res.data.data)
-	if(res.data.errcode === 4000 ||res.data.errcode === 4001 ||res.data.errcode === 4002 ||res.data.errcode === 4003 ){
-		Message.error({ message: res.data.errmsg });
-		Vue.$router.push('/login')
-		storage.removeLocal('userinfo')
-	}else if(res.data.errcode!==2000){
+  Load.hideLoading()
+  // console.log(res.data.data)
+  if (res.data.errcode === 4000 || res.data.errcode === 4001 || res.data.errcode === 4002 || res.data.errcode === 4003) {
+    Message.error({ message: res.data.errmsg });
+    Vue.$router.push('/login')
+    storage.removeLocal('userinfo')
+  } else if (res.data.errcode !== 2000) {
     Message.error({ message: res.data.errmsg });
   }
-	return res.data.data || res.data
+  return res.data.data || res.data
 }, err => {
   console.log(err)
   Load.hideLoading()

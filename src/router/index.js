@@ -322,27 +322,27 @@ const routes = [
         ]
       },
       // 结果管理
-      {
-        path: 'resultManagement',
-        component: Transform,
-        redirect: 'resultManagement',
-        meta: {
-          requiresAuth: true,
-          noCache: true,
-          title: 'tResultManagement'
-        },
-        children: [
-          {
-            path: '',
-            name: 'resultManagementt',
-            component: resultManagement,
-            meta: {
-              requiresAuth: true,
-              noCache: true,
-            }
-          },
-        ]
-      },
+      // {
+      //   path: 'resultManagement',
+      //   component: Transform,
+      //   redirect: 'resultManagement',
+      //   meta: {
+      //     requiresAuth: true,
+      //     noCache: true,
+      //     title: 'tResultManagement'
+      //   },
+      //   children: [
+      //     {
+      //       path: '',
+      //       name: 'resultManagementt',
+      //       component: resultManagement,
+      //       meta: {
+      //         requiresAuth: true,
+      //         noCache: true,
+      //       }
+      //     },
+      //   ]
+      // },
       // 结算管理
       {
         path: 'settlementManagement',
@@ -411,27 +411,27 @@ const routes = [
             ]
           },
           // 车型列表
-          {
-            path: 'carList',
-            component: Transform,
-            redirect: 'carList',
-            meta: {
-              requiresAuth: true,
-              noCache: false,
-              title: 'tCarList'
-            },
-            children: [
-              {
-                path: '',
-                name: 'carList',
-                component: carList,
-                meta: {
-                  requiresAuth: true,
-                  noCache: false
-                }
-              }
-            ]
-          }
+          // {
+          //   path: 'carList',
+          //   component: Transform,
+          //   redirect: 'carList',
+          //   meta: {
+          //     requiresAuth: true,
+          //     noCache: false,
+          //     title: 'tCarList'
+          //   },
+          //   children: [
+          //     {
+          //       path: '',
+          //       name: 'carList',
+          //       component: carList,
+          //       meta: {
+          //         requiresAuth: true,
+          //         noCache: false
+          //       }
+          //     }
+          //   ]
+          // }
         ]
       },
       // 服务条款管理
@@ -468,49 +468,49 @@ const routes = [
             ]
           },
           // 个人信息管理条款
-          {
-            path: 'information',
-            component: Transform,
-            redirect: 'information',
-            meta: {
-              requiresAuth: true,
-              noCache: false,
-              title: 'tInformation'
-            },
-            children: [
-              {
-                path: '',
-                name: 'information',
-                component: information,
-                meta: {
-                  requiresAuth: true,
-                  noCache: false
-                }
-              }
-            ]
-          },
+          // {
+          //   path: 'information',
+          //   component: Transform,
+          //   redirect: 'information',
+          //   meta: {
+          //     requiresAuth: true,
+          //     noCache: false,
+          //     title: 'tInformation'
+          //   },
+          //   children: [
+          //     {
+          //       path: '',
+          //       name: 'information',
+          //       component: information,
+          //       meta: {
+          //         requiresAuth: true,
+          //         noCache: false
+          //       }
+          //     }
+          //   ]
+          // },
           // 位置信息使用条款
-          {
-            path: 'position',
-            component: Transform,
-            redirect: 'position',
-            meta: {
-              requiresAuth: true,
-              noCache: false,
-              title: 'tPosition'
-            },
-            children: [
-              {
-                path: '',
-                name: 'position',
-                component: position,
-                meta: {
-                  requiresAuth: true,
-                  noCache: false
-                }
-              }
-            ]
-          }
+          // {
+          //   path: 'position',
+          //   component: Transform,
+          //   redirect: 'position',
+          //   meta: {
+          //     requiresAuth: true,
+          //     noCache: false,
+          //     title: 'tPosition'
+          //   },
+          //   children: [
+          //     {
+          //       path: '',
+          //       name: 'position',
+          //       component: position,
+          //       meta: {
+          //         requiresAuth: true,
+          //         noCache: false
+          //       }
+          //     }
+          //   ]
+          // }
         ]
       },
       // 客服中心

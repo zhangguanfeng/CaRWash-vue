@@ -240,7 +240,7 @@ export const addFAQ = (data) => {
  * */
 export const editFAQ = ({ id, ...data }) => {
   return server({
-    url: `/admin/faq//${id}`,
+    url: `/admin/faq/${id}`,
     method: 'PUT',
     data
   })

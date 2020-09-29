@@ -2,26 +2,27 @@
   <div>
     <!-- 搜索部分 -->
     <el-card class="search_card" shadow="hover">
-      <!-- 下半部分 -->
-      <div class="search_card_top">
-        <h2>{{$t('search_title')}}</h2>
-      </div>
-      <!-- 上半部分 -->
-      <div class="search_card_bottom">
-        <el-input :placeholder="$t('search')" class="searchByName" clearable
-          v-model="filter.search">
-        </el-input>
-        <!-- <el-input :placeholder="$t('inputShop')" class="searchByShop" clearable v-model="filter.store">
-        </el-input> -->
-        <el-button @click="get_list" class="search" round>{{$t('search_zh')}}</el-button>
-      </div>
+      <el-row type="flex" :gutter="20" align="middle">
+        <el-col :xs="12" :sm="10" :md="8" :lg="5">
+          <el-input
+            :placeholder="$t('search')"
+            class="searchByName"
+            clearable
+            v-model="filter.search"
+          ></el-input>
+        </el-col>
+        <el-col :xs="6" :sm="6" :md="6" :lg="6">
+          <el-button @click="get_list" type="primary">{{$t('search_zh')}}</el-button>
+        </el-col>
+      </el-row>
     </el-card>
-    <el-card class="container">
+    <el-card class="container" shadow="hover">
       <!-- 添加管理员部分 -->
-      <el-button type="primary" @click="managerFormFun('add')" class="addManager">
-        {{$t('managerList').addManagerList}}
-      </el-button>
-
+      <el-button
+        type="primary"
+        @click="managerFormFun('add')"
+        class="addManager"
+      >{{$t('managerList').addManagerList}}</el-button>
       <!-- 表格部分 -->
       <my-table
         :columns="columns"
@@ -38,16 +39,28 @@
         </template>
         <template v-slot:operation="slotProps">
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
-            <el-button @click="managerFormFun('check',slotProps.callback.row)" icon="el-icon-view"
-              type="success" size="mini"></el-button>
+            <el-button
+              @click="managerFormFun('check',slotProps.callback.row)"
+              icon="el-icon-view"
+              type="success"
+              size="mini"
+            ></el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
-            <el-button @click="managerFormFun('edit',slotProps.callback.row)" icon="el-icon-edit-outline"
-              type="primary" size="mini"></el-button>
+            <el-button
+              @click="managerFormFun('edit',slotProps.callback.row)"
+              icon="el-icon-edit-outline"
+              type="primary"
+              size="mini"
+            ></el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
-            <el-button @click="remove(slotProps.callback.row.id)" icon="el-icon-delete" type="danger"
-              size="mini"></el-button>
+            <el-button
+              @click="remove(slotProps.callback.row.id)"
+              icon="el-icon-delete"
+              type="danger"
+              size="mini"
+            ></el-button>
           </el-tooltip>
         </template>
       </my-table>
@@ -65,8 +78,7 @@
         :disabled="formInfo.disabled"
       ></form-page>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="done('managerForm')" type="primary" style="margin-left:30px;">{{title}}
-        </el-button>
+        <el-button @click="done('managerForm')" type="primary" style="margin-left:30px;">{{title}}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -237,7 +249,6 @@ export default {
       })
     },
     async done (name) {
-
       switch (this.which) {
         case 'add':
           this.formInfo.ref.validate((valid) => {
@@ -264,7 +275,6 @@ export default {
       await addManagement(managerForm)
       this.dialogFormVisible = false
       this.get_list()
-
     },
     async editManager (managerForm) {
       delete managerForm.account
@@ -281,89 +291,11 @@ export default {
 // 搜索部分
 .search_card /deep/ {
   margin-bottom: 15px;
-  .search_card_top {
-    margin-bottom: 20px;
-  }
-  .search_card_bottom {
-    height: 50px;
-    // width: 790px;
-    display: flex;
-    align-items: center;
-    // justify-content: space-between;
-    .searchByName,
-    .searchByShop {
-      margin-right: 40px;
-      position: relative;
-      width: 245px;
-      input {
-        height: 50px;
-        padding: 0 8px 0 47px;
-      }
-      input:focus {
-        border: 1.5px solid #545c64ac;
-      }
-    }
-    .searchByName:before {
-      content: '\e625';
-      font-family: 'iconfont' !important;
-      font-size: 16px;
-      font-style: normal;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      position: absolute;
-      top: 3px;
-      left: 10px;
-      font-size: 30px;
-      color: #545c64ac;
-    }
-    .searchByShop:before {
-      content: '\e62f';
-      font-family: 'iconfont' !important;
-      font-size: 16px;
-      font-style: normal;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      position: absolute;
-      top: 3px;
-      left: 10px;
-      font-size: 28px;
-      color: #545c64ac;
-    }
-    .search {
-      width: 100px;
-      height: 45px;
-      color: white;
-      border-radius: 10px;
-      background-color: #545c64ac;
-      // border: none;
-      transition: all 0.3s linear;
-    }
-    .search:hover {
-      border: none;
-      background-color: #545c6466;
-      transition: all 0.3s linear;
-    }
-  }
 }
 .container /deep/ {
   // 添加管理员部分
   .addManager {
     margin-bottom: 15px;
   }
-  // 表格部分
-  .el-table__header-wrapper {
-    th {
-      text-align: center;
-    }
-  }
-  .el-table__body-wrapper {
-    td {
-      text-align: center;
-    }
-    tr:nth-child(odd) {
-      background-color: #e9eef3;
-    }
-  }
-  // 添加表单部分
 }
 </style>
