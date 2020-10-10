@@ -95,7 +95,8 @@ export default {
     async loginHandle (ruleForm) {
       this.isShow = true
       try{
-				let res = await login(ruleForm)
+        let res = await login(ruleForm)
+        if(res.errcode) return
         this.saveUserInfo(res);
 				this.$router.push("/home");
 				this.$message.success("登录成功!");

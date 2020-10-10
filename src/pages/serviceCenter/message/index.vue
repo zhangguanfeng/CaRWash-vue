@@ -16,6 +16,34 @@
         </el-col>
       </el-row>
     </el-card>
+    <div class="fiveIcon mt20">
+      <ul @click="select">
+        <li>
+          <div data-index="0">
+            <i data-index="0" class="el-icon-present"></i>
+            <p data-index="0">全部</p>
+          </div>
+        </li>
+        <li>
+          <div data-index="1">
+            <i data-index="1" class="el-icon-pie-chart"></i>
+            <p data-index="1">所有客户</p>
+          </div>
+        </li>
+        <li>
+          <div data-index="2">
+            <i data-index="2" class="el-icon-edit-outline"></i>
+            <p data-index="2">所有职员</p>
+          </div>
+        </li>
+        <li>
+          <div data-index="3">
+            <i data-index="3" class="el-icon-edit-outline"></i>
+            <p data-index="3">单个用户</p>
+          </div>
+        </li>
+      </ul>
+    </div>
     <!-- 表单部分 -->
     <el-card class="container">
       <el-button
@@ -100,7 +128,8 @@ export default {
   data () {
     return {
       filter: {
-        search: ''
+        search: '',
+        type:0
       },
       clickType: '',
       columns: [
@@ -159,6 +188,14 @@ export default {
     this.initRules()
   },
   methods: {
+    select (e) {
+      console.log(e)
+      let dom = e.target;
+      let index = dom.getAttribute("data-index")
+      if(index===null) return
+      this.filter.type=index
+      this.get_list()
+    },
     initRules () {
       const formInfo = this.formInfo
       formInfo.rules = this.$initRules(formInfo.fieldList)
@@ -238,3 +275,70 @@ export default {
   }
 }
 </script>
+<style  lang='scss' scoped>
+.fiveIcon {
+  width: 100%;
+  display: flex;
+  margin-bottom: 15px;
+  ul {
+    display: flex;
+    width: 100%;
+    li {
+      width: 33%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      div {
+        width: 60%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        padding: 20px 0;
+        color: #fff;
+        flex-direction: column;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -o-transition: all 0.5s;
+        box-shadow: 0 5px 10px rgba(100, 100, 100, 0.2);
+        i {
+          font-size: 32px;
+          margin-bottom: 5px;
+          transition: all 0.5s;
+          -webkit-transition: all 0.5s;
+          -moz-transition: all 0.5s;
+          -o-transition: all 0.5s;
+        }
+        &:hover {
+          background: #0000fe;
+        }
+      }
+    }
+    li:nth-child(1) div {
+      background: #36cfca;
+    }
+    li:nth-child(1):hover div {
+      background: #30a19d;
+    }
+    li:nth-child(2) div {
+      background: #597cf4;
+    }
+    li:nth-child(2):hover div {
+      background: #1e3a9a;
+    }
+    li:nth-child(3) div {
+      background: #9253df;
+    }
+    li:nth-child(3):hover div {
+      background: #693e9e;
+    }
+    li:nth-child(4) div {
+      background: #73d13d;
+    }
+    li:nth-child(4):hover div {
+      background: #589a32;
+    }
+  }
+}
+</style>

@@ -35,6 +35,7 @@ server.interceptors.response.use(res => {
     Message.error({ message: res.data.errmsg });
     Vue.$router.push('/login')
     storage.removeLocal('userinfo')
+    storage.removeLocal('token')
   } else if (res.data.errcode !== 2000) {
     Message.error({ message: res.data.errmsg });
   }
@@ -45,6 +46,7 @@ server.interceptors.response.use(res => {
   if (err.response && err.response.status === 401) {
     Vue.$router.push('/login')
     storage.removeLocal('userinfo')
+    storage.removeLocal('token')
     Vue.$message.error("登录状态过期，请重新登录")
     return Promise.reject(err)
   }

@@ -144,10 +144,11 @@ export const editStaff = ({ id, ...data }) => {
  * @description: 获取职员列表
  * @return {Promise} promise
  * */
-export const getStaff = () => {
+export const getStaff = (params) => {
   return server({
     url: '/admin/staff',
-    method: 'GET'
+    method: 'GET',
+    params
   })
 }
 /**
@@ -249,10 +250,11 @@ export const editFAQ = ({ id, ...data }) => {
  * @description: 获取常见疑问列表
  * @return {Promise} promise
  * */
-export const getFAQ = () => {
+export const getFAQ = (params) => {
   return server({
     url: '/admin/faq',
-    method: 'GET'
+    method: 'GET',
+    params
   })
 }
 /**
@@ -279,10 +281,11 @@ export const deleteFAQ = (id) => {
  * @description: 获取疑问答复列表
  * @return {Promise} promise
  * */
-export const getQA = () => {
+export const getQA = (params) => {
   return server({
     url: '/admin/qa',
-    method: 'GET'
+    method: 'GET',
+    params
   })
 }
 /**
@@ -362,10 +365,11 @@ export const addEvalution = (data) => {
  * @description: 获取评价列表
  * @return {Promise} promise
  * */
-export const getEvalution = () => {
+export const getEvalution = (params) => {
   return server({
     url: '/admin/evaluation',
-    method: 'GET'
+    method: 'GET',
+    params
   })
 }
 /**
@@ -445,10 +449,11 @@ export const editMessage = ({ id, ...data }) => {
  * @description: 获取消息列表
  * @return {Promise} promise
  * */
-export const getMessage = () => {
+export const getMessage = (params) => {
   return server({
     url: '/admin/message',
-    method: 'GET'
+    method: 'GET',
+    params
   })
 }
 /**

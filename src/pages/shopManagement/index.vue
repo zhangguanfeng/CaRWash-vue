@@ -126,7 +126,6 @@ export default {
       this.$router.push(`/shopManagement/edit?id=${id}`)
     },
     remove (arr) {
-      console.log('arr', arr)
       const id = arr[0]
       this.$confirm('确定删除店铺吗?', '提示', {
         confirmButtonText: '确定',

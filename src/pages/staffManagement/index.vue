@@ -64,6 +64,7 @@
           </el-tooltip>
         </template>
       </my-table>
+      <page :total="list_data.total" :page_size.sync="pageSize" :page.sync="page" />
     </el-card>
 
     <!-- 表单 -->
@@ -88,6 +89,7 @@ import page from "@/components/page";
 import { getStaff, getStaffDetail, deleteStaff, editStaff, addStaff, getStore } from '@/api/api';
 import myTable from '@/components/Table'
 import FormPage from '@/components/FormPage'
+import { mapState } from 'vuex' 
 // 添加表单信息
 const formInfoData = {
   name: '',
@@ -170,7 +172,8 @@ export default {
   },
   components: {
     myTable,
-    FormPage
+    FormPage,
+    page
   },
   computed: {
     title () {
@@ -182,11 +185,17 @@ export default {
         case 'edit':
           return this.$t('btnTip').edit;
       }
-    }
+    },
+    ...mapState(['adminUser'])
   },
   created () {
     this.initRules()
-    this.getShopList()
+    if(this.adminUser.auth===0){
+      this.getShopList()
+    }else{
+      formInfoData.store=this.adminUser.store
+      this.formInfo.fieldList[5].hidden=true
+    }
   },
   methods: {
     initRules () {
@@ -261,19 +270,13 @@ export default {
         switch (title) {
           case '添加':
             await addStaff(this.formInfo.data)
-            const res = await getStaff()
-            if (res.errcode == 2000) {
-              this.get_list()
-            }
-            this.list_data.list = res1.list
             this.dialogFormVisible = false
+            this.get_list()
             break;
           case '编辑':
-            const res1 = await editStaff(this.formInfo.data)
-            if (res1.errcode == 2000) {
-              this.get_list()
-            }
+            await editStaff(this.formInfo.data)
             this.dialogFormVisible = false
+            this.get_list()
             break;
           case '关闭':
             this.dialogFormVisible = false

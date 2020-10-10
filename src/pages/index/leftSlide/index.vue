@@ -57,7 +57,7 @@
             <i class="iconfont iconfuwu1"></i>
             <span slot="title">{{$t('tServiceManagement')}}</span>
           </template>
-          <el-menu-item-group>
+          <el-menu-item-group v-if="adminUser.auth===0">
             <el-menu-item index="/serviceManagement/serviceList">{{$t('tServiceList')}}</el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group>
@@ -94,7 +94,7 @@
           <!-- <el-menu-item-group>
             <el-menu-item index="/contentManagement/carList">{{$t('tCarList')}}
             </el-menu-item>
-          </el-menu-item-group>-->
+          </el-menu-item-group> -->
         </el-submenu>
         <el-submenu index="5">
           <template slot="title">
