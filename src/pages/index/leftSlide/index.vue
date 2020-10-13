@@ -37,11 +37,11 @@
           <span slot="title">{{$t('tIndex')}}</span>
         </el-menu-item>
         <el-menu-item index="/managerList" v-if="adminUser.auth===0">
-          <i class="iconfont iconhuiyuan1"></i>
+          <i class="iconfont iconyonghu"></i>
           <span slot="title">{{$t('tManagerList')}}</span>
         </el-menu-item>
         <el-menu-item index="/shopManagement" v-if="adminUser.auth===0">
-          <i class="iconfont iconhuiyuan1"></i>
+          <i class="iconfont icongongsimingcheng"></i>
           <span slot="title">{{$t('tShopManagement')}}</span>
         </el-menu-item>
         <el-menu-item index="/memberManagement">
@@ -70,7 +70,7 @@
           </el-menu-item-group>
         </el-submenu>
         <el-menu-item index="/scheduleManagement">
-          <i class="iconfont iconhuiyuan"></i>
+          <i class="iconfont iconriqi"></i>
           <span slot="title">{{$t('tScheduleManagement')}}</span>
         </el-menu-item>
         <!-- <el-menu-item index="/resultManagement">
@@ -79,29 +79,29 @@
         </el-menu-item>-->
         <el-submenu index="3">
           <template slot="title">
-            <i class="iconfont iconfuwu1"></i>
+            <i class="iconfont iconbianhao"></i>
             <span slot="title">{{$t('tSettlementManagement')}}</span>
           </template>
           <el-menu-item-group>
             <el-menu-item index="/settlementManagement/settlementList">{{$t('tSettlementList')}}</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="4">
+        <el-submenu index="4" v-if="adminUser.auth===0">
           <template slot="title">
-            <i class="iconfont iconfuwu1"></i>
+            <i class="iconfont iconziyuan"></i>
             <span slot="title">{{$t('tContentManagement')}}</span>
           </template>
           <el-menu-item-group>
             <el-menu-item index="/contentManagement/commentList">{{$t('tCommentList')}}</el-menu-item>
           </el-menu-item-group>
-          <!-- <el-menu-item-group>
+          <el-menu-item-group>
             <el-menu-item index="/contentManagement/carList">{{$t('tCarList')}}
             </el-menu-item>
-          </el-menu-item-group> -->
+          </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="5">
+        <el-submenu index="5" v-if="adminUser.auth===0">
           <template slot="title">
-            <i class="iconfont iconfuwu1"></i>
+            <i class="iconfont iconsousuo"></i>
             <span slot="title">{{$t('tServiceCenter')}}</span>
           </template>
           <el-menu-item-group>
@@ -114,7 +114,7 @@
             <el-menu-item index="/serviceCenter/difficultQuestion">{{$t('tDifficultQuestion')}}</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
-        <el-submenu index="6">
+        <el-submenu index="6" v-if="adminUser.auth===0">
           <template slot="title">
             <i class="iconfont iconfuwu1"></i>
             <span slot="title">{{$t('tSetting')}}</span>

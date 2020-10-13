@@ -101,7 +101,7 @@ export default {
         image: this.file.url
       }
       const res = await editServiceTerm(data)
-      console.log(res)
+      // console.log(res)
     },
     // 选中图片
     async handleChange (file, fileList) {
@@ -113,12 +113,14 @@ export default {
       if (this.file.length > 0) {
         box.style.display = 'none'
       }
-      console.log(file.raw)
+      // console.log(file.raw)
       const res = await uploadImg(file)
-      console.log(res)
+      // console.log(res)
     },
     handleExceed (file) {
-      this.$message('最多只允许添加一张图片')
+      this.$message({
+        message:this.$t('maxOnePic')
+      })
     }
   }
 }

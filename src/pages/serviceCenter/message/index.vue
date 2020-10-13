@@ -189,7 +189,6 @@ export default {
   },
   methods: {
     select (e) {
-      console.log(e)
       let dom = e.target;
       let index = dom.getAttribute("data-index")
       if(index===null) return

@@ -1,7 +1,7 @@
 <template>
     <div>
          <div class="box">
-            <el-page-header @back="$router.go(-1)" content="店铺详情"></el-page-header>
+            <el-page-header @back="$router.go(-1)" :content="$t('shopManagement').detail"></el-page-header>
         </div>
         <el-card class="content mt20">
             <el-form label-position="left" :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -18,7 +18,7 @@
                     <div>{{ruleForm.phone}}</div>
                 </el-form-item>
                 <el-form-item :label="$t('shopManagement.scoped')" prop="area">
-                    <div v-for="(item,index) in ruleForm.area" :key="index">{{item}}</div>
+                    <div v-for="(item,index) in ruleForm.area" :key="index">{{item.name}}</div>
                 </el-form-item>
                 <el-form-item :label="$t('shopManagement.business')" prop="open_hours">
                     <div>{{ruleForm.open_hours}}</div>

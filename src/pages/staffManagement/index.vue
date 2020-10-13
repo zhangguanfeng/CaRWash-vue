@@ -5,7 +5,7 @@
       <el-row type="flex" :gutter="20" align="middle">
         <el-col :xs="12" :sm="10" :md="8" :lg="5">
           <el-input
-            :placeholder="$t('inputShop')"
+            :placeholder="$t('search')"
             class="searchByShop"
             clearable
             v-model="filter.search"
@@ -54,6 +54,13 @@
               size="mini"
             ></el-button>
           </el-tooltip>
+          <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
+            <el-button
+                size="mini"
+                type="info"
+                @click="new_password(slotProps.callback.row.id)"
+            >{{$t('btnTip').resetPW}}</el-button>
+          </el-tooltip>
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
             <el-button
               @click="remove(slotProps.callback.row)"
@@ -77,17 +84,23 @@
         :label-width="formInfo.labelWidth"
         :list-type-info="listTypeInfo"
         :disabled="formInfo.disabled"
+        @handleEvent="handle_event"
       >
-      <template v-slot:form-item-children>
-         <el-cascader
-            @change="selectArea"
-            :options="serviceAreaList"
-            :props="props"
-            clearable
-        ></el-cascader>
-      </template>
       </form-page>
-      <el-button @click="done(title)" type="primary" style="margin-left:30px;">{{title}}</el-button>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="done(title)" type="primary" style="margin-left:30px;">{{title}}</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog :title="$t('btnTip').resetPW" :visible.sync="key">
+      <el-form :rules="rules" ref="form" :model="info">
+        <el-form-item :label="$t('newPassword')" prop="password">
+            <el-input size="medium" v-model="info.password" :placeholder="$t('inputPassword')"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+          <el-button size="medium" @click="key = false">{{$t('btnTip').close}}</el-button>
+          <el-button type="primary" size="medium" @click="submit">{{$t('btnTip').submit}}</el-button>
+      </span>
     </el-dialog>
   </div>
 </template>
@@ -107,14 +120,13 @@ const formInfoData = {
   phone: '',
   auth: '1',
   store: '',
+  area:[]
 }
 export default {
   name: 'staffManagement',
   mixins: [mixin_pickerOptions, mixin_list(getStaff)],
   data () {
     return {
-      props: { multiple: true },
-      serviceAreaList:[],
       filter: {
         search: '',
       },
@@ -125,18 +137,22 @@ export default {
           prop: 'id',
         }, {
           label: this.$t('username'),
+          sortable: true,
           prop: 'name',
         }, {
           label: this.$t('account'),
+          sortable: true,
           prop: 'account',
         },
         {
           label: this.$t('phone'),
+          sortable: true,
           prop: 'phone',
         },
         {
           label: this.$t('shopID'),
-          prop: '',
+          sortable: true,
+          prop: 'store',
           slot: 'storeId'
         },
         {
@@ -146,7 +162,7 @@ export default {
         {
           label: this.$t('operation'),
           prop: '',
-          width: 200,
+          width: 350,
           align: 'left',
           slot: 'operation'
         }],
@@ -160,8 +176,8 @@ export default {
           { label: this.$t('password'), value: 'password', type: 'input', width: '260', className: 'el-form-block', required: false, hidden: false },
           { label: this.$t('phone'), value: 'phone', type: 'input', width: '260', className: 'el-form-block', required: true, disabled: false },
           { label: this.$t('managerList.auth'), value: 'auth', type: 'input', width: '260', className: 'el-form-block', required: true, disabled: true },
-          { label: this.$t('shop'), value: 'store', type: 'select', width: '260', className: 'el-form-block', list: 'shopList', required: true, disabled: false },
-          { label: this.$t('serviceArea.area'), value:'area', slot:true, hidden: false  },
+          { label: this.$t('shop'), value: 'store', event:'select' ,type: 'select', width: '260', className: 'el-form-block', list: 'shopList', required: true, disabled: false },
+          { label: this.$t('serviceArea.area'), value:'area', type:"remoteSelect",  width: '260', className: 'el-form-block',list:'areaList', multiple:true, required: true, hidden: false  },
         ],
         rules: {
         },
@@ -169,6 +185,7 @@ export default {
       },
       listTypeInfo: {
         shopList: [],
+        areaList: [],
         authList: [
           { label: this.$t('managerList.superManager'), value: 0 },
           { label: this.$t('managerList.shopManager'), value: 1 },
@@ -177,6 +194,15 @@ export default {
       // 是否显示添加表单
       dialogFormVisible: false,
       which: '',
+      // 修改密码
+      info: {
+        id:'',
+        password:''
+      },
+      key : false,
+      rules : {
+        password: [{required: true,message: this.$t('inputPassword')}],
+      }
     }
   },
   components: {
@@ -202,20 +228,44 @@ export default {
     this.initRules()
     if(this.adminUser.auth===0){
       this.getShopList()
-      // 超级管理员选店后发起请求  明天做
     }else{
       formInfoData.store=this.adminUser.store
       this.formInfo.fieldList[5].hidden=true
-      const res=await searchStoreArea({store_id:this.adminUser.store})
+      this.getAreaList(formInfoData.store)
     }
   },
   methods: {
-    selectArea(e){
-        this.formInfo.data.area=e.map(item=>item[1])
+     new_password(id){
+      this.key = true
+      this.info = {
+        id,
+        password:""
+      }
+    },
+    async submit(){
+      await this.$refs["form"].validate();
+      // await api_store.change_password(this.info)
+      // this.$message.success('修改成功')
+      // this.get_list()
+      console.log(this.info)
+    },
+    handle_event(e,store_id){
+      if(e==='select'){
+        formInfoData.store=store_id
+        formInfoData.area=[]
+        this.formInfo.data.area=[]
+        this.getAreaList(store_id)
+      }
     },
     initRules () {
       const formInfo = this.formInfo
       formInfo.rules = this.$initRules(formInfo.fieldList)
+    },
+    async getAreaList (store_id){
+      const res=await searchStoreArea({store_id})
+      this.listTypeInfo.areaList = res.list.map((item) => {
+        return { label: item.name, value: item.id }
+      })
     },
     async getShopList () {
       const res = await getStore()
@@ -226,11 +276,13 @@ export default {
     async staffFormFun (type, data) {
       switch (type) {
         case 'check':
-          this.formInfo.data = { ...data, store: data.store.id, auth: 1 }
+          var res=await getStaffDetail(data.id)
+          this.formInfo.data = { ...res, store: res.store.id, auth: 1, area:res.area.map(item=>item.id) }
           this.formInfo.fieldList[2].hidden = true
           break;
         case 'edit':
-          this.formInfo.data = { ...data, store: data.store.id, auth: 1 }
+          var res=await getStaffDetail(data.id)
+          this.formInfo.data = { ...res, store: res.store.id, auth: 1, area:res.area.map(item=>item.id) }
           this.formInfo.fieldList[2].required = false
           this.formInfo.fieldList[2].hidden = true
           this.initRules()
@@ -247,9 +299,9 @@ export default {
       this.which = type
     },
     remove (row) {
-      this.$confirm('是否删除' + row.name, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('staff').sureDeleteStaff + row.name, this.$t('tips'), {
+        confirmButtonText: this.$t('btnTips').submit,
+        cancelButtonText: this.$t('btnTips').cancel,
         type: 'warning'
       }).then(async () => {
         const res = await deleteStaff(row.id)
@@ -259,13 +311,13 @@ export default {
           })
           this.$message({
             type: 'success',
-            message: res.message
+            message: res.errmsg
           })
         }
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '已取消删除'
+          message: this.$t('cancelDelete')
         });
       })
     },
@@ -282,33 +334,25 @@ export default {
         }
       }
       if (flag) {
-        switch (title) {
-          case '添加':
+        switch (this.which) {
+          case 'add':
             await addStaff(this.formInfo.data)
             this.dialogFormVisible = false
             this.get_list()
             break;
-          case '编辑':
-            await editStaff(this.formInfo.data)
+          case 'check':
+             this.dialogFormVisible = false
+            break;
+          case 'edit':
+             await editStaff(this.formInfo.data)
             this.dialogFormVisible = false
             this.get_list()
             break;
-          case '关闭':
-            this.dialogFormVisible = false
-            break;
-        }
-        switch (this.which) {
-          case 'add':
-            return
-          case 'check':
-            return
-          case 'edit':
-            return
         }
       } else {
         this.$message({
           type: 'warning',
-          message: '请完善表单内容'
+          message: this.$t('finishForm')
         })
       }
     }

@@ -87,11 +87,11 @@
             @keyup.enter.native="handleInputConfirm(selectData.id)"
             >
             </el-input>
-            <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+            <el-button v-else class="button-new-tag" size="small" @click="showInput">{{$t('serviceList').addSecondCategory}}</el-button>
         </template>
       </form-page>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="done('managerForm')" type="primary" style="margin-left:30px;">{{title}}</el-button>
+        <el-button @click="done()" type="primary" style="margin-left:30px;">{{title}}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -137,6 +137,7 @@ export default {
           prop: 'id',
         }, {
           label: this.$t('serviceArea.first'),
+          sortable:true,
           prop: 'name',
         },
         {
@@ -209,8 +210,6 @@ export default {
         case 'edit':
             this.selectData=this.list_data.list[data]
             this.formInfo.fieldList[1].hidden=false
-            // delete data.parent
-            // delete data.children
             this.formInfo.data = { ...this.list_data.list[data]}
             this.initRules()
           break;
@@ -243,7 +242,7 @@ export default {
       }).catch({
       })
     },
-    done (name) {
+    done () {
       switch (this.which) {
         case 'add':
           this.formInfo.ref.validate((valid) => {
@@ -258,6 +257,8 @@ export default {
         case 'edit':
           this.formInfo.ref.validate((valid) => {
             if (valid) {
+              delete this.formInfo.data.parent
+              delete this.formInfo.data.children
               this.editServiceArea(this.formInfo.data)
             }
           })
@@ -302,7 +303,6 @@ padding-bottom: 0;
 }
 .input-new-tag {
 width: 100px;
-margin-left: 10px;
 vertical-align: bottom;
 }
 </style>

@@ -75,13 +75,13 @@ import { mixin_pickerOptions, mixin_list, get_list } from "@/mixins";
 import myTable from '@/components/Table'
 import FormPage from '@/components/FormPage'
 import page from "@/components/page";
-import { addEvalution, editEvalution, deleteEvalution, getEvalution, getService } from '@/api/api';
+import { addEvalution, editEvalution, deleteEvalution, getEvalution, getService,getCarList } from '@/api/api';
 const formInfoData = {
   username: '',
   address: '',
   service: '',
   car_type: '',
-  star: 3,
+  star: 5,
   content: ''
 }
 export default {
@@ -101,10 +101,12 @@ export default {
           sortable: true
         }, {
           label: this.$t('commentList.name'),
-          prop: 'username'
+          prop: 'username',
+          sortable: true
         }, {
           label: this.$t('commentList.address'),
-          prop: 'address'
+          prop: 'address',
+          sortable: true
         },
         {
           label: this.$t('commentList.service'),
@@ -112,16 +114,19 @@ export default {
         },
         {
           label: this.$t('commentList.car_type'),
-          prop: 'car_type'
+          prop: 'car_type',
+          sortable: true
         },
         {
           label: this.$t('commentList.star'),
-          prop: '',
-          slot: 'star'
+          prop: 'star',
+          slot: 'star',
+          sortable: true
         },
         {
           label: this.$t('commentList.content'),
-          prop: 'content'
+          prop: 'content',
+          sortable: true
         },
         {
           label: this.$t('operation'),
@@ -138,7 +143,7 @@ export default {
           { label: this.$t('commentList.name'), value: 'username', type: 'input', width: '260', className: 'el-form-block', required: true, hidden: false },
           { label: this.$t('commentList.address'), value: 'address', type: 'input', width: '260', className: 'el-form-block', required: true, hidden: false },
           { label: this.$t('commentList.service'), value: 'service', type: 'select', width: '260', className: 'el-form-block', list: 'serviceList', required: true },
-          { label: this.$t('commentList.car_type'), value: 'car_type', type: 'input', width: '260', className: 'el-form-block', required: true, disabled: false },
+          { label: this.$t('commentList.car_type'), value: 'car_type', type: 'select', width: '260', className: 'el-form-block',list: 'carList', required: true, disabled: false },
           { label: this.$t('commentList.star'), value: 'star', slot: true, width: '260', className: 'el-form-block', required: true },
           { label: this.$t('commentList.content'), value: 'content', type: 'textarea', width: '260', className: 'el-form-block', required: true, disabled: false },
         ],
@@ -147,7 +152,8 @@ export default {
         labelWidth: '120px'
       },
       listTypeInfo: {
-        serviceList: []
+        serviceList: [],
+        carList: []
       },
       dialogFormVisible: false,
       title: '',
@@ -155,10 +161,21 @@ export default {
     }
   },
   created () {
+    this.getCarList()
     this.getServiceList()
     this.initRules()
   },
   methods: {
+    // 获取车型
+    async getCarList () {
+      const res = await getCarList()
+      this.listTypeInfo.carList = res.list.map((item) => {
+        return {
+          label: item.name,
+          value: item.name
+        }
+      })
+    },
     // 获取服务类型列表
     async getServiceList () {
       const res = await getService()
@@ -198,9 +215,9 @@ export default {
       }
     },
     remove (id) {
-      this.$confirm('是否确认删除？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('commentList').sureDeleteComment, this.$t('tips'), {
+        confirmButtonText: this.$t('btnTips').submit,
+        cancelButtonText: this.$t('btnTips').cancel,
         type: 'warning'
       }).then(async () => {
         const res = await deleteEvalution(id)

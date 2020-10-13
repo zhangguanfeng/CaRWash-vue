@@ -462,6 +462,41 @@ export const deleteEvalution = (id) => {
   })
 }
 /**
+ * @description: 车型列表
+ * @return {Promise} promise
+ * */
+export const getCarList = () => {
+  return server({
+    url: `/admin/car_type`,
+    method: 'GET'
+  })
+}
+/**
+ * @description: 添加车型
+ * @param {string} name 车型名称* 
+ * @return {Promise} promise
+ * */
+export const addCar = (data) => {
+  return server({
+    url: `/admin/car_type`,
+    method: 'POST',
+    data
+  })
+}
+/**
+ * @description: 编辑车型
+ * @param {string} name 车型名称* 
+ * @param {number} id * 
+ * @return {Promise} promise
+ * */
+export const editCar = ({id,...data}) => {
+  return server({
+    url: `/admin/car_type/${id}`,
+    method: 'PUT',
+    data
+  })
+}
+/**
  * @description: 添加消息
  * @return {Promise} promise
  * */

@@ -28,8 +28,6 @@ const scheduleDetail = () => import('@/pages/scheduleManagement/detail')
 const resultManagement = () => import('@/pages/resultManagement')
 const settlementList = () => import('@/pages/settlementManagement/settlementList')
 const carList = () => import('@/pages/contentManagement/carList')
-const cartListEdit = () => import('@/pages/contentManagement/carList/edit')
-const cartListDetail = () => import('@/pages/contentManagement/carList/detail')
 const commentList = () => import('@/pages/contentManagement/commentList')
 const message = () => import('@/pages/serviceCenter/message')
 const commonQuestion = () => import('@/pages/serviceCenter/commonQuestion')
@@ -419,51 +417,20 @@ const routes = [
                   requiresAuth: true,
                   noCache: false
                 }
-              }
+              },
             ]
           },
           // 车型列表
-          // {
-          //   path: 'carList',
-          //   component: Transform,
-          //   redirect: 'carList',
-          //   meta: {
-          //     requiresAuth: true,
-          //     noCache: false,
-          //     title: 'tCarList'
-          //   },
-          //   children: [
-          //     {
-          //       path: '',
-          //       name: 'carList',
-          //       component: carList,
-          //       meta: {
-          //         requiresAuth: true,
-          //         noCache: false
-          //       }
-          //     },
-          //     {
-          //       path: 'edit',
-          //       name: 'cartListEdit',
-          //       component: cartListEdit,
-          //       meta: {
-          //         requiresAuth: true,
-          //         noCache: false,
-          //         title: 'tEdit'
-          //       }
-          //     },
-          //     {
-          //       path: 'detail',
-          //       name: 'cartListDetail',
-          //       component: cartListDetail,
-          //       meta: {
-          //         requiresAuth: true,
-          //         noCache: false,
-          //         title: 'tDetail'
-          //       }
-          //     }
-          //   ]
-          // }
+          {
+            path: 'carList',
+            name: 'carList',
+            component: carList,
+            meta: {
+              requiresAuth: true,
+              noCache: false,
+              title: 'tCarList'
+            },
+          },
         ]
       },
       // 服务条款管理

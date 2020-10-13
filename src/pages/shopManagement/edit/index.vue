@@ -19,10 +19,8 @@
                     <el-input v-model="ruleForm.phone"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('shopManagement.scoped')" prop="area">
-                    <!-- <el-select v-model="ruleForm.area" :placeholder="$t('shopManagement.selectScoped')">
-                        <el-option v-for="(item, index) in serviceList" :key="index" :label="item.list" :value="item.name"></el-option>
-                    </el-select> -->
                     <el-cascader
+                        :value="value"
                         @change="selectArea"
                         :options="serviceAreaList"
                         :props="props"
@@ -89,25 +87,26 @@ export default {
             },
             rules: {
                 name: [
-                    { required: true, message: '请输入代理店名称', trigger: 'blur' },
+                    { required: true, message: this.$t('shopManagement').inputName, trigger: 'blur' },
                 ],
                 address: [
-                    { required: true, message: '请选择地址', trigger: 'change' }
+                    { required: true, message: this.$t('shopManagement').inputAddress, trigger: 'change' }
                 ],
                 description: [
-                    { required: true, message: '请输入代理店介绍', trigger: 'blur' }
+                    { required: true, message: this.$t('shopManagement').inputShopDesc, trigger: 'blur' }
                 ],
                 phone: [
-                    { required: true, message: '请输入联系方式', trigger: 'blur' }
+                    { required: true, message: this.$t('inputContact'), trigger: 'blur' }
                 ],
                 area: [
-                    { required: true, message: '请选择服务范围', trigger: 'change' }
+                    { required: true, message: this.$t('shopManagement').selectScoped, trigger: 'change' }
                 ],
                 open_hours: [
-                    { required: true, message: '请选择营业时间', trigger: 'change' }
+                    { required: true, message: this.$t('shopManagement').selectBusiness, trigger: 'change' }
                 ]
             },
-            serviceAreaList:[]
+            serviceAreaList:[],
+            value:[]
         }
     },
     // components: {
@@ -118,7 +117,7 @@ export default {
 			return Number.isNaN(Number(this.$route.query.id)) ? undefined : Number(this.$route.query.id)
         },
         content(){
-			return this.id === undefined ? "添加店铺" : "修改店铺"
+			return this.id === undefined ? this.$t('shopManagement').addShop : this.$t('shopManagement').editShop
 		},
     },
     watch:{
@@ -135,16 +134,16 @@ export default {
     },
     methods:{
         selectArea(e){
+            console.log(e)
+            this.value=e
             this.ruleForm.area=e.map(item=>item[1])
         },
         async submitForm(formName) {
             await this.$refs[formName].validate()
             if(this.id === undefined){
                await addStore(this.ruleForm)
-                this.$message.success('创建成功')
             }else{
                 await editStore(this.ruleForm)
-                this.$message.success('修改成功')
             }
             this.$router.go(-1)
         },
@@ -169,6 +168,12 @@ export default {
             this.ruleForm = information
             this.startTime = information.open_hours.split('-')[0]
             this.endTime = information.open_hours.split('-')[1]
+            information.area.forEach(item=>this.serviceAreaList.forEach((serviceItem)=>serviceItem.children.forEach(cc=>{
+                if(cc.id===item.id){
+                    this.value.push([serviceItem.id,item.id])
+                }
+            })))
+            
         },
     },
     async created(){

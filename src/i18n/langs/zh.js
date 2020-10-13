@@ -63,14 +63,16 @@ const zh = {
   },
   // 职员管理页面部分
   staff: {
-    addStaff: '添加职员'
+    addStaff: '添加职员',
+    sureDeleteStaff:'是否删除'
   },
   // 服务区域列表
   serviceArea:{
     addArea:'添加区域',
     first:'一级区域',
     second:'二级区域',
-    area:'服务区域'
+    area:'服务区域',
+    sureDeleteArea:'确定删除该区域吗?'
   },
   // 服务列表页面部分
   serviceList: {
@@ -79,7 +81,8 @@ const zh = {
     id: '服务id',
     img: '服务',
     price: '价格',
-    category: '车型'
+    category: '车型',
+    addSecondCategory:'添加二级区域'
   },
   // 服务订单管理部分
   serviceApplication: {
@@ -90,16 +93,24 @@ const zh = {
     addManagerList: '添加管理员',
     auth: '权限等级',
     superManager: '超级管理员',
-    shopManager: '代理店管理员'
+    shopManager: '代理店管理员',
+    sureDeleteManager:'确定删除管理员吗?'
   },
   // 代理店管理
   shopManagement: {
     area: '选择区域',
     addShop: '添加代理店',
+    editShop:'修改代理店',
     scoped: '服务范围',
     contact: '联系方式',
     business: '营业时间',
-    selectScoped: '选择服务范围'
+    selectScoped: '选择服务范围',
+    selectBusiness:'选择营业事件',
+    sureDeleteShop:'确定删除店铺吗?',
+    detail:'店铺详情',
+    inputShopDesc:'请输入代理店介绍',
+    inputName: '请输入代理店名称',
+    inputAddress:'请输入地址',
   },
   // 日程管理
   shecheduleManagement: {
@@ -137,7 +148,13 @@ const zh = {
     content: '评价',
     service: '服务类型',
     name: '姓名',
-    star: '好评'
+    star: '好评',
+    sureDeleteComment:'确定删除评价吗?'
+  },
+  // // 车型列表
+  carList:{
+    add_car:'添加车型',
+    car_type:'车型'
   },
   // 复用部分
   search: '请输入关键字',
@@ -156,28 +173,33 @@ const zh = {
   inputUserID: '请输入用户ID',
   inputPhoneNum: '请输入手机号',
   inputUsername: '请输入用户姓名',
-  inputShop: '请输入代理店',
+  inputContact:'请输入联系方式',
   inputImage: '请选择图片',
-  inputShopAddress: '请输入代理店名称/地址',
   inputCategory: '请输入服务种类',
   inputTime: '请选择下单时间',
   operation: '操作',
   search_zh: '搜索',
   account: '账号名',
   inputAccount: '请输入帐号名',
+  newPassword: '新密码',
   password: '密码',
   inputPassword: '请输入密码',
   back: '返回',
   startTime: '启始时间',
   endTime: '结束时间',
-  back: '返回',
+  tips:'提示',
+  cancelDelete:'已取消删除',
+  finishForm:'请完善表单内容',
+  maxOnePic:'最多只允许添加一张图片',
   btnTip: {
     submit: '确认',
     check: '查看',
     edit: '编辑',
     delete: '删除',
     add: '添加',
-    close: '关闭'
+    close: '关闭',
+    cancel:'取消',
+    resetPW: '重置密码'
   }
 }
 export default zh

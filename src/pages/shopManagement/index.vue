@@ -5,7 +5,7 @@
       <el-row type="flex" :gutter="20" align="middle">
         <el-col :xs="12" :sm="10" :md="8" :lg="5">
           <el-input
-            :placeholder="$t('inputShopAddress')"
+            :placeholder="$t('search')"
             class="searchByShop"
             clearable
             v-model="filter.search"
@@ -79,13 +79,16 @@ export default {
           prop: 'id',
         }, {
           label: this.$t('shop'),
+          sortable: true,
           prop: 'name',
         }, {
           label: this.$t('address'),
+          sortable: true,
           prop: 'address',
         },
         {
           label: this.$t('introduce'),
+          sortable: true,
           prop: 'description',
         },
         // {
@@ -94,6 +97,7 @@ export default {
         // },
         {
           label: this.$t('shopManagement.contact'),
+          sortable: true,
           prop: 'phone',
         },
         {
@@ -127,9 +131,9 @@ export default {
     },
     remove (arr) {
       const id = arr[0]
-      this.$confirm('确定删除店铺吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('shopManagement').sureDeleteShop, this.$t('tips'), {
+        confirmButtonText: this.$t('btnTip').submit,
+        cancelButtonText: this.$t('btnTip').cancel,
         type: 'warning'
       }).then(async () => {
         await deleteStore(id)

@@ -54,6 +54,13 @@
               size="mini"
             ></el-button>
           </el-tooltip>
+          <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
+            <el-button
+                size="mini"
+                type="info"
+                @click="new_password(slotProps.callback.row.id)"
+            >{{$t('btnTip').resetPW}}</el-button>
+          </el-tooltip>
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
             <el-button
               @click="remove(slotProps.callback.row.id)"
@@ -79,6 +86,17 @@
       ></form-page>
       <span slot="footer" class="dialog-footer">
         <el-button @click="done('managerForm')" type="primary" style="margin-left:30px;">{{title}}</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog :title="$t('btnTip').resetPW" :visible.sync="key">
+      <el-form :rules="rules" ref="form" :model="info">
+        <el-form-item :label="$t('newPassword')" prop="password">
+            <el-input size="medium" v-model="info.password" :placeholder="$t('inputPassword')"></el-input>
+        </el-form-item>
+    </el-form>
+      <span slot="footer" class="dialog-footer">
+          <el-button size="medium" @click="key = false">{{$t('btnTip').close}}</el-button>
+          <el-button type="primary" size="medium" @click="submit">{{$t('btnTip').submit}}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -130,13 +148,16 @@ export default {
           prop: 'id',
         }, {
           label: this.$t('username'),
+          sortable: true,
           prop: 'name',
         }, {
           label: this.$t('account'),
+          sortable: true,
           prop: 'account',
         },
         {
           label: this.$t('phone'),
+          sortable: true,
           prop: 'phone',
         },
         {
@@ -145,13 +166,14 @@ export default {
         },
         {
           label: this.$t('managerList.auth'),
-          prop: '',
+          sortable: true,
+          prop: 'auth',
           slot: 'auth'
         },
         {
           label: this.$t('operation'),
           prop: '',
-          width: 200,
+          width: 350,
           align: 'left',
           slot: 'operation'
         }],
@@ -171,6 +193,15 @@ export default {
         },
         labelWidth: '120px'
       },
+      // 修改密码
+      info: {
+        id:'',
+        password:''
+      },
+      key : false,
+      rules : {
+        password: [{required: true,message: this.$t('inputPassword')}],
+      }
     }
   },
 
@@ -194,6 +225,20 @@ export default {
     this.initRules()
   },
   methods: {
+    new_password(id){
+      this.key = true
+      this.info = {
+        id,
+        password:""
+      }
+    },
+    async submit(){
+      await this.$refs["form"].validate();
+      // await api_store.change_password(this.info)
+      // this.$message.success('修改成功')
+      // this.get_list()
+      console.log(this.info)
+    },
     initRules () {
       const formInfo = this.formInfo
       formInfo.rules = this.$initRules(formInfo.fieldList)
@@ -234,9 +279,9 @@ export default {
       this.which = type
     },
     remove (id) {
-      this.$confirm('确定删除管理员吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('managerList').sureDeleteManager, this.$t('tips'), {
+        confirmButtonText: this.$t('btnTip').submit,
+        cancelButtonText: this.$t('btnTip').cancel,
         type: 'warning'
       }).then(async () => {
         let res = await deleteManagement(id)
@@ -271,7 +316,6 @@ export default {
     },
     async addManager (managerForm) {
       delete managerForm.id
-      managerForm.store = Number(managerForm.store)
       await addManagement(managerForm)
       this.dialogFormVisible = false
       this.get_list()
