@@ -9,7 +9,8 @@
                     <el-input v-model="ruleForm.name"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('address')" prop="address">
-                    <el-input @click.native = "openMap" v-model="ruleForm.address" disabled size = "medium"></el-input>
+                    <!-- <el-input @click.native = "openMap" v-model="ruleForm.address" disabled size = "medium"></el-input> -->
+                    <el-input v-model="ruleForm.address"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('introduce')" prop="description">
                     <el-input v-model="ruleForm.description"></el-input>
@@ -17,10 +18,16 @@
                 <el-form-item :label="$t('phone')" prop="phone">
                     <el-input v-model="ruleForm.phone"></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('shopManagement.scoped')" prop="service_range">
-                    <el-select v-model="ruleForm.service_range" :placeholder="$t('shopManagement.selectScoped')">
+                <el-form-item :label="$t('shopManagement.scoped')" prop="area">
+                    <!-- <el-select v-model="ruleForm.area" :placeholder="$t('shopManagement.selectScoped')">
                         <el-option v-for="(item, index) in serviceList" :key="index" :label="item.list" :value="item.name"></el-option>
-                    </el-select>
+                    </el-select> -->
+                    <el-cascader
+                        @change="selectArea"
+                        :options="serviceAreaList"
+                        :props="props"
+                        clearable
+                    ></el-cascader>
                 </el-form-item>
                 <el-form-item :label="$t('shopManagement.business')" prop="open_hours">
                     <el-time-select
@@ -48,23 +55,24 @@
                 </el-form-item>
             </el-form>
             <!-- 店铺地址 -->
-            <el-dialog
+            <!-- <el-dialog
             title="选择地址"
             :visible.sync="mapDialog"
             width="50%"
             :before-close="mapClose">
             <vue-map-small @sendData = "getMapData" ></vue-map-small>
-            </el-dialog>
+            </el-dialog> -->
         </el-card>
     </div>
 </template>
 <script>
-import vueMapSmall from '@/components/global/vueMap'
-import {getStoreDetail, getService, editStore, addStore} from '@/api/api'
+// import vueMapSmall from '@/components/global/vueMap'
+import {getStoreDetail, getServiceArea, editStore, addStore} from '@/api/api'
 export default {
     name:'shopEdit',
     data(){
         return {
+            props: { multiple: true },
             startTime:'',
             endTime:'',
             // 地图弹窗
@@ -76,7 +84,7 @@ export default {
                 address: '',
                 description: '',
                 phone: '',
-                service_range: '',
+                area: [],
                 open_hours: ''
             },
             rules: {
@@ -92,19 +100,19 @@ export default {
                 phone: [
                     { required: true, message: '请输入联系方式', trigger: 'blur' }
                 ],
-                service_range: [
+                area: [
                     { required: true, message: '请选择服务范围', trigger: 'change' }
                 ],
                 open_hours: [
                     { required: true, message: '请选择营业时间', trigger: 'change' }
                 ]
             },
-            serviceList:''
+            serviceAreaList:[]
         }
     },
-    components: {
-        vueMapSmall
-    },
+    // components: {
+    //     vueMapSmall
+    // },
     computed:{
         id(){
 			return Number.isNaN(Number(this.$route.query.id)) ? undefined : Number(this.$route.query.id)
@@ -126,10 +134,13 @@ export default {
         }
     },
     methods:{
+        selectArea(e){
+            this.ruleForm.area=e.map(item=>item[1])
+        },
         async submitForm(formName) {
             await this.$refs[formName].validate()
             if(this.id === undefined){
-                await addStore(this.ruleForm)
+               await addStore(this.ruleForm)
                 this.$message.success('创建成功')
             }else{
                 await editStore(this.ruleForm)
@@ -138,21 +149,21 @@ export default {
             this.$router.go(-1)
         },
         // 地图传值
-        getMapData (data) {
-            console.log('getMap',data)
-        this.mapDialog = data.status
-        this.ruleForm.address = data.mapInfo.name
-        // this.storeInfo.gpsX = data.mapInfo.gpsX
-        // this.storeInfo.gpsY = data.mapInfo.gpsY
-        },
-        // 地图弹窗关闭
-        mapClose (done) {
-            done()
-        },
-        // 打开地图
-        openMap () {
-        this.mapDialog = true
-        },
+        // getMapData (data) {
+        //     console.log('getMap',data)
+        // this.mapDialog = data.status
+        // this.ruleForm.address = data.mapInfo.name
+        // // this.storeInfo.gpsX = data.mapInfo.gpsX
+        // // this.storeInfo.gpsY = data.mapInfo.gpsY
+        // },
+        // // 地图弹窗关闭
+        // mapClose (done) {
+        //     done()
+        // },
+        // // 打开地图
+        // openMap () {
+        // this.mapDialog = true
+        // },
         async get_info(){
             const information = await getStoreDetail(this.id)
             this.ruleForm = information
@@ -161,8 +172,16 @@ export default {
         },
     },
     async created(){
-        const res = await getService()
-        this.serviceList = res.list
+        const res = await getServiceArea()
+        res.list.forEach(item=>{
+            item.label=item.name
+            item.value=item.id
+            item.children.forEach(item=>{
+                item.label=item.name
+                item.value=item.id
+            })
+        })
+        this.serviceAreaList =res.list
         if(this.id === undefined) return
 		this.get_info()
     },

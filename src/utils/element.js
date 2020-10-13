@@ -49,6 +49,7 @@ import {
   Carousel,
   CarouselItem,
   PageHeader,
+  Cascader
 } from "element-ui";
 Message.install = () => {
   Vue.prototype.$message = Message;
@@ -109,4 +110,4 @@ Vue.use(Tree);
 Vue.use(Upload);
 Vue.use(Carousel);
 Vue.use(CarouselItem);
-
+Vue.use(Cascader)

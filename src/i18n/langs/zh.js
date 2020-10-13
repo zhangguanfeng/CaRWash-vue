@@ -21,6 +21,8 @@ const zh = {
   tDetail: '详情',
   // 服务订单管理
   tServiceApplication: '服务订单管理',
+  // 服务区域
+  tServiceArea: '服务区域',
   // 管理员列表
   tManagerList: '管理员列表',
   // 代理店管理
@@ -62,6 +64,13 @@ const zh = {
   // 职员管理页面部分
   staff: {
     addStaff: '添加职员'
+  },
+  // 服务区域列表
+  serviceArea:{
+    addArea:'添加区域',
+    first:'一级区域',
+    second:'二级区域',
+    area:'服务区域'
   },
   // 服务列表页面部分
   serviceList: {

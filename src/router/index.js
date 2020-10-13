@@ -17,6 +17,7 @@ const serviceListDetail = () => import('@/pages/serviceManagement/serviceList/de
 const serviceApplication = () => import('@/pages/serviceManagement/serviceApplication')
 const serviceOrderDetail = () => import('@/pages/serviceManagement/serviceApplication/detail')
 const serviceOrderEdit = () => import('@/pages/serviceManagement/serviceApplication/edit')
+const serviceArea = () => import('@/pages/serviceManagement/serviceArea')
 const managerList = () => import('@/pages/managerList')
 const shopManagement = () => import('@/pages/shopManagement')
 const shopDetail = () => import('@/pages/shopManagement/detail')
@@ -278,6 +279,15 @@ const routes = [
                 }
               }
             ]
+          },
+          {
+            path: 'serviceArea',
+            component: serviceArea,
+            meta: {
+              requiresAuth: true,
+              noCache: true,
+              title: 'tServiceArea'
+            },
           }
         ]
       },

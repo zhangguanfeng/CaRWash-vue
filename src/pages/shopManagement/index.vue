@@ -88,10 +88,10 @@ export default {
           label: this.$t('introduce'),
           prop: 'description',
         },
-        {
-          label: this.$t('shopManagement.scoped'),
-          prop: 'service_range',
-        },
+        // {
+        //   label: this.$t('shopManagement.scoped'),
+        //   prop: 'area',
+        // },
         {
           label: this.$t('shopManagement.contact'),
           prop: 'phone',
@@ -132,7 +132,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(async () => {
-        await delete deleteStore(id)
+        await deleteStore(id)
         this.get_list()
       }).catch({
 

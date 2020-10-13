@@ -128,7 +128,7 @@
         v-if="item.type === 'tag'"
       >{{ $fn.getDataName({dataList: listTypeInfo[item.list], value: 'value', label: 'key', data: data[item.value]}) || '-' }}</el-tag>
       <template v-if="item.slot">
-        <slot :name="'form-item-' + item.value" />
+        <slot :name="'form-item-' + item.value"  />
       </template>
     </el-form-item>
   </el-form>

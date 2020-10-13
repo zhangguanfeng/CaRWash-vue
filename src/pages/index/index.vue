@@ -5,22 +5,23 @@
     </el-header>
     <el-container class="middle_content">
       <left-slide :collapse="collapse"></left-slide>
-      <el-main style="height: 100%;background: #E9EEF3;">
-        <!-- 面包屑 -->
-        <breadcrumb></breadcrumb>
-        <!-- 视图内容 -->
-        <!-- <transition name="fade-page" mode="out-in">
-            <router-view></router-view>
+      <!-- <el-scrollbar style="height:100%;"> -->
+        <el-main style="height: 100%;background: #E9EEF3;">
+          <!-- 面包屑 -->
+          <breadcrumb></breadcrumb>
+          <!-- 视图内容 -->
+          <!-- <transition name="fade-page" mode="out-in">
+              <router-view></router-view>
 
-          </transition>-->
-        <cTransition>
-          <!-- <keep-alive v-if="$route.meta.noCache">
-            <router-view></router-view>
-          </keep-alive>
-          <router-view v-if="!$route.meta.noCache"></router-view> -->
-        </cTransition>
-      </el-main>
-      </el-scrollbar>
+            </transition>-->
+          <cTransition>
+            <!-- <keep-alive v-if="$route.meta.noCache">
+              <router-view></router-view>
+            </keep-alive>
+            <router-view v-if="!$route.meta.noCache"></router-view> -->
+          </cTransition>
+        </el-main>
+      <!-- </el-scrollbar> -->
     </el-container>
   </el-container>
 </template>

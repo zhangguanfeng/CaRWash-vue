@@ -17,8 +17,8 @@
                 <el-form-item :label="$t('phone')" prop="phone">
                     <div>{{ruleForm.phone}}</div>
                 </el-form-item>
-                <el-form-item :label="$t('shopManagement.scoped')" prop="service_range">
-                    <div>{{ruleForm.service_range}}</div>
+                <el-form-item :label="$t('shopManagement.scoped')" prop="area">
+                    <div v-for="(item,index) in ruleForm.area" :key="index">{{item}}</div>
                 </el-form-item>
                 <el-form-item :label="$t('shopManagement.business')" prop="open_hours">
                     <div>{{ruleForm.open_hours}}</div>
@@ -38,7 +38,7 @@ export default {
                 address: '',
                 description: '',
                 phone: '',
-                service_range: '',
+                area: '',
                 open_hours: ''
             },
         }

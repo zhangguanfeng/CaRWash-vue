@@ -172,6 +172,64 @@ export const deleteStaff = (id) => {
   })
 }
 /**
+ * @description: 查询代理店所负责的区域
+ * @param {number} store_id 店铺id* 
+ * @return {Promise} promise
+ * */
+export const searchStoreArea = (params) => {
+  return server({
+    url: `/admin/store_area`,
+    method: 'GET',
+    params
+  })
+}
+/**
+ * @description: 获取服务区域
+ * @return {Promise} promise
+ * */
+export const getServiceArea = () => {
+  return server({
+    url: '/admin/area',
+    method: 'GET'
+  })
+}
+/**
+ * @description: 添加服务区域
+ * @param {string} name  服务名称* 
+ * @param {number} parent  所属一级区域id（如果是添加一级区域，则该字段不传）
+ * @return {Promise} promise
+ * */
+export const addServiceArea = (data) => {
+  return server({
+    url: '/admin/area',
+    method: 'POST',
+    data
+  })
+}
+/**
+ * @description: 编辑服务区域
+ * @param {number} id  * 
+ * @param {string} name  修改后的名称* 
+ * @return {Promise} promise
+ * */
+export const editServiceArea = ({id,...data}) => {
+  return server({
+    url: `/admin/area/${id}`,
+    method: 'PUT',
+    data
+  })
+}
+/**
+ * @description: 删除服务区域
+ * @return {Promise} promise
+ * */
+export const deleteServiceArea = (id) => {
+  return server({
+    url: `/admin/area/${id}`,
+    method: 'DELETE'
+  })
+}
+/**
  * @description: 获取服务列表
  * @return {Promise} promise
  * */

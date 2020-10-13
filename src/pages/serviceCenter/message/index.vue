@@ -21,7 +21,7 @@
         <li>
           <div data-index="0">
             <i data-index="0" class="el-icon-present"></i>
-            <p data-index="0">全部</p>
+            <p data-index="0">全体</p>
           </div>
         </li>
         <li>

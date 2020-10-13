@@ -77,7 +77,16 @@
         :label-width="formInfo.labelWidth"
         :list-type-info="listTypeInfo"
         :disabled="formInfo.disabled"
-      ></form-page>
+      >
+      <template v-slot:form-item-children>
+         <el-cascader
+            @change="selectArea"
+            :options="serviceAreaList"
+            :props="props"
+            clearable
+        ></el-cascader>
+      </template>
+      </form-page>
       <el-button @click="done(title)" type="primary" style="margin-left:30px;">{{title}}</el-button>
     </el-dialog>
   </div>
@@ -86,7 +95,7 @@
 <script>
 import { mixin_pickerOptions, mixin_list, get_list } from "@/mixins";
 import page from "@/components/page";
-import { getStaff, getStaffDetail, deleteStaff, editStaff, addStaff, getStore } from '@/api/api';
+import { getStaff, getStaffDetail, deleteStaff, editStaff, addStaff, getStore, searchStoreArea } from '@/api/api';
 import myTable from '@/components/Table'
 import FormPage from '@/components/FormPage'
 import { mapState } from 'vuex' 
@@ -104,11 +113,10 @@ export default {
   mixins: [mixin_pickerOptions, mixin_list(getStaff)],
   data () {
     return {
+      props: { multiple: true },
+      serviceAreaList:[],
       filter: {
-        // name: '',
-        // shop: '',
         search: '',
-        // order: '-id'
       },
       columns: [
         {
@@ -153,6 +161,7 @@ export default {
           { label: this.$t('phone'), value: 'phone', type: 'input', width: '260', className: 'el-form-block', required: true, disabled: false },
           { label: this.$t('managerList.auth'), value: 'auth', type: 'input', width: '260', className: 'el-form-block', required: true, disabled: true },
           { label: this.$t('shop'), value: 'store', type: 'select', width: '260', className: 'el-form-block', list: 'shopList', required: true, disabled: false },
+          { label: this.$t('serviceArea.area'), value:'area', slot:true, hidden: false  },
         ],
         rules: {
         },
@@ -175,6 +184,7 @@ export default {
     FormPage,
     page
   },
+
   computed: {
     title () {
       switch (this.which) {
@@ -188,16 +198,21 @@ export default {
     },
     ...mapState(['adminUser'])
   },
-  created () {
+  async created () {
     this.initRules()
     if(this.adminUser.auth===0){
       this.getShopList()
+      // 超级管理员选店后发起请求  明天做
     }else{
       formInfoData.store=this.adminUser.store
       this.formInfo.fieldList[5].hidden=true
+      const res=await searchStoreArea({store_id:this.adminUser.store})
     }
   },
   methods: {
+    selectArea(e){
+        this.formInfo.data.area=e.map(item=>item[1])
+    },
     initRules () {
       const formInfo = this.formInfo
       formInfo.rules = this.$initRules(formInfo.fieldList)
