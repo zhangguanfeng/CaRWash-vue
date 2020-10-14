@@ -40,7 +40,7 @@
         </template>
       </my-table>
     </el-card>
-    <el-dialog :title="title" :visible.sync="dialogFormVisible" width="500px">
+    <!-- <el-dialog :title="title" :visible.sync="dialogFormVisible" width="500px">
       <form-page
         :ref-obj.sync="formInfo.ref"
         :data="formInfo.data"
@@ -53,24 +53,18 @@
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">{{submitBut}}</el-button>
       </span>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
 <script>
 import { mixin_pickerOptions, mixin_list, get_list } from "@/mixins";
 import myTable from '@/components/Table'
-import FormPage from '@/components/FormPage'
-import { addFAQ, editServiceTerm, getServiceTerm, getFAQDetail, deleteFAQ } from '@/api/api';
-const formInfoData = {
-  category: '',
-  title: '',
-  answer: ''
-}
+// import FormPage from '@/components/FormPage'
+import { getServiceTerm } from '@/api/api';
 export default {
   mixins: [mixin_pickerOptions, mixin_list(getServiceTerm)],
   components: {
-    FormPage,
     myTable
   },
   data () {
@@ -78,15 +72,17 @@ export default {
       clickType: '',
       columns: [
         {
-          label: this.$t('FAQ.id'),
+          label: 'ID',
           prop: 'id',
+          width:200
         }, {
           label: this.$t('serviceTerms.type'),
           prop: 'name',
-        }, {
-          label: this.$t('serviceTerms.content'),
-          prop: 'content',
-        },
+        }, 
+        // {
+        //   label: this.$t('serviceTerms.content'),
+        //   prop: 'content',
+        // },
         {
           label: this.$t('operation'),
           prop: '',
@@ -94,85 +90,20 @@ export default {
           align: 'left',
           slot: 'operation'
         }],
-      formInfo: {
-        ref: null,
-        disabled: false,
-        data: formInfoData,
-        fieldList: [
-          { label: this.$t('serviceTerms.type'), value: 'name', type: 'input', width: '260', className: 'el-form-block', required: true, hidden: false },
-          { label: this.$t('serviceTerms.content'), value: 'content', type: 'input', width: '260', className: 'el-form-block', required: true, hidden: false },
-        ],
-        rules: {
-        },
-        labelWidth: '120px'
-      },
-      listTypeInfo: {
-      },
-      dialogFormVisible: false,
-      title: '',
-      submitBut: ''
     }
   },
   created () {
-    this.initRules()
+    
   },
   methods: {
-    initRules () {
-      const formInfo = this.formInfo
-      formInfo.rules = this.$initRules(formInfo.fieldList)
-    },
     handleClick (value, item) {
       this.clickType = value
-      this.dialogFormVisible = true
       switch (value) {
         case 'edit':
-          this.title = this.$t('btnTip.edit')
-          this.submitBut = this.$t('btnTip.submit')
-          this.formInfo.data = { ...item }
-          this.formInfo.disabled = false
+          this.$router.push(`/setting/use/edit?id=${item.id}&type=edit`)
           break;
         case 'check':
-          this.title = this.$t('btnTip.check')
-          this.submitBut = this.$t('btnTip.close')
-          this.formInfo.disabled = true
-          this.formInfo.data = { ...item }
-          break;
-      }
-    },
-    remove (id) {
-      this.$confirm('是否确认删除？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(async () => {
-        const res = await deleteFAQ(id)
-        if (res.errcode == 2000) {
-          this.list_data.list = this.list_data.list.filter((value) => {
-            return value.id !== id
-          })
-          this.$message.success(res.errmsg)
-        }
-      }).catch(() => {
-        // this.$message('取消了删除')
-      })
-    },
-    submitForm () {
-      switch (this.clickType) {
-        case 'edit':
-          this.formInfo.ref.validate(async (valid) => {
-            if (valid) {
-              const res = await editServiceTerm(this.formInfo.data)
-              if (res.errcode == 2000) {
-                this.get_list()
-                this.$message.success(res.errmsg)
-              }
-              this.dialogFormVisible = false
-            }
-          })
-          break;
-        case 'check':
-          this.dialogFormVisible = false
-          break;
+           this.$router.push(`/setting/use/edit?id=${item.id}&type=check`)
       }
     },
   }

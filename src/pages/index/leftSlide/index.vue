@@ -98,6 +98,10 @@
             <el-menu-item index="/contentManagement/carList">{{$t('tCarList')}}
             </el-menu-item>
           </el-menu-item-group>
+          <el-menu-item-group>
+            <el-menu-item index="/contentManagement/configList">{{$t('tConfigList')}}
+            </el-menu-item>
+          </el-menu-item-group>
         </el-submenu>
         <el-submenu index="5" v-if="adminUser.auth===0">
           <template slot="title">

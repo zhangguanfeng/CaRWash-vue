@@ -105,7 +105,7 @@ export default {
       clickType: '',
       columns: [
         {
-          label: this.$t('FAQ.id'),
+          label: 'ID',
           prop: 'id',
         }, {
           label: this.$t('FAQ.create_time'),
@@ -182,9 +182,9 @@ export default {
       }
     },
     remove (id) {
-      this.$confirm('是否确认删除？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('FAQ.sureDeleteFAQ'), this.$t('tips'), {
+        confirmButtonText: this.$t('btnTip.submit'),
+        cancelButtonText: this.$t('btnTip.cancel'),
         type: 'warning'
       }).then(async () => {
         const res = await deleteFAQ(id)

@@ -28,11 +28,13 @@ const scheduleDetail = () => import('@/pages/scheduleManagement/detail')
 const resultManagement = () => import('@/pages/resultManagement')
 const settlementList = () => import('@/pages/settlementManagement/settlementList')
 const carList = () => import('@/pages/contentManagement/carList')
+const configList= () => import('@/pages/contentManagement/configList')
 const commentList = () => import('@/pages/contentManagement/commentList')
 const message = () => import('@/pages/serviceCenter/message')
 const commonQuestion = () => import('@/pages/serviceCenter/commonQuestion')
 const difficultQuestion = () => import('@/pages/serviceCenter/difficultQuestion')
 const use = () => import('@/pages/setting/use')
+const useEdit = () => import('@/pages/setting/use/edit')
 const information = () => import('@/pages/setting/information')
 const position = () => import('@/pages/setting/position')
 Vue.use(VueRouter)
@@ -431,6 +433,17 @@ const routes = [
               title: 'tCarList'
             },
           },
+          // 配置列表
+          {
+            path: 'configList',
+            name: 'configList',
+            component: configList,
+            meta: {
+              requiresAuth: true,
+              noCache: false,
+              title: 'tConfigList'
+            },
+          },
         ]
       },
       // 服务条款管理
@@ -459,6 +472,15 @@ const routes = [
                 path: '',
                 name: 'use',
                 component: use,
+                meta: {
+                  requiresAuth: true,
+                  noCache: false
+                }
+              },
+              {
+                path: 'edit',
+                name: 'useEdit',
+                component: useEdit,
                 meta: {
                   requiresAuth: true,
                   noCache: false

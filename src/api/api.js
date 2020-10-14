@@ -66,6 +66,19 @@ export const getManagementDetail = (id) => {
   })
 }
 /**
+ * @description: 修改管理员密码
+ * @param {String} password 新密码*
+ * @param {number} id* 
+ * @return {Promise} promise
+ * */
+export const changeManagerPW = ({id,...data}) => {
+  return server({
+    url: `/admin/user/${id}`,
+    method: 'PATCH',
+    data
+  })
+}
+/**
  * @description: 添加代理店
  * @return {Promise} promise
  * */
@@ -169,6 +182,19 @@ export const deleteStaff = (id) => {
   return server({
     url: `/admin/staff/${id}`,
     method: 'DELETE'
+  })
+}
+/**
+ * @description: 修改职员密码
+ * @param {String} password 新密码*
+ * @param {number} id* 
+ * @return {Promise} promise
+ * */
+export const changeStaffPW = ({id,...data}) => {
+  return server({
+    url: `/admin/staff/${id}`,
+    method: 'PATCH',
+    data
   })
 }
 /**
@@ -492,6 +518,29 @@ export const addCar = (data) => {
 export const editCar = ({id,...data}) => {
   return server({
     url: `/admin/car_type/${id}`,
+    method: 'PUT',
+    data
+  })
+}
+/**
+ * @description: 配置列表
+ * @return {Promise} promise
+ * */
+export const getConfigList = () => {
+  return server({
+    url: `/admin/config`,
+    method: 'GET',
+  })
+}
+/**
+ * @description: 修改配置
+ * @param {number} id * 
+ * @param {string} value 配置值* 
+ * @return {Promise} promise
+ * */
+export const editConfig = ({id,...data}) => {
+  return server({
+    url: `/admin/config/${id}`,
     method: 'PUT',
     data
   })

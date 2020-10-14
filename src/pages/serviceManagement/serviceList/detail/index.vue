@@ -6,10 +6,10 @@
     <el-card class="content mt20">
       <el-form label-position="left" :model="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item :label="$t('serviceList').name + '：'" prop="name">
-          <span>{{basicData.name}}</span>
+          <span>{{list.name}}</span>
         </el-form-item>
         <el-form-item :label="$t('serviceList').frequentness + '：'" prop="name">
-          <span>{{basicData.times}}</span>
+          <span>{{list.times}}</span>
         </el-form-item>
         <el-form-item :label="$t('serviceList').price + '：'">
           <el-table stripe :data="list_data.list" border style="width: 100%">
@@ -32,7 +32,7 @@
           </el-table>
         </el-form-item>
         <el-form-item :label="$t('serviceList').img + '：'">
-          <el-image style="width: 100px; height: 100px" :src="url" :preview-src-list="srcList">
+          <el-image style="width: 100px; height: 100px" :src="list.image" :preview-src-list="[list.image]">
           </el-image>
         </el-form-item>
       </el-form>
@@ -55,10 +55,10 @@
   </div>
 </template>
 <script>
-import { mixin_pickerOptions, mixin_list } from "@/mixins";
-import page from "@/components/page";
+// import { mixin_pickerOptions, mixin_list } from "@/mixins";
+// import page from "@/components/page";
 import FormPage from '@/components/FormPage'
-import { getPrice, editPrice } from '@/api/api';
+import { getPrice, editPrice, getServiceDetail } from '@/api/api';
 
 // 添加表单信息
 const formInfoData = {
@@ -67,9 +67,6 @@ const formInfoData = {
   amount:''
 }
 export default {
-  created () {
-    this.getPriceInfo()
-  },
   data () {
     return {
       // 地图弹窗
@@ -85,11 +82,12 @@ export default {
         startTime: '',
         endTime: ''
       },
-      basicData: this.$route.params,
+      list:'',
+      basicData: '',
       list_data: [],
-      url: this.$route.params.image,
+      // url: this.$route.params.image,
       srcList: [
-        this.$route.params.image
+        // this.$route.params.image
       ],
       formInfo: {
         ref: null,
@@ -108,15 +106,29 @@ export default {
       dialogFormVisible: false,
     }
   },
-   components: {
+  components: {
     FormPage
   },
+  computed:{
+    id(){
+			return Number.isNaN(Number(this.$route.query.id)) ? undefined : Number(this.$route.query.id)
+    },
+  },
+  created(){
+    if(this.id === undefined) return
+    this.get_info()
+
+  },
   methods: {
+    async get_info(){
+      const res = await getServiceDetail(this.id)
+      this.list=res
+      this.getPriceInfo()
+    },
      done(){
       this.formInfo.ref.validate(async(valid) => {
         if (valid) {
           this.editPrice(this.formInfo.data)
-  
         }
       })
     },
@@ -138,7 +150,7 @@ export default {
     },
     async getPriceInfo () {
       this.list_data = await getPrice({
-        service: this.$route.params.times / 4
+        service: this.list.times / 4
       })
     }
   }

@@ -21,25 +21,25 @@
         <li>
           <div data-index="0">
             <i data-index="0" class="el-icon-present"></i>
-            <p data-index="0">全体</p>
+            <p data-index="0">{{this.$t('message.typeText0')}}</p>
           </div>
         </li>
         <li>
           <div data-index="1">
             <i data-index="1" class="el-icon-pie-chart"></i>
-            <p data-index="1">所有客户</p>
+            <p data-index="1">{{this.$t('message.typeText1')}}</p>
           </div>
         </li>
         <li>
           <div data-index="2">
             <i data-index="2" class="el-icon-edit-outline"></i>
-            <p data-index="2">所有职员</p>
+            <p data-index="2">{{this.$t('message.typeText2')}}</p>
           </div>
         </li>
         <li>
           <div data-index="3">
             <i data-index="3" class="el-icon-edit-outline"></i>
-            <p data-index="3">单个用户</p>
+            <p data-index="3">{{this.$t('message.typeText3')}}</p>
           </div>
         </li>
       </ul>
@@ -61,6 +61,12 @@
         @emitSelection="allSelect"
         @sortChange="sort_change"
       >
+        <template v-slot:type="slotProps">
+          <span>{{type(slotProps.callback.row.type) }}</span>
+        </template>
+        <template v-slot:status="slotProps">
+          <span>{{status(slotProps.callback.row.status) }}</span>
+        </template>
         <template v-slot:operation="slotProps">
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
             <el-button
@@ -134,22 +140,34 @@ export default {
       clickType: '',
       columns: [
         {
-          label: this.$t('FAQ.id'),
+          label: 'ID',
           prop: 'id',
+          sortable: true
         }, {
-          label: this.$t('FAQ.create_time'),
+          label: this.$t('message.create_time'),
           prop: 'create_time',
+          sortable: true
         }, {
-          label: this.$t('FAQ.category'),
-          prop: 'category',
+          label: this.$t('message.type'),
+          prop: 'type',
+          slot:'type',
+          sortable: true
         },
         {
-          label: this.$t('FAQ.title'),
+          label: this.$t('message.title'),
           prop: 'title',
+          sortable: true
         },
         {
-          label: this.$t('FAQ.answer'),
-          prop: 'answer',
+          label: this.$t('message.content'),
+          prop: 'content',
+          sortable: true
+        },
+        {
+          label: this.$t('message.status'),
+          prop: 'status',
+          slot:'status',
+          sortable: true
         },
         {
           label: this.$t('operation'),
@@ -187,7 +205,30 @@ export default {
   created () {
     this.initRules()
   },
+  filters:{
+    
+  },
   methods: {
+    status(e){
+      switch(e){
+        case 0:
+          return  this.$t('message.statusText0')
+        case 1:
+          return  this.$t('message.statusText1')
+      }
+    },
+    type(e){
+      switch(e){
+        case 0:
+          return this.$t('message.typeText0')
+        case 1:
+          return this.$t('message.typeText1')
+        case 2:
+          return this.$t('message.typeText2')
+        case 3:
+          return this.$t('message.typeText3')
+      }
+    },
     select (e) {
       let dom = e.target;
       let index = dom.getAttribute("data-index")

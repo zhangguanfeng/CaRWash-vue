@@ -3,6 +3,7 @@ import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 const zh = {
   // 退出
   exit: '退出',
+  in:'进入',
   // 首页
   tIndex: '首页',
   // 后台名字
@@ -57,6 +58,8 @@ const zh = {
   tInformation: '个人信息管理条款',
   // 位置信息使用条款
   tPosition: '位置信息使用条款',
+  // 配置列表
+  tConfigList:'配置列表',
   // 会员管理页面部分
   member: {
     service: '服务',
@@ -120,17 +123,28 @@ const zh = {
   // 常见疑问
   FAQ: {
     ask: '新建疑问',
-    id: '编号',
     create_time: '创建时间',
     category: '分类',
     title: '标题',
-    answer: '回答'
+    answer: '回答',
+    sureDeleteFAQ:'是否确认删除？'
+  },
+  // 疑难解答
+  QA: {
+    title:'标题',
+    content:'问题内容',
+    answer:'答复',
+    sureDeleteQA:'是否确认删除？'
   },
   // 消息通知
   message: {
+    create_time: '创建时间',
     type: '消息类型',
     title: '标题',
     content: '消息内容',
+    status:'状态',
+    statusText0:'未读',
+    statusText1:'已读',
     typeText0: '全体',
     typeText1: '所有客户',
     typeText2: '所有职员',
@@ -151,12 +165,20 @@ const zh = {
     star: '好评',
     sureDeleteComment:'确定删除评价吗?'
   },
-  // // 车型列表
+  // 车型列表
   carList:{
     add_car:'添加车型',
     car_type:'车型'
   },
+  // 配置列表
+  configList:{
+    name:'配置名',
+    value:'配置值'
+  },
   // 复用部分
+  loginSuccess:'登录成功',
+  signOutSuccess:'退出成功',
+  changeSuccess:'修改成功',
   search: '请输入关键字',
   choiceAuth: '请选择管理员权限',
   choiceShop: '请选择代理店',
@@ -172,7 +194,7 @@ const zh = {
   search_title: '筛选查询',
   inputUserID: '请输入用户ID',
   inputPhoneNum: '请输入手机号',
-  inputUsername: '请输入用户姓名',
+  inputUsername: '请输入用户名',
   inputContact:'请输入联系方式',
   inputImage: '请选择图片',
   inputCategory: '请输入服务种类',
@@ -191,6 +213,9 @@ const zh = {
   cancelDelete:'已取消删除',
   finishForm:'请完善表单内容',
   maxOnePic:'最多只允许添加一张图片',
+  min6:'长度不少于6个字符',
+  min3:'长度不少于3个字符',
+  sort:'排序',
   btnTip: {
     submit: '确认',
     check: '查看',

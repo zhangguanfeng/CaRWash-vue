@@ -4,35 +4,21 @@
       <el-page-header @back="$router.go(-1)"></el-page-header>
     </div>
     <el-card class="content mt20">
-      <el-form label-position="left" :model="ruleForm" label-width="100px" class="demo-ruleForm">
+      <el-form label-position="left" :model="ruleForm" label-width="100px"  ref="ruleForm" class="demo-ruleForm">
         <el-form-item :label="$t('serviceList').name" prop="name">
-          <el-input v-model="list_data.name"></el-input>
+          <el-input v-model="ruleForm.name"></el-input>
         </el-form-item>
-        <el-form-item :label="$t('serviceList').frequentness" prop="name">
-          <el-input v-model="list_data.times"></el-input>
+        <el-form-item :label="$t('serviceList').frequentness" prop="times">
+          <el-input v-model="ruleForm.times"></el-input>
         </el-form-item>
         <!-- 图片上传 -->
         <el-form-item :label="$t('inputImage')">
-          <el-upload ref="showUp" action="#" list-type="picture-card" :auto-upload="false"
-            :limit="1" :on-exceed="handleExceed" :file-list="file" :on-change="handleChange">
-            <i slot="default" class="el-icon-plus"></i>
-            <div slot="file" slot-scope="{file}">
-              <img class="el-upload-list__item-thumbnail" :src="file.url" alt="">
-              <span class="el-upload-list__item-actions">
-                <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file)">
-                  <i class="el-icon-zoom-in"></i>
-                </span>
-                <span v-if="!disabled" class="el-upload-list__item-delete"
-                  @click="handleRemove(file)">
-                  <i class="el-icon-delete"></i>
-                </span>
-              </span>
-            </div>
-          </el-upload>
+          <component-upload-img
+            :limitMax="1"
+            :file-list="ruleForm.image"
+            @changeImgList="changeImgList"
+          ></component-upload-img>
         </el-form-item>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="dialogImageUrl" alt="">
-        </el-dialog>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">
             {{$t('btnTip').edit}}
@@ -43,85 +29,63 @@
   </div>
 </template>
 <script>
-import vueMapSmall from '@/components/global/vueMap'
-import { uploadImg, unloadImg, editServiceTerm } from '@/api/api'
+import componentUploadImg from '@/components/uploadImg'
+import { editService, getServiceDetail } from '@/api/api'
 export default {
   name: 'serviceEdit',
-  mounted () {
-    var box = document.getElementsByClassName('el-upload--picture-card')[0]
-    box.style.display = 'none'
-  },
   data () {
     return {
-      hideUpload: false,
-      file: [{
-        name: this.$route.params.name,
-        url: this.$route.params.image
-      }],
-      dialogImageUrl: '',
-      dialogVisible: false,
-      disabled: false,
-      // 地图弹窗
-      mapDialog: false,
-      // 修改之后地图
-      // locationInfo: {},
       ruleForm: {
+        id:'',
         name: '',
-        address: '',
-        description: '',
-        phone: '',
-        service_range: '',
-        startTime: '',
-        endTime: ''
+        times:'',
+        image:''
       },
-      list_data: this.$route.params,
-      fileUrl: ''
+       rules: {
+        name: [
+            { required: true, message: this.$t('shopManagement').inputName, trigger: 'blur' },
+        ],
+        times: [
+            { required: true, message: this.$t('shopManagement').inputAddress, trigger: 'change' },
+            { type: 'number', message: '次数必须为数字值'}
+        ],
+        images: [
+            { required: true, message: this.$t('shopManagement').inputShopDesc, trigger: 'blur' }
+        ],
+    },
     }
   },
   components: {
-    vueMapSmall
+    componentUploadImg
+  },
+  computed:{
+    id(){
+			return Number.isNaN(Number(this.$route.query.id)) ? undefined : Number(this.$route.query.id)
+    },
+  },
+  created(){
+    this.get_info()
   },
   methods: {
-    // 删除图片
-    async handleRemove (file) {
-      var box = document.getElementsByClassName('el-upload--picture-card')[0]
-      box.style.display = 'inline-block'
-      const res = await unloadImg(file.url)
-      this.file = []
-    },
-    handlePictureCardPreview (file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
-    async submitForm () {
-      var data = {
-        id: this.list_data.id,
-        name: this.list_data.name,
-        times: this.list_data.times,
-        image: this.file.url
+    changeImgList(arr){
+      if(arr.length===0){
+        this.ruleForm.image=''
+      }else{
+        this.ruleForm.image=arr[0]
       }
-      const res = await editServiceTerm(data)
-      // console.log(res)
     },
-    // 选中图片
-    async handleChange (file, fileList) {
-      var box = document.getElementsByClassName('el-upload--picture-card')[0]
-      this.file.push({
-        name: file.name,
-        url: file.url
-      })
-      if (this.file.length > 0) {
-        box.style.display = 'none'
+    async get_info(){
+      const res = await getServiceDetail(this.id)
+      this.ruleForm = res
+    },
+    async submitForm (formName) {
+      if(!isNaN(Number(this.ruleForm.times))){
+        this.ruleForm.times=Number(this.ruleForm.times)
       }
-      // console.log(file.raw)
-      const res = await uploadImg(file)
-      // console.log(res)
+      await this.$refs[formName].validate()
+      const res = await editService(this.ruleForm)
+      this.$router.go(-1)
     },
-    handleExceed (file) {
-      this.$message({
-        message:this.$t('maxOnePic')
-      })
-    }
   }
 }
 </script>

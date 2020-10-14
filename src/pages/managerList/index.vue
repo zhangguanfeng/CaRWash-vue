@@ -107,7 +107,7 @@ import { mixin_pickerOptions, mixin_list } from "@/mixins"
 import page from "@/components/page"
 import myTable from '@/components/Table'
 import FormPage from '@/components/FormPage'
-import { getManagementList, deleteManagement, addManagement, editManagement, getManagementDetail, getStore } from '@/api/api';
+import { getManagementList, deleteManagement, addManagement, editManagement, getManagementDetail, getStore, changeManagerPW } from '@/api/api';
 const formInfoData = {
   name: '',
   account: '',
@@ -200,7 +200,10 @@ export default {
       },
       key : false,
       rules : {
-        password: [{required: true,message: this.$t('inputPassword')}],
+        password: [
+          {required: true,message: this.$t('inputPassword')},
+          { min: 6, message: this.$t('min6'), trigger: 'blur' }
+        ],
       }
     }
   },
@@ -234,10 +237,10 @@ export default {
     },
     async submit(){
       await this.$refs["form"].validate();
-      // await api_store.change_password(this.info)
-      // this.$message.success('修改成功')
-      // this.get_list()
-      console.log(this.info)
+      await changeManagerPW(this.info)
+      this.$message.success('修改成功')
+      this.key=false
+      this.get_list()
     },
     initRules () {
       const formInfo = this.formInfo

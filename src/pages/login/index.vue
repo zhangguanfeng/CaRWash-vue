@@ -60,12 +60,12 @@ export default {
       // 表单验证规则
       rules: {
         account: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-          { min: 3, message: '长度不少于3个字符', trigger: 'blur' }
+          { required: true, message: this.$t('inputUsername'), trigger: 'blur' },
+          { min: 3, message: this.$t('min3'), trigger: 'blur' }
         ],
         password: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, message: '长度不少于6个字符', trigger: 'blur' }
+          { required: true, message: this.$t('inputPassword'), trigger: 'blur' },
+          { min: 6, message: this.$t('min6'), trigger: 'blur' }
         ]
       }
     }
@@ -99,7 +99,9 @@ export default {
         if(res.errcode) return
         this.saveUserInfo(res);
 				this.$router.push("/home");
-				this.$message.success("登录成功!");
+				this.$message.success({
+          message:this.$t('loginSuccess')
+        });
 				this.isShow = false;
 			}catch(e){
 				console.log(e)

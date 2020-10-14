@@ -11,7 +11,7 @@
         <el-button @click="changeCollapse">
           <i class="el-icon-s-operation fs20 "></i>
         </el-button>
-        <el-input prefix-icon="el-icon-search" v-model="input" placeholder="请输入内容"></el-input>
+        <!-- <el-input prefix-icon="el-icon-search" v-model="input" placeholder="请输入内容"></el-input> -->
       </div>
       <div class="rightTopRight flex">
         <div class="numberBadge">
@@ -25,12 +25,12 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-        <el-button>
+        <!-- <el-button>
           <i class="el-icon-message-solid fs20 "></i>
         </el-button>
         <el-button>
           <i class="el-icon-chat-dot-round fs20 "></i>
-        </el-button>
+        </el-button> -->
         <div>
           <el-dropdown trigger="click">
             <div class="ml20 flex">
@@ -59,7 +59,7 @@ export default {
         'English',
         '한국어'
       ],
-      input: '',
+      // input: '',
       // 当前导航栏显示方式
       collapse: false,
     }
@@ -67,7 +67,9 @@ export default {
   methods: {
     ...mapMutations(['saveUserInfo', 'saveLanguage']),
     exit () {
-      this.$message.success('退出成功')
+      this.$message.success({
+        message:this.$t('signOutSuccess')
+      })
       // this.saveUserInfo(null)
       storage.removeLocal('token')
       storage.removeLocal('userinfo')

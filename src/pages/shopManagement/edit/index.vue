@@ -134,7 +134,6 @@ export default {
     },
     methods:{
         selectArea(e){
-            console.log(e)
             this.value=e
             this.ruleForm.area=e.map(item=>item[1])
         },

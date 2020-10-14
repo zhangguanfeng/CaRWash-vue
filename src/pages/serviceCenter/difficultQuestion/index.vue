@@ -18,11 +18,6 @@
     </el-card>
     <!-- 表单部分 -->
     <el-card class="container">
-      <el-button
-        type="primary"
-        @click="handleClick('add')"
-        style="margin-bottom:15px;"
-      >{{$t('FAQ').ask}}</el-button>
       <my-table
         :columns="columns"
         :data="list_data.list"
@@ -34,14 +29,14 @@
         @sortChange="sort_change"
       >
         <template v-slot:operation="slotProps">
-          <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
+          <!-- <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
             <el-button
               @click="handleClick('check',slotProps.callback.row)"
               icon="el-icon-view"
               type="success"
               size="mini"
             ></el-button>
-          </el-tooltip>
+          </el-tooltip> -->
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
             <el-button
               @click="handleClick('edit',slotProps.callback.row)"
@@ -84,10 +79,8 @@ import { mixin_pickerOptions, mixin_list, get_list } from "@/mixins";
 import myTable from '@/components/Table'
 import FormPage from '@/components/FormPage'
 import page from "@/components/page";
-import { addFAQ, editFAQ, getQA, getQADetail, deleteFAQ } from '@/api/api';
+import {  editQA, getQA, getQADetail, deleteQA } from '@/api/api';
 const formInfoData = {
-  category: '',
-  title: '',
   answer: ''
 }
 export default {
@@ -105,22 +98,23 @@ export default {
       clickType: '',
       columns: [
         {
-          label: this.$t('FAQ.id'),
+          label: 'ID',
           prop: 'id',
+          sortable:true
         }, {
-          label: this.$t('FAQ.create_time'),
+          label: this.$t('QA.title'),
           prop: 'title',
-        }, {
-          label: this.$t('FAQ.category'),
+          sortable:true
+        },
+        {
+          label: this.$t('QA.content'),
           prop: 'content',
+          sortable:true
         },
         {
-          label: this.$t('FAQ.title'),
+          label: this.$t('QA.answer'),
           prop: 'answer',
-        },
-        {
-          label: this.$t('FAQ.answer'),
-          prop: 'status',
+          sortable:true
         },
         {
           label: this.$t('operation'),
@@ -134,9 +128,7 @@ export default {
         disabled: false,
         data: formInfoData,
         fieldList: [
-          { label: this.$t('FAQ.category'), value: 'category', type: 'input', width: '260', className: 'el-form-block', required: true, hidden: false },
-          { label: this.$t('FAQ.title'), value: 'title', type: 'input', width: '260', className: 'el-form-block', required: true, hidden: false },
-          { label: this.$t('FAQ.answer'), value: 'answer', type: 'textarea', width: '260', className: 'el-form-block', required: true, disabled: false },
+          { label: this.$t('QA.answer'), value: 'answer', type: 'textarea', width: '260', className: 'el-form-block', required: true, disabled: false },
         ],
         rules: {
         },
@@ -161,33 +153,33 @@ export default {
       this.clickType = value
       this.dialogFormVisible = true
       switch (value) {
-        case 'add':
-          this.title = this.$t('FAQ.ask')
-          this.submitBut = this.$t('btnTip.add')
-          this.formInfo.data = { ...formInfoData }
-          this.formInfo.disabled = false
-          break;
+        // case 'add':
+        //   this.title = this.$t('FAQ.ask')
+        //   this.submitBut = this.$t('btnTip.add')
+        //   this.formInfo.data = { ...formInfoData }
+        //   this.formInfo.disabled = false
+        //   break;
         case 'edit':
           this.title = this.$t('btnTip.edit')
           this.submitBut = this.$t('btnTip.submit')
           this.formInfo.data = { ...item }
           this.formInfo.disabled = false
           break;
-        case 'check':
-          this.title = this.$t('btnTip.check')
-          this.submitBut = this.$t('btnTip.close')
-          this.formInfo.disabled = true
-          this.formInfo.data = { ...item }
-          break;
+        // case 'check':
+        //   this.title = this.$t('btnTip.check')
+        //   this.submitBut = this.$t('btnTip.close')
+        //   this.formInfo.disabled = true
+        //   this.formInfo.data = { ...item }
+        //   break;
       }
     },
     remove (id) {
-      this.$confirm('是否确认删除？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('QA.sureDeleteQA'), this.$t('tips'), {
+        confirmButtonText: this.$t('btnTip.submit'),
+        cancelButtonText: this.$t('btnTip.cancel'),
         type: 'warning'
       }).then(async () => {
-        const res = await deleteFAQ(id)
+        const res = await deleteQA(id)
         if (res.errcode == 2000) {
           this.list_data.list = this.list_data.list.filter((value) => {
             return value.id !== id
@@ -200,22 +192,22 @@ export default {
     },
     submitForm () {
       switch (this.clickType) {
-        case 'add':
-          this.formInfo.ref.validate(async (valid) => {
-            if (valid) {
-              const res = await addFAQ(this.formInfo.data)
-              if (res.errcode == 2000) {
-                this.get_list()
-                this.$message.success(res.errmsg)
-              }
-              this.dialogFormVisible = false
-            }
-          })
-          break;
+        // case 'add':
+        //   this.formInfo.ref.validate(async (valid) => {
+        //     if (valid) {
+        //       const res = await addFAQ(this.formInfo.data)
+        //       if (res.errcode == 2000) {
+        //         this.get_list()
+        //         this.$message.success(res.errmsg)
+        //       }
+        //       this.dialogFormVisible = false
+        //     }
+        //   })
+        //   break;
         case 'edit':
           this.formInfo.ref.validate(async (valid) => {
             if (valid) {
-              const res = await editFAQ(this.formInfo.data)
+              const res = await editQA(this.formInfo.data)
               if (res.errcode == 2000) {
                 this.get_list()
                 this.$message.success(res.errmsg)
@@ -224,9 +216,9 @@ export default {
             }
           })
           break;
-        case 'check':
-          this.dialogFormVisible = false
-          break;
+        // case 'check':
+        //   this.dialogFormVisible = false
+        //   break;
       }
     },
   }
