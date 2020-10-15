@@ -17,6 +17,9 @@
         @emitSelection="allSelect"
         @sortChange="sort_change"
       >
+        <template v-slot:serviceName="slotProps">
+          <div>{{slotProps.callback.row.service.name}}</div>
+        </template>
         <template v-slot:star="slotProps">
           <el-rate v-model="slotProps.callback.row.star" disabled style="margin-top:6px;"></el-rate>
         </template>
@@ -71,7 +74,7 @@
 </template>
 
 <script>
-import { mixin_pickerOptions, mixin_list, get_list } from "@/mixins";
+import { mixin_pickerOptions, mixin_list } from "@/mixins";
 import myTable from '@/components/Table'
 import FormPage from '@/components/FormPage'
 import page from "@/components/page";
@@ -96,7 +99,7 @@ export default {
       clickType: '',
       columns: [
         {
-          label: this.$t('FAQ.id'),
+          label: 'ID',
           prop: 'id',
           sortable: true
         }, {
@@ -110,7 +113,9 @@ export default {
         },
         {
           label: this.$t('commentList.service'),
-          prop: 'service.name'
+          prop: 'service__name',
+          slot:'serviceName',
+          sortable: true
         },
         {
           label: this.$t('commentList.car_type'),

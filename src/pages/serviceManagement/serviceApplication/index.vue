@@ -1,104 +1,272 @@
 <template>
   <div>
-    <!-- 搜索部分. -->
-    <el-card class="search_card" shadow="hover">
-      <!-- 上半部分 -->
-      <div class="search_card_top">
-        <h2>{{$t('search_title')}}</h2>
-      </div>
-      <!-- 下半部分 -->
-      <div class="search_card_bottom">
-        <el-input :placeholder="$t('inputCategory')" class="searchByCategory" clearable
-          v-model="filter.searchByCategory">
-        </el-input>
-        <el-input :placeholder="$t('inputUserID')" class="searchByID" clearable v-model="filter.searchByID">
-        </el-input>
-        <el-date-picker v-model="filter.orderTime" type="date" :placeholder="$t('serviceApplication').time"
-          class="orderTime">
-        </el-date-picker>
-        <el-input :placeholder="$t('inputShop')" class="searchByShop" clearable v-model="filter.searchByShop">
-        </el-input>
-        <el-button class="search" round>{{$t('search_zh')}}</el-button>
-      </div>
+    <el-card style="margin-bottom: 15px;" shadow="hover">
+      <el-row type="flex" :gutter="20" align="middle">
+        <el-col :xs="12" :sm="10" :md="8" :lg="5">
+          <el-input
+            :placeholder="$t('search')"
+            class="searchByShop"
+            clearable
+            v-model="filter.search"
+          ></el-input>
+        </el-col>
+        <el-col :xs="6" :sm="6" :md="6" :lg="6">
+          <el-button @click="get_list" type="primary" class="search">{{$t('search_zh')}}</el-button>
+        </el-col>
+      </el-row>
     </el-card>
-
     <el-card class="container">
-      <!-- 表格部分 -->
-      <el-table :data="tableData" border style="width: 100%">
-        <el-table-column prop="id" label="ID">
-        </el-table-column>
-        <el-table-column prop="username" :label="$t('username')">
-        </el-table-column>
-        <el-table-column prop="serviceCategory" :label="$t('category')">
-        </el-table-column>
-        <el-table-column prop="orderTime" :label="$t('time')">
-        </el-table-column>
-        <el-table-column :label="$t('operation')">
+      <my-table
+        :columns="columns"
+        :data="list_data.list"
+        :showIndex="false"
+        :showSelection="false"
+        :cellStyle="{padding: '6px 0'}"
+        :headerCellStyle="{background:'rgba(51, 55, 68)',color:'#fff'}"
+        @emitSelection="allSelect"
+        @sortChange="sort_change"
+      >
+        <template v-slot:userAccount="slotProps">
+          <div>{{slotProps.callback.row.user.account}}</div>
+        </template>
+        <template v-slot:userPhone="slotProps">
+          <div>{{slotProps.callback.row.user.phone}}</div>
+        </template>
+        <template v-slot:staffName="slotProps">
+          <div>{{slotProps.callback.row.staff.name}}</div>
+        </template>
+        <template v-slot:active="slotProps">
+          <div>{{status(slotProps.callback.row.active)}}</div>
+        </template>
+        <template v-slot:operation="slotProps">
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
-            <el-button @click="go(1)" icon="el-icon-user-solid" type="success" size="mini"></el-button>
+            <el-button
+              @click="handleClick('check',slotProps.callback.row)"
+              icon="el-icon-view"
+              type="success"
+              size="mini"
+            ></el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').edit" placement="top">
-            <el-button @click="go(2)" icon="el-icon-edit-outline" type="primary" size="mini"></el-button>
+            <el-button
+              @click="handleClick('edit',slotProps.callback.row)"
+              icon="el-icon-edit-outline"
+              type="primary"
+              size="mini"
+            ></el-button>
           </el-tooltip>
-          <el-tooltip class="item" effect="dark" :content="$t('btnTip').delete" placement="top">
-            <el-button icon="el-icon-delete" type="danger" size="mini"></el-button>
-          </el-tooltip>
-        </el-table-column>
-      </el-table>
+        </template>
+      </my-table>
+      <page :total="list_data.total" :page_size.sync="pageSize" :page.sync="page" />
     </el-card>
+
+    <!-- 表单 -->
+    <el-dialog :title="title" :visible.sync="dialogFormVisible" width="500px">
+      <form-page
+        :ref-obj.sync="formInfo.ref"
+        :data="formInfo.data"
+        :field-list="formInfo.fieldList"
+        :rules="formInfo.rules"
+        :label-width="formInfo.labelWidth"
+        :list-type-info="listTypeInfo"
+        :disabled="formInfo.disabled"
+      >
+      </form-page>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="done(title)" type="primary" style="margin-left:30px;">{{title}}</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import { mixin_pickerOptions, mixin_list } from "@/mixins";
+import page from "@/components/page";
+import { getOrderList, editOrder, getStaff } from '@/api/api';
+import myTable from '@/components/Table'
+import FormPage from '@/components/FormPage'
+import { mapState } from 'vuex' 
+// 添加表单信息
+const formInfoData = {
+  amount:'',
+  staff:'',
+  active:'',
+}
 export default {
+  name: 'serviceApplication',
+  mixins: [mixin_pickerOptions, mixin_list(getOrderList)],
   data () {
     return {
-      filter:{
-        searchByCategory: '',
-        searchByID: '',
-        searchByShop: '',
-        orderTime: ''
+      filter: {
+        search: '',
+        service: '',
       },
-      tableData: [{
-        id: '1001',
-        username:'12321',
-        serviceCategory: '洗车',
-        orderTime: '2020-08-26'
-      }, {
-        id: '1001',
-        username:'12321',
-        serviceCategory: '洗车',
-        orderTime: '2020-08-26'
-      }, {
-        id: '1001',
-        username:'12321',
-        serviceCategory: '洗车',
-        orderTime: '2020-08-26'
-      }, {
-        id: '1001',
-        username:'12321',
-        serviceCategory: '洗车',
-        orderTime: '2020-08-26'
-      }],
+      columns: [
+        {
+          label: 'ID',
+          sortable: true,
+          prop: 'id',
+        }, {
+          label: this.$t('serviceApplication.create_time'),
+          sortable: true,
+          prop: 'create_time',
+        }, {
+          label: this.$t('serviceApplication.userAccount'),
+          sortable: true,
+          prop: 'user__account',
+          slot:'userAccount'
+        },
+        {
+          label: this.$t('serviceApplication.userPhone'),
+          sortable: true,
+          prop: 'user__phone',
+          slot:'userPhone'
+        },
+        {
+          label: this.$t('serviceApplication.service'),
+          sortable: true,
+          prop: 'service'
+        },
+        {
+          label: this.$t('serviceApplication.store'),
+          sortable: true,
+          prop: 'store',
+        },
+        {
+          label: this.$t('serviceApplication.staff'),
+          sortable: true,
+          prop: 'staff__name',
+          slot: 'staffName'
+        },
+        {
+          label: this.$t('serviceApplication.amount'),
+          sortable: true,
+          prop: 'amount',
+        },
+        {
+          label: this.$t('serviceApplication.active'),
+          sortable: true,
+          prop: 'active',
+          slot:'active'
+        },
+        {
+          label: this.$t('operation'),
+          prop: '',
+          align: 'left',
+          slot: 'operation'
+        }],
+      formInfo: {
+        ref: null,
+        disabled: false,
+        data: formInfoData,
+        fieldList: [
+          { label: this.$t('serviceApplication.amount'), value: 'amount', width: '260', type: 'input', className: 'el-form-block', required: true },
+          { label: this.$t('serviceApplication.staff'), value: 'staff',type:"select", width: '260', className: 'el-form-block',list:'staffList', multiple:true, required: true, hidden: false },
+          { label: this.$t('serviceApplication.active'), value:'active',type: 'select', width: '260', className: 'el-form-block',list:'statusList', required: false, hidden: true  },
+        ],
+        rules: {
+        },
+        labelWidth: '120px'
+      },
+      listTypeInfo: {
+        staffList: [],
+        statusList:[
+          {label:this.$t('serviceApplication').unConfirm,value:0},
+          {label:this.$t('serviceApplication').confirm,value:1},
+          {label:this.$t('serviceApplication').refuse,value:2}
+        ],
+      },
       // 是否显示添加表单
-      // dialogFormVisible: false,
-      // 添加表单信息
-      // addStaffForm: {
-      //   username: '',
-      //   phone: '',
-      //   id: '',
-      //   shop: ''
-      // },
-      
+      dialogFormVisible: false,
+      which: '',
     }
   },
-  methods:{
-    go(type){
-      switch(type){
+  components: {
+    myTable,
+    FormPage,
+    page
+  },
+
+  computed: {
+    title () {
+      switch (this.which) {
+        case 'edit':
+          return this.$t('btnTip').edit;
+      }
+    },
+  },
+  async created () {
+    this.initRules()
+    this.getStaffList()
+  },
+  methods: {
+    status(status){
+      switch(status){
+        case 0:
+          return this.$t('serviceApplication.unConfirm')
         case 1:
-          return this.$router.push('serviceApplication/detail')
+          return this.$t('serviceApplication.confirm')
         case 2:
-          return this.$router.push('serviceApplication/edit')
+          return this.$t('serviceApplication.refuse')
+      }
+    },
+    async getStaffList(){
+        const res=await getStaff()
+        this.listTypeInfo.staffList = res.list.map((item) => {
+        return { label: item.name, value: item.id }
+      })
+    },
+    initRules () {
+      const formInfo = this.formInfo
+      formInfo.rules = this.$initRules(formInfo.fieldList)
+    },
+    async handleClick (type, data) {
+      switch (type) {
+        case 'check':
+          this.$router.push(`/serviceManagement/serviceApplication/detail?id=${data.id}`)
+          break;
+        case 'edit':
+          this.formInfo.data = { id:data.id,amount:data.amount, active:data.active, staff:data.staff.id }
+          this.formInfo.fieldList[2].required = data.active!==0?false:true
+          this.formInfo.fieldList[2].hidden = data.active!==0?true:false
+          this.initRules()
+          break;
+      }
+      this.formInfo.disabled = type !== 'check' ? false : true
+      this.dialogFormVisible = true
+      this.which = type
+    },
+    async done (title) {
+      var flag = false
+      var arr = Object.values(this.formInfo.data)
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].length !== 0) {
+          flag = true
+        }
+        else {
+          flag = false
+          break
+        }
+      }
+      if (flag) {
+        switch (this.which) {
+          case 'edit':
+            const res=await editOrder(this.formInfo.data)
+            if(res.errcode===2000){
+              this.$message.success({
+                message:this.$t('changeSuccess')
+              })
+              this.dialogFormVisible = false
+              this.get_list()
+            }
+            
+            break;
+        }
+      } else {
+        this.$message({
+          type: 'warning',
+          message: this.$t('finishForm')
+        })
       }
     }
   }
@@ -106,123 +274,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// 搜索部分
-.search_card /deep/ {
-  margin-bottom: 15px;
-  .search_card_top {
-    margin-bottom: 20px;
-  }
-  .search_card_bottom {
-    height: 50px;
-    width: 1200px;
-    display: flex;
-    justify-content: space-between;
-    .searchByCategory,
-    .searchByID,
-    .orderTime,
-    .searchByShop {
-      position: relative;
-      width: 245px;
-      z-index: 0;
-      input {
-        height: 50px;
-        padding: 0 8px 0 47px;
-      }
-      input:focus {
-        border: 1.5px solid #545c64ac;
-      }
-      i {
-        display: none;
-      }
-    }
-    .searchByCategory:before {
-      content: "\e699";
-      font-family: "iconfont" !important;
-      font-size: 16px;
-      font-style: normal;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      position: absolute;
-      top: 3px;
-      left: 10px;
-      font-size: 30px;
-      color: #545c64ac;
-    }
-    .searchByID:before {
-      content: "\e696";
-      font-family: "iconfont" !important;
-      font-size: 16px;
-      font-style: normal;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      position: absolute;
-      top: 3px;
-      left: 10px;
-      font-size: 28px;
-      color: #545c64ac;
-    }
-    .searchByShop:before {
-      content: "\e62f";
-      font-family: "iconfont" !important;
-      font-size: 16px;
-      font-style: normal;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      position: absolute;
-      top: 3px;
-      left: 10px;
-      font-size: 28px;
-      color: #545c64ac;
-    }
-    .orderTime:before {
-      content: "\e665";
-      z-index: 99;
-      font-family: "iconfont" !important;
-      font-size: 16px;
-      font-style: normal;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      position: absolute;
-      top: 3px;
-      left: 10px;
-      font-size: 28px;
-      color: #545c64ac;
-    }
-    .search {
-      width: 100px;
-      height: 45px;
-      color: white;
-      border-radius: 10px;
-      background-color: #545c64ac;
-      // border: none;
-      transition: all 0.3s linear;
-    }
-    .search:hover {
-      border: none;
-      background-color: #545c6466;
-      transition: all 0.3s linear;
-    }
-  }
-}
 .container /deep/ {
   // 添加管理员部分
   .addManager {
     margin-bottom: 15px;
   }
-  // 表格部分
-  .el-table__header-wrapper {
-    th {
-      text-align: center;
-    }
-  }
-  .el-table__body-wrapper {
-    td {
-      text-align: center;
-    }
-    tr:nth-child(odd) {
-      background-color: #e9eef3;
-    }
-  }
-  // 添加表单部分
 }
 </style>

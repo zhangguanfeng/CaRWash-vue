@@ -34,6 +34,9 @@
         @emitSelection="allSelect"
         @sortChange="sort_change"
       >
+        <template v-slot:storeName="slotProps">
+          <span>{{ slotProps.callback.row.store.name }}</span>
+        </template>
         <template v-slot:auth="slotProps">
           <span>{{ auth_filters(slotProps.callback.row.auth) }}</span>
         </template>
@@ -162,7 +165,9 @@ export default {
         },
         {
           label: this.$t('shop'),
-          prop: 'store.name',
+          sortable: true,
+          prop: 'store__name',
+          slot: 'storeName'
         },
         {
           label: this.$t('managerList.auth'),

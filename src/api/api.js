@@ -599,6 +599,92 @@ export const getMessage = (params) => {
   })
 }
 /**
+ * @description: 服务订单列表
+ * @param {number} service 服务id（服务次数的）
+ * @return {Promise} promise
+ * */
+export const getOrderList = (params) => {
+  return server({
+    url: `/admin/order`,
+    method: 'GET',
+    params
+  })
+}
+/**
+ * @description: 服务订单详情
+ * @param {number} id 订单id* 
+ * @return {Promise} promise
+ * */
+export const getOrderDetail = (id) => {
+  return server({
+    url: `/admin/order/${id}`,
+    method: 'GET'
+  })
+}
+/**
+ * @description: 编辑服务订单
+ * @param {number} id 订单id* 
+ * @param {number} amount 价格
+ * @param {number} staff 职员id
+ * @param {number} active 状态 1确认 2拒绝  只有当前订单状态为0时才可以修改
+ * @return {Promise} promise
+ * */
+export const editOrder = ({id,...data}) => {
+  return server({
+    url: `/admin/order/${id}`,
+    method: 'PUT',
+    data
+  })
+}
+/**
+ * @description: 日程列表
+ * @param {number} service 服务id（服务次数的）
+ * @param {number} status 状态
+ *       (0, "未洗车"),
+        (1, "未找到车辆"),
+        (2, "洗车结束"),
+        (3, "已延迟"),
+        (4, "已取消")
+ * @return {Promise} promise
+ * */
+export const getScheduleList = (params) => {
+  return server({
+    url: `/admin/schedule`,
+    method: 'GET',
+    params
+  })
+}
+/**
+ * @description: 日程详情
+ * @param {number} id 日程id* 
+ * @return {Promise} promise
+ * */
+export const getScheduleDetail = (id) => {
+  return server({
+    url: `/admin/schedule/${id}`,
+    method: 'GET'
+  })
+}
+/**
+ * @description: 编辑日程
+ * @param {number} id 日程id* 
+ * @param {number} staff 职员id
+ * @param {number} status 状态 此处只能为4  当状态为0 1时可调用编辑
+ *      (0, "未洗车"),
+        (1, "未找到车辆"),
+        (2, "洗车结束"),
+        (3, "已延迟"),
+        (4, "已取消")
+ * @return {Promise} promise
+ * */
+export const editSchedule = ({id,...data}) => {
+  return server({
+    url: `/admin/schedule/${id}`,
+    method: 'PUT',
+    data
+  })
+}
+/**
  * @description: 上传图片
  * @return {Promise} promise
  * */

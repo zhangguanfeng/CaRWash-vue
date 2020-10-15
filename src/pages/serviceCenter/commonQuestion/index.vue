@@ -107,20 +107,25 @@ export default {
         {
           label: 'ID',
           prop: 'id',
+          sortable:true
         }, {
           label: this.$t('FAQ.create_time'),
           prop: 'create_time',
+          sortable:true
         }, {
           label: this.$t('FAQ.category'),
           prop: 'category',
+          sortable:true
         },
         {
           label: this.$t('FAQ.title'),
           prop: 'title',
+          sortable:true
         },
         {
           label: this.$t('FAQ.answer'),
           prop: 'answer',
+          sortable:true
         },
         {
           label: this.$t('operation'),

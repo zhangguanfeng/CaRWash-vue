@@ -166,7 +166,8 @@ export default {
       }
     }
     .rightTopRight {
-      min-width: 270px;
+      // min-width: 270px;
+      min-width: 150px;
     }
   }
 }

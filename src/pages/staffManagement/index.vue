@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- 搜索部分 -->
     <el-card style="margin-bottom: 15px;" shadow="hover">
       <el-row type="flex" :gutter="20" align="middle">
         <el-col :xs="12" :sm="10" :md="8" :lg="5">
@@ -17,13 +16,11 @@
       </el-row>
     </el-card>
     <el-card class="container">
-      <!-- 添加管理员部分 -->
       <el-button
         type="primary"
         @click="staffFormFun('add')"
         class="addManager"
       >{{$t('staff').addStaff}}</el-button>
-      <!-- 表格部分 -->
       <my-table
         :columns="columns"
         :data="list_data.list"
@@ -34,8 +31,8 @@
         @emitSelection="allSelect"
         @sortChange="sort_change"
       >
-        <template v-slot:storeId="slotProps">
-          <div>{{slotProps.callback.row.store.id}}</div>
+         <template v-slot:storeName="slotProps">
+          <div>{{slotProps.callback.row.store.name}}</div>
         </template>
         <template v-slot:operation="slotProps">
           <el-tooltip class="item" effect="dark" :content="$t('btnTip').check" placement="top">
@@ -150,14 +147,10 @@ export default {
           prop: 'phone',
         },
         {
-          label: this.$t('shopID'),
-          sortable: true,
-          prop: 'store',
-          slot: 'storeId'
-        },
-        {
           label: this.$t('shopName'),
-          prop: 'store.name',
+          sortable: true,
+          prop: 'store__name',
+          slot:'storeName'
         },
         {
           label: this.$t('operation'),

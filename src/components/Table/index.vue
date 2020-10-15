@@ -111,7 +111,8 @@ export default {
     },
     handleSortChange (val) {
       this.$emit('sortChange', val)
-    }
+    },
+
   }
 }
 </script>
